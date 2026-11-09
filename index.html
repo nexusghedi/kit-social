@@ -40,7 +40,7 @@ nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none
 nav a{flex:none;text-decoration:none;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-weight:700;font-size:.85rem}
 .evento{background:var(--card);border-radius:18px;border:1px solid var(--line);overflow:hidden;scroll-margin-top:12px}
 .testa{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:14px;align-items:start}
-.testa img{width:96px;height:128px;object-fit:cover;border-radius:10px;display:block;background:var(--line);cursor:zoom-in}
+.testa img{width:96px;height:96px;object-fit:cover;border-radius:10px;display:block;background:var(--line);cursor:zoom-in}
 .testa .info{min-width:0;display:flex;flex-direction:column;gap:6px}
 .quando{align-self:flex-start;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;color:#1d1d1b}
 .evento h2{margin:0;font-size:1.15rem;line-height:1.25;font-weight:800;text-wrap:balance}
@@ -70,7 +70,7 @@ textarea:focus-visible{outline:2px solid var(--wa);outline-offset:1px}
 .btn.bloccato{opacity:.4;cursor:not-allowed}
 details.dacompletare>summary{background:var(--warn-bg)}
 .azioni{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.azioni [data-condividi]{grid-column:1/-1}
+
 .btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:12px;padding:11px 12px;font:inherit;font-weight:800;font-size:.92rem;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none;min-height:46px}
 .btn:focus-visible{outline:2px solid var(--wa);outline-offset:2px}
 .btn.wa{background:var(--wa);border-color:var(--wa);color:var(--wa-fg)}
@@ -94,6 +94,7 @@ footer{color:var(--muted);font-size:.82rem}
       <li><b>1.</b> Tocca «Condividi con immagine»</li>
       <li><b>2.</b> Scegli WhatsApp e il gruppo</li>
       <li><b>3.</b> Invia: il testo arriva come didascalia</li>
+      <li>I messaggi di servizio partono senza immagine</li>
     </ul>
   </header>
   <nav id="indice" aria-label="Eventi"></nav>
@@ -108,48 +109,41 @@ footer{color:var(--muted);font-size:.82rem}
 const SITO='https://nexusghedi.it/';
 const EVENTI=[
 {id:'fontanellato',titolo:'Arkè i5sensi · Fontanellato e il re dei salumi',quando:'Sab 21 novembre',col:'var(--viaggi)',
- img:'img/fontanellato.jpg',file:'nexus-arke-fontanellato.jpg',url:SITO+'2026/11/05/arke-i5sensi-fontanellato/',
- msgs:[{id:'annuncio',label:'Promemoria per gli iscritti al corso',inv:'Da mandare mer 18 o gio 19 novembre',t:
-`*Arkè i5sensi · tappa 4*
-*Fontanellato e il re dei salumi* · sabato 21 novembre
+ img:'img/wa-fontanellato.jpg',file:'nexus-arke-fontanellato.jpg',url:SITO+'2026/11/05/arke-i5sensi-fontanellato/',
+ msgs:[{id:'promemoria',label:'Promemoria per gli iscritti al corso',inv:'Da mandare mer 18 o gio 19 novembre',img:true,t:
+`*ARKÈ i5SENSI · FONTANELLATO*
+_E il re dei salumi · guarda, ascolta, gusta_
 
-Guarda, ascolta, gusta: la Rocca Sanvitale con la Camera Ottica e la saletta del Parmigianino, poi le cantine di stagionatura del Culatello di Zibello, con degustazione.
+*Sabato 21 novembre*, partenza ore 13:00 dal parcheggio di via dei Fontanili (Ghedi).
 
-🚌 Partenza ore 13.00, parcheggio di via dei Fontanili, Ghedi
-🏠 Rientro in serata (partenza verso le 19.30)
-
-Tutto su ${SITO}2026/11/05/arke-i5sensi-fontanellato/
-
-Per informazioni: 331 763 4299
-Nexus APS`}]},
+Tutto sul sito:
+${SITO}2026/11/05/arke-i5sensi-fontanellato/`}]},
 {id:'laudato',titolo:'Laudato sì: i verbi di Francesco',quando:'Sab 28 novembre',col:'var(--conf)',
- img:'img/laudato.jpg',file:'nexus-laudato-si.jpg',url:SITO+'2026/11/05/laudato-si-i-verbi-di-francesco/',
- msgs:[{id:'annuncio',label:'Invito alla serata',inv:'Da mandare una settimana prima e il giorno stesso',t:
-`*Laudato sì: i verbi di Francesco*
-📅 Sabato 28 novembre, ore 20.30
-📍 Teatro Il Gabbiano, Ghedi
+ img:'img/wa-laudato.jpg',file:'nexus-laudato-si.jpg',url:SITO+'2026/11/05/laudato-si-i-verbi-di-francesco/',
+ msgs:[{id:'invito',label:'Invito alla serata',inv:'Da mandare una settimana prima e il giorno stesso',img:true,t:
+`*LAUDATO SÌ · i verbi di Francesco*
+*Sabato 28 novembre, ore 20.30* · Teatro Il Gabbiano, Ghedi
 
-Una serata sui verbi di Francesco: desiderare, servire, gioire, osservare, andare per il mondo, lodare.
-Il momento dedicato a _osservare_ è a cura di Nexus, con Elisa Mastromatteo e Letizia Pari.
+Il momento dedicato a _osservare_ è a cura di Nexus. Ingresso libero.
 
-Ingresso libero fino a esaurimento posti.
-${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/
-
-Nexus APS`}]},
+${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/`}]},
 {id:'salento',titolo:'Salento: un risveglio assoluto per i cinque sensi',quando:'5–10 dicembre',col:'var(--viaggi)',
- img:'img/salento.jpg',file:'nexus-salento.jpg',url:SITO+'2026/11/05/salento-ars-nova-dicembre-2026/',
+ img:'img/wa-salento.jpg',file:'nexus-salento.jpg',url:SITO+'2026/11/05/salento-ars-nova-dicembre-2026/',
  msgs:[
- {id:'incontro',label:'Incontro di preparazione',inv:'Da mandare la settimana prima del 1° dicembre',t:
-`🌿 *Salento: un risveglio assoluto per i cinque sensi* · 5–10 dicembre
+ {id:'annuncio',label:'Annuncio',inv:'Finché ci sono posti',img:true,t:
+`*SALENTO*
+_Un risveglio assoluto per i cinque sensi_
 
-Care amiche e cari amici, prima di partire ci troviamo per l'*incontro di preparazione storico-artistica*: un'introduzione ai luoghi che visiteremo, da Lecce a Otranto a Leuca.
+*5–10 dicembre* · aereo e pullman GT, quota *1.880 €* tutto incluso.
 
-📅 *Martedì 1 dicembre, ore 20.30*
-🏢 Sede Nexus, Via Fabio Filzi 10, Ghedi (primo piano, di fronte alla Caritas parrocchiale)
-
-È pensato per chi partecipa al viaggio, ma è aperto anche ai curiosi.
-Ci vediamo lì!`},
- {id:'saldo',label:'Promemoria del saldo',inv:'Da mandare prima della scadenza del saldo',t:
+Programma completo:
+${SITO}2026/11/05/salento-ars-nova-dicembre-2026/
+Per iscriverti rispondi a questo messaggio.`},
+ {id:'incontro',label:'Incontro di preparazione',inv:'Da mandare la settimana prima del 1° dicembre',img:false,t:
+`*Salento · incontro di preparazione*
+*Martedì 1 dicembre, ore 20.30*, in sede (Via Fabio Filzi 10, Ghedi).
+Un'introduzione ai luoghi che visiteremo, da Lecce a Otranto a Leuca. Aperto anche ai curiosi.`},
+ {id:'saldo',label:'Promemoria del saldo',inv:'Da mandare prima della scadenza del saldo',img:false,t:
 `🌿 *Salento: un risveglio assoluto per i cinque sensi*
 _In aereo e pullman GT_ · 5–10 dicembre 2026
 
@@ -168,21 +162,15 @@ Causale: _Viaggio in Salento – Nome e Cognome_
 📅 Vi aspettiamo all'incontro di preparazione *martedì 1 dicembre alle 20.30* in sede.
 
 Grazie per la collaborazione: ci vediamo presto per scoprire insieme il Salento!`},
- {id:'partenza',label:'Promemoria di partenza',inv:'Da mandare il 2 o il 3 dicembre',t:
-`🧳 *Salento, si parte!* · sabato 5 dicembre
-
-Care amiche e cari amici, ecco le ultime indicazioni:
-
-🚌 Ritrovo *sabato 5 dicembre alle ore [orario]* a [luogo], Ghedi: pullman per Linate, volo ITA per Bari alle 8.55.
-🪪 Portate la *carta d'identità valida*: serve per l'imbarco.
-🎒 Bagaglio: [regole del volo]. Scarpe comode per le visite e qualcosa di caldo per la sera.
-🛬 Rientro giovedì 10 dicembre: volo Bari–Linate alle 18.30, a Ghedi in tarda serata.
-
-Per qualsiasi necessità: 331 763 4299
-Buon viaggio a tutti!`}]},
+ {id:'partenza',label:'Promemoria di partenza',inv:'Da mandare il 2 o il 3 dicembre',img:false,t:
+`*Salento, si parte!*
+Ritrovo *sabato 5 dicembre alle [orario]* a [luogo], Ghedi.
+Portate la carta d'identità valida. Bagaglio: [regole del volo].
+Rientro giovedì 10 dicembre in tarda serata.
+Per necessità: 331 763 4299`}]},
 {id:'milano',titolo:'Milano: Dalí, Verdi e un aperitivo in centro',quando:'Mar 29 dicembre',col:'var(--viaggi)',
  img:'img/milano.jpg',file:'nexus-milano-posto-libero.jpg',url:SITO+'2026/11/05/milano-29-dicembre-2026/',
- msgs:[{id:'posto',label:'Si è liberato un posto',inv:'Solo se qualcuno si ritira',t:
+ msgs:[{id:'posto',label:'Si è liberato un posto',inv:'Solo se qualcuno si ritira',img:true,t:
 `*SI È LIBERATO UN POSTO*
 *Milano · martedì 29 dicembre*
 
@@ -191,28 +179,18 @@ Dalí a Palazzo Reale, la Milano di Verdi con i visori VR e un aperitivo in cent
 Programma completo sul sito:
 ${SITO}2026/11/05/milano-29-dicembre-2026/
 
-Vuoi il posto? Rispondi a questo messaggio: va a chi scrive per primo.
-
-Nexus APS`}]},
+Vuoi il posto? Rispondi a questo messaggio: va a chi scrive per primo.`}]},
 {id:'tunisia',titolo:'Tunisia da sentire',quando:'7–12 febbraio 2027',col:'var(--viaggi)',
  img:'img/tunisia.jpg',file:'nexus-tunisia.jpg',url:SITO+'2026/11/05/tunisia-da-sentire-febbraio-2027/',
  msgs:[
- {id:'ultimi',label:'Ultimi giorni per iscriversi',inv:'Da mandare mer 11 o gio 12 novembre',t:
-`🇹🇳 *Tunisia da sentire* · 7–12 febbraio 2027
+ {id:'ultimi',label:'Ultimi giorni per iscriversi',inv:'Da mandare mer 11 o gio 12 novembre',img:true,t:
+`*TUNISIA · ultimi giorni per iscriversi*
+Le iscrizioni chiudono *domenica 15 novembre*, acconto 200 €.
 
-Care amiche e cari amici, *ultimi giorni per iscriversi*: le iscrizioni chiudono *domenica 15 novembre*.
-
-📝 Iscrizione: https://forms.gle/UoJPBWJPpCfCmCk56
-💳 Acconto: *200 € a persona*, da versare con l'iscrizione
-🏦 Bonifico a Nexus A.p.s. – IBAN IT79G0857554570000000015816
-Causale: _Viaggio in Tunisia – nome e cognome dei partecipanti_
-📱 Oppure Satispay (negozio Nexus A.p.s.) o in sede il sabato 9–11
-
-Quota: 1.690 € con 25 partecipanti, 1.750 € con 20; singola +180 €.
-Programma completo: ${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/
-
-Per domande: 331 763 4299`},
- {id:'annuncio',label:'Annuncio',inv:'Il primo messaggio, da rimandare se serve',t:
+Modulo: https://forms.gle/UoJPBWJPpCfCmCk56
+Programma, quote e pagamento:
+${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/`},
+ {id:'annuncio',label:'Annuncio',inv:'Il primo messaggio, da rimandare se serve',img:true,t:
 `🇹🇳 *TUNISIA DA SENTIRE*
 📅 7–12 febbraio 2027 · ponte di Carnevale
 ✈️ 6 giorni, aereo e bus GT, tutto incluso
@@ -227,16 +205,10 @@ https://forms.gle/UoJPBWJPpCfCmCk56
 
 Vi aspettiamo! 🧡 Nexus APS`}]},
 {id:'attivamente',titolo:'Attiva-mente: il piacere di stare insieme',quando:'Ogni martedì',col:'var(--corsi)',
- img:'img/attiva-mente.jpg',file:'nexus-attiva-mente.jpg',url:SITO+'2026/09/28/riparte-attiva-mente-ottobre-2026/',
- msgs:[{id:'settimana',label:'Promemoria del martedì',inv:'Da mandare il martedì mattina',t:
-`🎨 *Attiva-mente* · oggi pomeriggio, dalle 15 alle 17
-📍 Sede Nexus, Via Fabio Filzi 10, Ghedi
-
-Pittura, collage, maglia e uncinetto, modellare: non serve esperienza, si impara insieme.
-Gratuito per i soci.
-
-Vi aspettiamo!
-Nexus APS`}]}
+ img:'img/wa-attiva-mente.jpg',file:'nexus-attiva-mente.jpg',url:SITO+'2026/09/28/riparte-attiva-mente-ottobre-2026/',
+ msgs:[{id:'settimana',label:'Promemoria del martedì',inv:'Da mandare il martedì mattina',img:true,t:
+`*ATTIVA-MENTE* · oggi dalle 15 alle 17 in sede
+Pittura, collage, maglia, uncinetto e modellare: non serve esperienza. Gratuito per i soci.`}]}
 ];
 
 const $=(s,el=document)=>el.querySelector(s);
@@ -268,17 +240,18 @@ function render(){
   </div>
   <p class="ev-avviso" data-evavviso hidden></p>
   <div class="msgs">
-   ${e.msgs.map((m,i)=>{const k=`kit:${e.id}:${m.id}`;const t=store.get(k)??m.t;const n=nQuadre(t);return `
+   ${e.msgs.map((m,i)=>{const k=`kit2:${e.id}:${m.id}`;const t=store.get(k)??m.t;const n=nQuadre(t);return `
    <details ${i===0?'open':''}>
-    <summary><span class="tit">${esc(m.label)}<span class="quando-invio">${esc(m.inv)}</span></span><span class="freccia">${ICO.giu}</span></summary>
+    <summary><span class="tit">${esc(m.label)}<span class="quando-invio">${m.img?'Con l\'immagine':'Solo testo, senza immagine'} · ${esc(m.inv)}</span></span><span class="freccia">${ICO.giu}</span></summary>
     <div class="corpo">
      <label class="sr" for="${e.id}-${m.id}" hidden>${esc(m.label)}</label>
      <textarea id="${e.id}-${m.id}" data-k="${k}" data-ev="${e.id}" data-m="${m.id}">${esc(t)}</textarea>
      <div class="avviso" data-avviso hidden><span>⚠ Non ancora pronto: completa queste parti, poi potrai inviarlo.</span><ul></ul></div>
      <div class="azioni">
-      <button class="btn wa" data-condividi>${ICO.wa}Condividi con immagine</button>
+      ${m.img?`<button class="btn wa" data-condividi style="grid-column:1/-1">${ICO.wa}Condividi con immagine</button>
       <button class="btn" data-copia>${ICO.copy}Copia testo</button>
-      <a class="btn" data-wa target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(t)}">${ICO.wa}Solo testo</a>
+      <a class="btn" data-wa target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(t)}">${ICO.wa}Solo testo</a>`:`<a class="btn wa" data-wa target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(t)}" style="grid-column:1/-1">${ICO.wa}Manda su WhatsApp</a>
+      <button class="btn" data-copia style="grid-column:1/-1">${ICO.copy}Copia testo</button>`}
      </div>
      <button class="ripristina" data-ripristina ${store.get(k)!==null?'':'hidden'}>Ripristina il testo originale</button>
     </div>
