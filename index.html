@@ -13,17 +13,17 @@
   --bg:#f4f5f2; --card:#ffffff; --fg:#1d1d1b; --muted:#5d5e5a; --line:#e3e5df;
   --wa:#109439; --wa-fg:#ffffff; --soft:#eef6f0; --warn-bg:#fff4d6; --warn-fg:#6b4a00;
   --viaggi:#ef7d32; --conf:#f8ba32; --corsi:#0163a5; --verde:#109439;
-  --field:#fafaf8;
+  --field:#fafaf8; --warn-line:#e0a800;
   --font:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#151614; --card:#1f201d; --fg:#f1f1ec; --muted:#a9aaa3; --line:#33352f;
   --wa:#25a84a; --wa-fg:#ffffff; --soft:#1d2a20; --warn-bg:#3a3018; --warn-fg:#f3d58a;
-  --field:#191a17; color-scheme:dark}}
+  --field:#191a17; --warn-line:#a07a10; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#151614; --card:#1f201d; --fg:#f1f1ec; --muted:#a9aaa3; --line:#33352f;
   --wa:#25a84a; --wa-fg:#ffffff; --soft:#1d2a20; --warn-bg:#3a3018; --warn-fg:#f3d58a;
-  --field:#191a17; color-scheme:dark}
+  --field:#191a17; --warn-line:#a07a10; color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -60,7 +60,15 @@ details[open] summary .freccia{transform:rotate(180deg)}
 .corpo{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
 textarea{width:100%;min-height:220px;resize:vertical;border:1px solid var(--line);border-radius:12px;background:var(--field);color:var(--fg);font:inherit;font-size:.92rem;line-height:1.5;padding:12px}
 textarea:focus-visible{outline:2px solid var(--wa);outline-offset:1px}
-.avviso{margin:0;background:var(--warn-bg);color:var(--warn-fg);border-radius:10px;padding:8px 12px;font-size:.85rem;font-weight:700}
+.avviso{margin:0;background:var(--warn-bg);color:var(--warn-fg);border:2px solid var(--warn-line);border-radius:12px;padding:10px 12px;font-size:.9rem;font-weight:800;display:flex;flex-direction:column;gap:6px}
+.avviso ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.avviso li{background:var(--card);color:var(--fg);border:1px dashed var(--warn-line);border-radius:8px;padding:2px 8px;font-weight:700;font-size:.85rem}
+.sospesi{background:var(--warn-bg);color:var(--warn-fg);border:2px solid var(--warn-line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.92rem}
+.sospesi strong{font-weight:900;font-size:1rem}
+.sospesi a{color:inherit;font-weight:800}
+.ev-avviso{margin:0;padding:8px 16px;background:var(--warn-bg);color:var(--warn-fg);font-weight:800;font-size:.85rem;border-top:1px solid var(--line)}
+.btn.bloccato{opacity:.4;cursor:not-allowed}
+details.dacompletare>summary{background:var(--warn-bg)}
 .azioni{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .azioni [data-condividi]{grid-column:1/-1}
 .btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:12px;padding:11px 12px;font:inherit;font-weight:800;font-size:.92rem;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none;min-height:46px}
@@ -89,6 +97,7 @@ footer{color:var(--muted);font-size:.82rem}
     </ul>
   </header>
   <nav id="indice" aria-label="Eventi"></nav>
+  <div class="sospesi" id="sospesi" role="status" hidden></div>
   <main id="eventi" style="display:flex;flex-direction:column;gap:22px"></main>
   <footer>Le parti tra [quadre] vanno completate prima dell'invio. Le modifiche al testo restano su questo telefono.</footer>
 </div>
@@ -257,14 +266,15 @@ function render(){
     <div class="img-azioni"><button class="btn piccolo" data-salva="${e.id}">${ICO.img}Salva immagine</button></div>
    </div>
   </div>
+  <p class="ev-avviso" data-evavviso hidden></p>
   <div class="msgs">
    ${e.msgs.map((m,i)=>{const k=`kit:${e.id}:${m.id}`;const t=store.get(k)??m.t;const n=nQuadre(t);return `
    <details ${i===0?'open':''}>
-    <summary><span class="tit">${esc(m.label)}<span class="quando-invio">${esc(m.inv)}</span></span>${n?`<span class="badge" data-badge>DA COMPLETARE</span>`:''}<span class="freccia">${ICO.giu}</span></summary>
+    <summary><span class="tit">${esc(m.label)}<span class="quando-invio">${esc(m.inv)}</span></span><span class="freccia">${ICO.giu}</span></summary>
     <div class="corpo">
      <label class="sr" for="${e.id}-${m.id}" hidden>${esc(m.label)}</label>
      <textarea id="${e.id}-${m.id}" data-k="${k}" data-ev="${e.id}" data-m="${m.id}">${esc(t)}</textarea>
-     <p class="avviso" data-avviso ${n?'':'hidden'}>Completa le parti tra [quadre] prima di mandarlo.</p>
+     <div class="avviso" data-avviso hidden><span>⚠ Non ancora pronto: completa queste parti, poi potrai inviarlo.</span><ul></ul></div>
      <div class="azioni">
       <button class="btn wa" data-condividi>${ICO.wa}Condividi con immagine</button>
       <button class="btn" data-copia>${ICO.copy}Copia testo</button>
@@ -277,24 +287,44 @@ function render(){
  </section>`).join('');
 }
 render();
+document.querySelectorAll('textarea[data-k]').forEach(aggiorna);
 
 document.addEventListener('input',ev=>{
  const ta=ev.target.closest('textarea[data-k]');if(!ta)return;
  store.set(ta.dataset.k,ta.value);aggiorna(ta);
 });
 function aggiorna(ta){
- const c=ta.closest('.corpo');const n=nQuadre(ta.value);
- c.querySelector('[data-avviso]').hidden=!n;
+ const c=ta.closest('.corpo');const parti=ta.value.match(/\[[^\]]+\]/g)||[];const n=parti.length;
+ const av=c.querySelector('[data-avviso]');av.hidden=!n;
+ av.querySelector('ul').innerHTML=parti.map(x=>`<li>${esc(x)}</li>`).join('');
  c.querySelector('[data-wa]').href='https://wa.me/?text='+encodeURIComponent(ta.value);
+ c.querySelectorAll('.azioni .btn:not([data-salva])').forEach(bt=>{bt.classList.toggle('bloccato',!!n);bt.setAttribute('aria-disabled',n?'true':'false')});
  c.querySelector('[data-ripristina]').hidden=store.get(ta.dataset.k)===null;
- const s=ta.closest('details').querySelector('summary');let b=s.querySelector('[data-badge]');
+ const d=ta.closest('details');d.classList.toggle('dacompletare',!!n);
+ const s=d.querySelector('summary');let b=s.querySelector('[data-badge]');
  if(n&&!b){b=document.createElement('span');b.className='badge';b.dataset.badge='';b.textContent='DA COMPLETARE';s.insertBefore(b,s.lastElementChild)}
  if(!n&&b)b.remove();
+ riepilogo();
+}
+function riepilogo(){
+ const lista=[];
+ document.querySelectorAll('.evento').forEach(sec=>{
+  const tas=[...sec.querySelectorAll('textarea')].filter(t=>nQuadre(t.value));
+  const ea=sec.querySelector('[data-evavviso]');ea.hidden=!tas.length;
+  ea.textContent=tas.length?`⚠ ${tas.length===1?'1 messaggio':tas.length+' messaggi'} da completare prima dell'invio`:'';
+  tas.forEach(t=>lista.push({id:t.id,ev:sec.querySelector('h2').textContent,m:t.closest('details').querySelector('.tit').firstChild.textContent}));
+ });
+ const el=$('#sospesi');el.hidden=!lista.length;
+ el.innerHTML=lista.length?`<strong>⚠ ${lista.length===1?'C\'è un messaggio':'Ci sono '+lista.length+' messaggi'} da completare</strong>`+lista.map(x=>`<a href="#${x.id}" data-vai="${x.id}">${esc(x.m)} · ${esc(x.ev)}</a>`).join(''):'';
 }
 document.addEventListener('click',async ev=>{
  const z=ev.target.closest('[data-zoom]');
  if(z){const zm=$('#zoom');zm.querySelector('img').src=z.src;zm.hidden=false;return}
  if(ev.target.closest('#zoom')){$('#zoom').hidden=true;return}
+ const vai=ev.target.closest('[data-vai]');
+ if(vai){ev.preventDefault();const t=document.getElementById(vai.dataset.vai);t.closest('details').open=true;t.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>t.focus({preventScroll:true}),400);return}
+ const blk=ev.target.closest('.btn.bloccato');
+ if(blk){ev.preventDefault();const t=blk.closest('.corpo').querySelector('textarea');toast('Prima completa le parti tra [quadre]');t.focus();return}
  const cp=ev.target.closest('[data-copia]');
  if(cp){const ta=cp.closest('.corpo').querySelector('textarea');
   try{await navigator.clipboard.writeText(ta.value);toast('Testo copiato')}
