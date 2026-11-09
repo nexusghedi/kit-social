@@ -103,6 +103,9 @@ footer{color:var(--muted);font-size:.82rem}
 .stato.libero{background:#fff4d6;color:#7a5600}
 .stato.completo{background:#ececea;color:#3a3a38}
 .stato.info{background:var(--bg);color:var(--muted)}
+.oggi{background:#e7f5ec;color:#0d4a1f;border:2px solid #109439;border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.92rem}
+.oggi strong{font-weight:900;font-size:1rem}
+.oggi a{color:inherit;font-weight:800}
 .nota{margin:0;font-size:.85rem;color:var(--muted);background:var(--bg);border-radius:10px;padding:8px 12px}
 .vuoto{padding:14px 16px;color:var(--muted);font-size:.9rem}
 </style>
@@ -115,6 +118,7 @@ footer{color:var(--muted);font-size:.82rem}
     <ul class="come" id="come"></ul>
   </header>
   <nav id="indice" aria-label="Eventi"></nav>
+  <div class="oggi" id="oggi" hidden></div>
   <div class="sospesi" id="sospesi" role="status" hidden></div>
   <main id="eventi" style="display:flex;flex-direction:column;gap:22px"></main>
   <footer>Le parti tra [quadre] vanno completate prima dell'invio. Le modifiche al testo restano su questo telefono.</footer>
@@ -129,7 +133,7 @@ const EVENTI=[
 {id:'fontanellato',titolo:'Arkè i5sensi · Fontanellato e il re dei salumi',quando:'Sab 21 novembre',col:'var(--viaggi)',stato:[{t:'Uscita riservata agli iscritti al corso',tipo:'info'}],
  url:SITO+'2026/11/05/arke-i5sensi-fontanellato/',
  msgs:[
- {id:'wa',canale:'wa',label:'Promemoria per gli iscritti al corso',inv:'Da mandare mer 18 o gio 19 novembre',img:'img/wa-fontanellato.jpg',t:
+ {id:'wa',invio:['2026-11-18'],canale:'wa',label:'Promemoria per gli iscritti al corso',inv:'Da mandare mer 18 o gio 19 novembre',img:'img/wa-fontanellato.jpg',t:
 `*ARKÈ i5SENSI · FONTANELLATO*
 _E il re dei salumi · guarda, ascolta, gusta_
 
@@ -137,7 +141,7 @@ _E il re dei salumi · guarda, ascolta, gusta_
 
 Tutto sul sito:
 ${SITO}2026/11/05/arke-i5sensi-fontanellato/`},
- {id:'fb',canale:'fb',label:'Post Facebook',inv:'Una settimana prima',img:'img/post-fontanellato.jpg',imgs:['img/post-fontanellato.jpg','img/post2-fontanellato.jpg','img/post3-fontanellato.jpg'],t:
+ {id:'fb',invio:['2026-11-14'],canale:'fb',label:'Post Facebook',inv:'Una settimana prima',img:'img/post-fontanellato.jpg',imgs:['img/post-fontanellato.jpg','img/post2-fontanellato.jpg','img/post3-fontanellato.jpg'],t:
 `Arkè i5sensi fa tappa a Fontanellato, sabato 21 novembre.
 
 Guarda, ascolta, gusta: la Rocca Sanvitale circondata dall'acqua del fossato, con la Camera Ottica e la saletta affrescata dal Parmigianino. Poi nelle storiche cantine di stagionatura, alla scoperta del Culatello di Zibello DOP, con degustazione.
@@ -145,7 +149,7 @@ Guarda, ascolta, gusta: la Rocca Sanvitale circondata dall'acqua del fossato, co
 È la quarta delle dieci uscite del corso itinerante Arkè i5sensi 2026–2027, riservate agli iscritti al corso.
 
 👉 ${SITO}2026/11/05/arke-i5sensi-fontanellato/`},
- {id:'ig',canale:'ig',label:'Post Instagram',inv:'Una settimana prima',img:'img/post-fontanellato.jpg',imgs:['img/post-fontanellato.jpg','img/post2-fontanellato.jpg','img/post3-fontanellato.jpg'],t:
+ {id:'ig',invio:['2026-11-14'],canale:'ig',label:'Post Instagram',inv:'Una settimana prima',img:'img/post-fontanellato.jpg',imgs:['img/post-fontanellato.jpg','img/post2-fontanellato.jpg','img/post3-fontanellato.jpg'],t:
 `Arkè i5sensi fa tappa a Fontanellato, sabato 21 novembre.
 
 Guarda, ascolta, gusta: la Rocca Sanvitale con la Camera Ottica e gli affreschi del Parmigianino, poi le cantine di stagionatura del Culatello di Zibello DOP.
@@ -153,19 +157,19 @@ Guarda, ascolta, gusta: la Rocca Sanvitale con la Camera Ottica e gli affreschi 
 Quarta uscita del corso itinerante Arkè i5sensi 2026–2027, riservata agli iscritti. Tutto sul sito: link in bio.
 
 ${TAG} #Arkèi5sensi #Fontanellato #RoccaSanvitale #Parmigianino #CulatelloDiZibello`},
- {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Due giorni prima e il giorno stesso',img:'img/storia-fontanellato.jpg',nota:'Aggiungi l\'adesivo «Link» sotto «Scopri l\'uscita», nella zona scura in basso. Il link è qui sotto.',t:`${SITO}2026/11/05/arke-i5sensi-fontanellato/`}]},
+ {id:'storia',invio:['2026-11-19','2026-11-21'],canale:'storia',label:'Storia Instagram',inv:'Due giorni prima e il giorno stesso',img:'img/storia-fontanellato.jpg',nota:'Aggiungi l\'adesivo «Link» sotto «Scopri l\'uscita», nella zona scura in basso. Il link è qui sotto.',t:`${SITO}2026/11/05/arke-i5sensi-fontanellato/`}]},
 
 {id:'laudato',titolo:'Laudato sì: i verbi di Francesco',quando:'Sab 28 novembre',col:'var(--conf)',stato:[{t:'Ingresso libero, fino a esaurimento posti',tipo:'info'}],
  url:SITO+'2026/11/05/laudato-si-i-verbi-di-francesco/',
  msgs:[
- {id:'wa',canale:'wa',label:'Invito alla serata',inv:'Una settimana prima e il giorno stesso',img:'img/wa-laudato.jpg',t:
+ {id:'wa',invio:['2026-11-21','2026-11-28'],canale:'wa',label:'Invito alla serata',inv:'Una settimana prima e il giorno stesso',img:'img/wa-laudato.jpg',t:
 `*LAUDATO SÌ · i verbi di Francesco*
 *Sabato 28 novembre, ore 20.30* · Teatro Il Gabbiano, Ghedi
 
 Il momento dedicato a _osservare_ è a cura di Nexus. Ingresso libero.
 
 ${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/`},
- {id:'fb',canale:'fb',label:'Post Facebook',inv:'Una settimana prima',img:'img/post-laudato.jpg',imgs:['img/post-laudato.jpg','img/post2-laudato.jpg','img/post3-laudato.jpg'],t:
+ {id:'fb',invio:['2026-11-21'],canale:'fb',label:'Post Facebook',inv:'Una settimana prima',img:'img/post-laudato.jpg',imgs:['img/post-laudato.jpg','img/post2-laudato.jpg','img/post3-laudato.jpg'],t:
 `Laudato sì: una serata sui verbi di Francesco.
 Desiderare, servire, gioire, osservare, andare per il mondo, lodare.
 
@@ -173,7 +177,7 @@ Sabato 28 novembre alle 20.30 al Teatro Il Gabbiano di Ghedi, con la Parrocchia 
 
 Ingresso libero fino a esaurimento posti.
 👉 ${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/`},
- {id:'ig',canale:'ig',label:'Post Instagram',inv:'Una settimana prima',img:'img/post-laudato.jpg',imgs:['img/post-laudato.jpg','img/post2-laudato.jpg','img/post3-laudato.jpg'],t:
+ {id:'ig',invio:['2026-11-21'],canale:'ig',label:'Post Instagram',inv:'Una settimana prima',img:'img/post-laudato.jpg',imgs:['img/post-laudato.jpg','img/post2-laudato.jpg','img/post3-laudato.jpg'],t:
 `Laudato sì: una serata sui verbi di Francesco. Desiderare, servire, gioire, osservare, andare per il mondo, lodare.
 
 Sabato 28 novembre alle 20.30 al Teatro Il Gabbiano di Ghedi. Il momento dedicato a «osservare» è a cura di Nexus, con Elisa Mastromatteo e Letizia Pari.
@@ -181,7 +185,7 @@ Sabato 28 novembre alle 20.30 al Teatro Il Gabbiano di Ghedi. Il momento dedicat
 Ingresso libero. Info: link in bio.
 
 ${TAG} #LaudatoSi #SanFrancesco #TeatroIlGabbiano`},
- {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Il giorno prima e il giorno stesso',img:'img/storia-laudato.jpg',nota:'Aggiungi l\'adesivo «Link» nello spazio giallo in basso, con il testo SCOPRI. Il link è qui sotto.',t:`${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/`}]},
+ {id:'storia',invio:['2026-11-27','2026-11-28'],canale:'storia',label:'Storia Instagram',inv:'Il giorno prima e il giorno stesso',img:'img/storia-laudato.jpg',nota:'Aggiungi l\'adesivo «Link» nello spazio giallo in basso, con il testo SCOPRI. Il link è qui sotto.',t:`${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/`}]},
 
 {id:'salento',titolo:'Salento: un risveglio assoluto per i cinque sensi',quando:'5–10 dicembre',col:'var(--viaggi)',stato:[{t:'Iscrizioni aperte',tipo:'aperte'}],
  url:SITO+'2026/11/05/salento-ars-nova-dicembre-2026/',
@@ -195,11 +199,11 @@ _Un risveglio assoluto per i cinque sensi_
 Programma completo:
 ${SITO}2026/11/05/salento-ars-nova-dicembre-2026/
 Per iscriverti rispondi a questo messaggio.`},
- {id:'incontro',canale:'wa',label:'Incontro di preparazione · una settimana prima',inv:'Da mandare tra il 24 e il 30 novembre',img:null,dal:'2026-11-20',fino:'2026-11-30',t:
+ {id:'incontro',invio:['2026-11-24'],canale:'wa',label:'Incontro di preparazione · una settimana prima',inv:'Da mandare tra il 24 e il 30 novembre',img:null,dal:'2026-11-20',fino:'2026-11-30',t:
 `*Salento · incontro di preparazione*
 *Martedì 1 dicembre, ore 20.30*, in sede (Via Fabio Filzi 10, Ghedi).
 Un'introduzione ai luoghi che visiteremo, da Lecce a Otranto a Leuca. Aperto anche ai curiosi.`},
- {id:'incontro-oggi',canale:'wa',label:'Incontro di preparazione · il giorno stesso',inv:'Da mandare martedì 1 dicembre in mattinata',img:null,dal:'2026-12-01',fino:'2026-12-01',t:
+ {id:'incontro-oggi',invio:['2026-12-01'],canale:'wa',label:'Incontro di preparazione · il giorno stesso',inv:'Da mandare martedì 1 dicembre in mattinata',img:null,dal:'2026-12-01',fino:'2026-12-01',t:
 `*Salento · ci vediamo stasera!*
 Alle *20.30 in sede* (Via Fabio Filzi 10, Ghedi) l'incontro di preparazione al viaggio: luoghi, storia e ultime indicazioni.`},
  {id:'saldo',canale:'wa',label:'Promemoria del saldo',inv:'Prima della scadenza del saldo',img:null,t:
@@ -221,7 +225,7 @@ Causale: _Viaggio in Salento – Nome e Cognome_
 📅 Vi aspettiamo all'incontro di preparazione *martedì 1 dicembre alle 20.30* in sede.
 
 Grazie per la collaborazione: ci vediamo presto per scoprire insieme il Salento!`},
- {id:'partenza',canale:'wa',label:'Promemoria di partenza',inv:'Il 2 o il 3 dicembre',img:null,t:
+ {id:'partenza',invio:['2026-12-02'],canale:'wa',label:'Promemoria di partenza',inv:'Il 2 o il 3 dicembre',img:null,t:
 `*Salento, si parte!*
 Ritrovo *sabato 5 dicembre alle [orario]* a [luogo], Ghedi.
 Portate la carta d'identità valida. Bagaglio: [regole del volo].
@@ -282,7 +286,7 @@ ${TAG} #Milano #DalíELaModa #PalazzoReale #YouAreVerdi`},
 {id:'tunisia',titolo:'Tunisia da sentire',quando:'7–12 febbraio 2027',col:'var(--viaggi)',stato:[{t:'Iscrizioni aperte fino al 15 novembre',tipo:'aperte',fino:'2026-11-15'},{t:'Iscrizioni chiuse · lista d\'attesa',tipo:'completo',dal:'2026-11-16'}],
  url:SITO+'2026/11/05/tunisia-da-sentire-febbraio-2027/',
  msgs:[
- {id:'ultimi',canale:'wa',label:'Ultimi giorni per iscriversi',inv:'Mer 11 o gio 12 novembre',img:'img/tunisia.jpg',fino:'2026-11-15',t:
+ {id:'ultimi',invio:['2026-11-11'],canale:'wa',label:'Ultimi giorni per iscriversi',inv:'Mer 11 o gio 12 novembre',img:'img/tunisia.jpg',fino:'2026-11-15',t:
 `*TUNISIA · ultimi giorni per iscriversi*
 Le iscrizioni chiudono *domenica 15 novembre*, acconto 200 €.
 
@@ -303,7 +307,7 @@ ${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/
 https://forms.gle/UoJPBWJPpCfCmCk56
 
 Vi aspettiamo! 🧡 Nexus APS`},
- {id:'attesa',canale:'wa',label:'Lista d\'attesa',inv:'Dopo la chiusura delle iscrizioni',img:null,dal:'2026-11-16',t:
+ {id:'attesa',invio:['2026-11-16'],canale:'wa',label:'Lista d\'attesa',inv:'Dopo la chiusura delle iscrizioni',img:null,dal:'2026-11-16',t:
 `*TUNISIA DA SENTIRE* · 7–12 febbraio 2027
 Le iscrizioni sono chiuse, ma puoi metterti in *lista d'attesa*: se si libera un posto ti avvisiamo.
 Rispondi a questo messaggio.
@@ -328,12 +332,12 @@ Aereo e bus GT, formula tutto incluso. Iscrizioni entro il 15 novembre con un ac
 Programma, quote e modulo: link in bio.
 
 ${TAG} #Tunisia #SidiBouSaid #Sahara #ViaggiareConISensi`},
- {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Fino al 15 novembre',img:'img/storia-tunisia.jpg',fino:'2026-11-15',nota:'Aggiungi l\'adesivo «Link» in basso con il testo ISCRIVITI, e l\'adesivo «Conto alla rovescia»: «Iscrizioni Tunisia», 15 novembre. Il link del modulo è qui sotto.',t:`https://forms.gle/UoJPBWJPpCfCmCk56`}]},
+ {id:'storia',invio:['2026-11-12'],canale:'storia',label:'Storia Instagram',inv:'Fino al 15 novembre',img:'img/storia-tunisia.jpg',fino:'2026-11-15',nota:'Aggiungi l\'adesivo «Link» in basso con il testo ISCRIVITI, e l\'adesivo «Conto alla rovescia»: «Iscrizioni Tunisia», 15 novembre. Il link del modulo è qui sotto.',t:`https://forms.gle/UoJPBWJPpCfCmCk56`}]},
 
 {id:'attivamente',titolo:'Attiva-mente: il piacere di stare insieme',quando:'Ogni martedì',col:'var(--corsi)',stato:[{t:'Gratuito per i soci, ogni martedì 15–17',tipo:'info'}],
  url:SITO+'2026/09/28/riparte-attiva-mente-ottobre-2026/',
  msgs:[
- {id:'wa',canale:'wa',label:'Promemoria del martedì',inv:'Il martedì mattina',img:'img/wa-attiva-mente.jpg',t:
+ {id:'wa',invio:['mar'],canale:'wa',label:'Promemoria del martedì',inv:'Il martedì mattina',img:'img/wa-attiva-mente.jpg',t:
 `*ATTIVA-MENTE* · oggi dalle 15 alle 17 in sede
 Pittura, collage, maglia, uncinetto e modellare: non serve esperienza. Gratuito per i soci.`},
  {id:'fb',canale:'fb',label:'Post Facebook',inv:'Ogni tanto, per ricordarlo',img:'img/post-attiva-mente.jpg',t:
@@ -351,7 +355,7 @@ Ogni martedì dalle 15 alle 17 nella sede Nexus a Ghedi: pittura, collage, magli
 Info: link in bio.
 
 ${TAG} #AttivaMente #Laboratori #StareInsieme`},
- {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Il martedì mattina',img:'img/storia-attiva-mente.jpg',nota:'Aggiungi l\'adesivo «Link» in basso con il testo INFO. Il link è qui sotto.',t:`${SITO}2026/09/28/riparte-attiva-mente-ottobre-2026/`}]}
+ {id:'storia',invio:['mar'],canale:'storia',label:'Storia Instagram',inv:'Il martedì mattina',img:'img/storia-attiva-mente.jpg',nota:'Aggiungi l\'adesivo «Link» in basso con il testo INFO. Il link è qui sotto.',t:`${SITO}2026/09/28/riparte-attiva-mente-ottobre-2026/`}]}
 ];
 
 const CANALI={wa:'WhatsApp',fb:'Facebook',ig:'Instagram'};
@@ -447,6 +451,13 @@ function aggiorna(ta){
  if(!n&&b)b.remove();
  riepilogo();
 }
+const GIORNO=['dom','lun','mar','mer','gio','ven','sab'][new Date().getDay()];
+const daOggi=m=>attivo(m)&&(m.invio||[]).some(d=>d===OGGI||d===GIORNO);
+function oggi(){
+ const l=[];EVENTI.forEach(e=>e.msgs.filter(daOggi).forEach(m=>l.push({ev:e.id,m:m.id,c:scheda(m),label:m.label,tit:e.titolo,can:m.canale==='storia'?'Storia':CANALI[m.canale]})));
+ const el=$('#oggi');el.hidden=!l.length;
+ el.innerHTML=l.length?`<strong>📅 Da mandare oggi</strong>`+l.map(x=>`<a href="#${x.ev}" data-vai="${x.ev}|${x.m}|${x.c}">${esc(x.can)} · ${esc(x.label)} · ${esc(x.tit)}</a>`).join(''):'';
+}
 function riepilogo(){
  const lista=[];
  EVENTI.forEach(e=>{
@@ -459,7 +470,7 @@ function riepilogo(){
  const el=$('#sospesi');el.hidden=!lista.length;
  el.innerHTML=lista.length?`<strong>⚠ ${lista.length===1?'C\'è un messaggio':'Ci sono '+lista.length+' messaggi'} da completare</strong>`+lista.map(x=>`<a href="#${x.ev}" data-vai="${x.ev}|${x.m}|${x.c}">${esc(x.label)} · ${esc(x.tit)}</a>`).join(''):'';
 }
-render();
+render();oggi();
 
 document.addEventListener('input',ev=>{
  const ta=ev.target.closest('textarea[data-k]');if(!ta)return;
