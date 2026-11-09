@@ -183,14 +183,21 @@ Vuoi il posto? Rispondi a questo messaggio: va a chi scrive per primo.`}]},
 {id:'tunisia',titolo:'Tunisia da sentire',quando:'7–12 febbraio 2027',col:'var(--viaggi)',
  img:'img/tunisia.jpg',file:'nexus-tunisia.jpg',url:SITO+'2026/11/05/tunisia-da-sentire-febbraio-2027/',
  msgs:[
- {id:'ultimi',label:'Ultimi giorni per iscriversi',inv:'Da mandare mer 11 o gio 12 novembre',img:true,t:
+ {id:'ultimi',label:'Ultimi giorni per iscriversi',inv:'Da mandare mer 11 o gio 12 novembre',img:true,fino:'2026-11-15',t:
 `*TUNISIA · ultimi giorni per iscriversi*
 Le iscrizioni chiudono *domenica 15 novembre*, acconto 200 €.
 
 Modulo: https://forms.gle/UoJPBWJPpCfCmCk56
 Programma, quote e pagamento:
 ${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/`},
- {id:'annuncio',label:'Annuncio',inv:'Il primo messaggio, da rimandare se serve',img:true,t:
+ {id:'attesa',label:'Lista d\'attesa',inv:'Dopo la chiusura delle iscrizioni',img:false,dal:'2026-11-16',t:
+`*TUNISIA DA SENTIRE* · 7–12 febbraio 2027
+Le iscrizioni sono chiuse, ma puoi metterti in *lista d'attesa*: se si libera un posto ti avvisiamo.
+Rispondi a questo messaggio.
+
+Programma completo:
+${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/`},
+ {id:'annuncio',label:'Annuncio',inv:'Il primo messaggio, da rimandare se serve',img:true,fino:'2026-11-15',t:
 `🇹🇳 *TUNISIA DA SENTIRE*
 📅 7–12 febbraio 2027 · ponte di Carnevale
 ✈️ 6 giorni, aereo e bus GT, tutto incluso
@@ -212,6 +219,8 @@ Pittura, collage, maglia, uncinetto e modellare: non serve esperienza. Gratuito 
 ];
 
 const $=(s,el=document)=>el.querySelector(s);
+const OGGI=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})();
+const attivo=m=>(!m.dal||OGGI>=m.dal)&&(!m.fino||OGGI<=m.fino);
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 let dl=null;
 const toastEl=$('#toast');let tt;
@@ -240,7 +249,7 @@ function render(){
   </div>
   <p class="ev-avviso" data-evavviso hidden></p>
   <div class="msgs">
-   ${e.msgs.map((m,i)=>{const k=`kit2:${e.id}:${m.id}`;const t=store.get(k)??m.t;const n=nQuadre(t);return `
+   ${e.msgs.filter(attivo).map((m,i)=>{const k=`kit2:${e.id}:${m.id}`;const t=store.get(k)??m.t;const n=nQuadre(t);return `
    <details ${i===0?'open':''}>
     <summary><span class="tit">${esc(m.label)}<span class="quando-invio">${m.img?'Con l\'immagine':'Solo testo, senza immagine'} · ${esc(m.inv)}</span></span><span class="freccia">${ICO.giu}</span></summary>
     <div class="corpo">
