@@ -5,10 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#109439">
-<title>Kit WhatsApp Nexus</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icona-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icona-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Kit social Nexus</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap">
 <style>
-/* Layout: una colonna da telefono; ogni evento è un blocco con immagine e messaggi pronti, ognuno con i suoi tre tasti */
+/* Layout: una colonna da telefono; ogni evento ha tre schede (WhatsApp, Facebook, Instagram) con i messaggi pronti e i loro tasti */
 :root{
   --bg:#f4f5f2; --card:#ffffff; --fg:#1d1d1b; --muted:#5d5e5a; --line:#e3e5df;
   --wa:#109439; --wa-fg:#ffffff; --soft:#eef6f0; --warn-bg:#fff4d6; --warn-fg:#6b4a00;
@@ -70,7 +74,7 @@ textarea:focus-visible{outline:2px solid var(--wa);outline-offset:1px}
 .btn.bloccato{opacity:.4;cursor:not-allowed}
 details.dacompletare>summary{background:var(--warn-bg)}
 .azioni{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-
+.azioni .wa{grid-column:1/-1}
 .btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:12px;padding:11px 12px;font:inherit;font-weight:800;font-size:.92rem;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none;min-height:46px}
 .btn:focus-visible{outline:2px solid var(--wa);outline-offset:2px}
 .btn.wa{background:var(--wa);border-color:var(--wa);color:var(--wa-fg)}
@@ -82,20 +86,25 @@ details.dacompletare>summary{background:var(--warn-bg)}
 .zoom img{max-width:100%;max-height:100%;border-radius:8px}
 footer{color:var(--muted);font-size:.82rem}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
-</style>
 
+.canali{display:flex;gap:6px;padding:0 14px 12px}
+.canali button{flex:1;appearance:none;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:10px;padding:8px 6px;font:inherit;font-weight:800;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.canali button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.canali button:focus-visible{outline:2px solid var(--wa);outline-offset:2px}
+.canali .n{font-size:.72rem;font-weight:900;opacity:.7}
+.anteprima{display:flex;gap:12px;align-items:center}
+.anteprima img{height:84px;width:auto;max-width:120px;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;display:block}
+.anteprima span{font-size:.82rem;color:var(--muted)}
+.nota{margin:0;font-size:.85rem;color:var(--muted);background:var(--bg);border-radius:10px;padding:8px 12px}
+.vuoto{padding:14px 16px;color:var(--muted);font-size:.9rem}
+</style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Kit WhatsApp</h1>
-    <p class="lead">Messaggi pronti per gli eventi in programma, con la loro immagine. Puoi modificare il testo prima di mandarlo.</p>
-    <ul class="come">
-      <li><b>1.</b> Tocca «Condividi con immagine»</li>
-      <li><b>2.</b> Scegli WhatsApp e il gruppo</li>
-      <li><b>3.</b> Invia: il testo arriva come didascalia</li>
-      <li>I messaggi di servizio partono senza immagine</li>
-    </ul>
+    <h1>Kit social</h1>
+    <p class="lead">Immagini e testi pronti per WhatsApp, Facebook e Instagram, evento per evento. Puoi modificare il testo prima di usarlo.</p>
+    <ul class="come" id="come"></ul>
   </header>
   <nav id="indice" aria-label="Eventi"></nav>
   <div class="sospesi" id="sospesi" role="status" hidden></div>
@@ -107,30 +116,69 @@ footer{color:var(--muted);font-size:.82rem}
 
 <script>
 const SITO='https://nexusghedi.it/';
+const TAG='#NexusAPS #Ghedi';
 const EVENTI=[
 {id:'fontanellato',titolo:'Arkè i5sensi · Fontanellato e il re dei salumi',quando:'Sab 21 novembre',col:'var(--viaggi)',
- img:'img/wa-fontanellato.jpg',file:'nexus-arke-fontanellato.jpg',url:SITO+'2026/11/05/arke-i5sensi-fontanellato/',
- msgs:[{id:'promemoria',label:'Promemoria per gli iscritti al corso',inv:'Da mandare mer 18 o gio 19 novembre',img:true,t:
+ url:SITO+'2026/11/05/arke-i5sensi-fontanellato/',
+ msgs:[
+ {id:'wa',canale:'wa',label:'Promemoria per gli iscritti al corso',inv:'Da mandare mer 18 o gio 19 novembre',img:'img/wa-fontanellato.jpg',t:
 `*ARKÈ i5SENSI · FONTANELLATO*
 _E il re dei salumi · guarda, ascolta, gusta_
 
 *Sabato 21 novembre*, partenza ore 13:00 dal parcheggio di via dei Fontanili (Ghedi).
 
 Tutto sul sito:
-${SITO}2026/11/05/arke-i5sensi-fontanellato/`}]},
+${SITO}2026/11/05/arke-i5sensi-fontanellato/`},
+ {id:'fb',canale:'fb',label:'Post Facebook',inv:'Una settimana prima',img:'img/post-fontanellato.jpg',t:
+`Arkè i5sensi fa tappa a Fontanellato, sabato 21 novembre.
+
+Guarda, ascolta, gusta: la Rocca Sanvitale circondata dall'acqua del fossato, con la Camera Ottica e la saletta affrescata dal Parmigianino. Poi nelle storiche cantine di stagionatura, alla scoperta del Culatello di Zibello DOP, con degustazione.
+
+È la quarta delle dieci uscite del corso itinerante Arkè i5sensi 2026–2027, riservate agli iscritti al corso.
+
+👉 ${SITO}2026/11/05/arke-i5sensi-fontanellato/`},
+ {id:'ig',canale:'ig',label:'Post Instagram',inv:'Una settimana prima',img:'img/post-fontanellato.jpg',t:
+`Arkè i5sensi fa tappa a Fontanellato, sabato 21 novembre.
+
+Guarda, ascolta, gusta: la Rocca Sanvitale con la Camera Ottica e gli affreschi del Parmigianino, poi le cantine di stagionatura del Culatello di Zibello DOP.
+
+Quarta uscita del corso itinerante Arkè i5sensi 2026–2027, riservata agli iscritti. Tutto sul sito: link in bio.
+
+${TAG} #Arkèi5sensi #Fontanellato #RoccaSanvitale #Parmigianino #CulatelloDiZibello`},
+ {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Due giorni prima e il giorno stesso',img:'img/storia-fontanellato.jpg',nota:'Aggiungi l\'adesivo «Link» nella fascia scura in basso, con il testo SCOPRI. Il link è qui sotto.',t:`${SITO}2026/11/05/arke-i5sensi-fontanellato/`}]},
+
 {id:'laudato',titolo:'Laudato sì: i verbi di Francesco',quando:'Sab 28 novembre',col:'var(--conf)',
- img:'img/wa-laudato.jpg',file:'nexus-laudato-si.jpg',url:SITO+'2026/11/05/laudato-si-i-verbi-di-francesco/',
- msgs:[{id:'invito',label:'Invito alla serata',inv:'Da mandare una settimana prima e il giorno stesso',img:true,t:
+ url:SITO+'2026/11/05/laudato-si-i-verbi-di-francesco/',
+ msgs:[
+ {id:'wa',canale:'wa',label:'Invito alla serata',inv:'Una settimana prima e il giorno stesso',img:'img/wa-laudato.jpg',t:
 `*LAUDATO SÌ · i verbi di Francesco*
 *Sabato 28 novembre, ore 20.30* · Teatro Il Gabbiano, Ghedi
 
 Il momento dedicato a _osservare_ è a cura di Nexus. Ingresso libero.
 
-${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/`}]},
+${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/`},
+ {id:'fb',canale:'fb',label:'Post Facebook',inv:'Una settimana prima',img:'img/post-laudato.jpg',t:
+`Laudato sì: una serata sui verbi di Francesco.
+Desiderare, servire, gioire, osservare, andare per il mondo, lodare.
+
+Sabato 28 novembre alle 20.30 al Teatro Il Gabbiano di Ghedi, con la Parrocchia Santa Maria Assunta. Il momento dedicato a «osservare» è a cura di Nexus, con Elisa Mastromatteo e Letizia Pari.
+
+Ingresso libero fino a esaurimento posti.
+👉 ${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/`},
+ {id:'ig',canale:'ig',label:'Post Instagram',inv:'Una settimana prima',img:'img/post-laudato.jpg',t:
+`Laudato sì: una serata sui verbi di Francesco. Desiderare, servire, gioire, osservare, andare per il mondo, lodare.
+
+Sabato 28 novembre alle 20.30 al Teatro Il Gabbiano di Ghedi. Il momento dedicato a «osservare» è a cura di Nexus, con Elisa Mastromatteo e Letizia Pari.
+
+Ingresso libero. Info: link in bio.
+
+${TAG} #LaudatoSi #SanFrancesco #TeatroIlGabbiano`},
+ {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Il giorno prima e il giorno stesso',img:'img/storia-laudato.jpg',nota:'Aggiungi l\'adesivo «Link» nello spazio giallo in basso, con il testo SCOPRI. Il link è qui sotto.',t:`${SITO}2026/11/05/laudato-si-i-verbi-di-francesco/`}]},
+
 {id:'salento',titolo:'Salento: un risveglio assoluto per i cinque sensi',quando:'5–10 dicembre',col:'var(--viaggi)',
- img:'img/wa-salento.jpg',file:'nexus-salento.jpg',url:SITO+'2026/11/05/salento-ars-nova-dicembre-2026/',
+ url:SITO+'2026/11/05/salento-ars-nova-dicembre-2026/',
  msgs:[
- {id:'annuncio',label:'Annuncio',inv:'Finché ci sono posti',img:true,t:
+ {id:'wa',canale:'wa',label:'Annuncio',inv:'Finché ci sono posti',img:'img/wa-salento.jpg',t:
 `*SALENTO*
 _Un risveglio assoluto per i cinque sensi_
 
@@ -139,11 +187,11 @@ _Un risveglio assoluto per i cinque sensi_
 Programma completo:
 ${SITO}2026/11/05/salento-ars-nova-dicembre-2026/
 Per iscriverti rispondi a questo messaggio.`},
- {id:'incontro',label:'Incontro di preparazione',inv:'Da mandare la settimana prima del 1° dicembre',img:false,t:
+ {id:'incontro',canale:'wa',label:'Incontro di preparazione',inv:'La settimana prima del 1° dicembre',img:null,t:
 `*Salento · incontro di preparazione*
 *Martedì 1 dicembre, ore 20.30*, in sede (Via Fabio Filzi 10, Ghedi).
 Un'introduzione ai luoghi che visiteremo, da Lecce a Otranto a Leuca. Aperto anche ai curiosi.`},
- {id:'saldo',label:'Promemoria del saldo',inv:'Da mandare prima della scadenza del saldo',img:false,t:
+ {id:'saldo',canale:'wa',label:'Promemoria del saldo',inv:'Prima della scadenza del saldo',img:null,t:
 `🌿 *Salento: un risveglio assoluto per i cinque sensi*
 _In aereo e pullman GT_ · 5–10 dicembre 2026
 
@@ -162,15 +210,34 @@ Causale: _Viaggio in Salento – Nome e Cognome_
 📅 Vi aspettiamo all'incontro di preparazione *martedì 1 dicembre alle 20.30* in sede.
 
 Grazie per la collaborazione: ci vediamo presto per scoprire insieme il Salento!`},
- {id:'partenza',label:'Promemoria di partenza',inv:'Da mandare il 2 o il 3 dicembre',img:false,t:
+ {id:'partenza',canale:'wa',label:'Promemoria di partenza',inv:'Il 2 o il 3 dicembre',img:null,t:
 `*Salento, si parte!*
 Ritrovo *sabato 5 dicembre alle [orario]* a [luogo], Ghedi.
 Portate la carta d'identità valida. Bagaglio: [regole del volo].
 Rientro giovedì 10 dicembre in tarda serata.
-Per necessità: 331 763 4299`}]},
+Per necessità: 331 763 4299`},
+ {id:'fb',canale:'fb',label:'Post Facebook',inv:'Finché ci sono posti',img:'img/post-salento.jpg',t:
+`Salento: un risveglio assoluto per i cinque sensi.
+
+Dal 5 al 10 dicembre, sei giorni in aereo e pullman GT tra Lecce, Otranto, Leuca, Gallipoli, Nardò, Galatina, Ostuni e Martina Franca. La pietra d'oro leccese e la bottega del cartapestaio, il caffè leccese e il pasticciotto, il canto del mare e una serata di pizzica in masseria.
+
+Quota 1.880 € tutto incluso, singola +220 €. Organizzazione tecnica Nord Ovest Viaggi.
+Per iscriverti scrivici su WhatsApp al 331 763 4299.
+👉 ${SITO}2026/11/05/salento-ars-nova-dicembre-2026/`},
+ {id:'ig',canale:'ig',label:'Post Instagram',inv:'Finché ci sono posti',img:'img/post-salento.jpg',t:
+`Salento: un risveglio assoluto per i cinque sensi. Dal 5 al 10 dicembre, sei giorni in aereo e pullman GT tra Lecce, Otranto, Leuca, Gallipoli e Martina Franca.
+
+La pietra d'oro leccese, il pasticciotto, il canto del mare e una serata di pizzica in masseria.
+
+Quota 1.880 € tutto incluso. Programma: link in bio. Iscrizioni su WhatsApp +39 331 763 4299.
+
+${TAG} #Salento #Lecce #Otranto #BaroccoLeccese #ViaggiareConISensi`},
+ {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Finché ci sono posti',img:'img/storia-salento.jpg',nota:'Aggiungi l\'adesivo «Link» nella fascia grigia in basso, con il testo PROGRAMMA. Il link è qui sotto.',t:`${SITO}2026/11/05/salento-ars-nova-dicembre-2026/`}]},
+
 {id:'milano',titolo:'Milano: Dalí, Verdi e un aperitivo in centro',quando:'Mar 29 dicembre',col:'var(--viaggi)',
- img:'img/milano.jpg',file:'nexus-milano-posto-libero.jpg',url:SITO+'2026/11/05/milano-29-dicembre-2026/',
- msgs:[{id:'posto',label:'Si è liberato un posto',inv:'Solo se qualcuno si ritira',img:true,t:
+ url:SITO+'2026/11/05/milano-29-dicembre-2026/',
+ msgs:[
+ {id:'wa',canale:'wa',label:'Si è liberato un posto',inv:'Solo se qualcuno si ritira',img:'img/milano.jpg',t:
 `*SI È LIBERATO UN POSTO*
 *Milano · martedì 29 dicembre*
 
@@ -179,25 +246,39 @@ Dalí a Palazzo Reale, la Milano di Verdi con i visori VR e un aperitivo in cent
 Programma completo sul sito:
 ${SITO}2026/11/05/milano-29-dicembre-2026/
 
-Vuoi il posto? Rispondi a questo messaggio: va a chi scrive per primo.`}]},
+Vuoi il posto? Rispondi a questo messaggio: va a chi scrive per primo.`},
+ {id:'fb',canale:'fb',label:'Post Facebook · posto liberato',inv:'Solo se qualcuno si ritira',img:'img/post-milano.jpg',t:
+`Si è liberato un posto per Milano, martedì 29 dicembre.
+
+Una giornata tra il surrealismo da indossare di «Dalí e la moda» a Palazzo Reale e la Milano segreta dell'Ottocento, da scoprire a piedi con i visori VR di «You are Verdi». Chiudiamo con un aperitivo in centro.
+
+Quota 85 € (pranzo facoltativo 35 €). Partenza da Ghedi alle 7:30, rientro in serata.
+Il posto va a chi scrive per primo: WhatsApp 331 763 4299.
+👉 ${SITO}2026/11/05/milano-29-dicembre-2026/`},
+ {id:'ig',canale:'ig',label:'Post Instagram · posto liberato',inv:'Solo se qualcuno si ritira',img:'img/post-milano.jpg',t:
+`Si è liberato un posto per Milano, martedì 29 dicembre.
+
+Una giornata tra il surrealismo da indossare di «Dalí e la moda» a Palazzo Reale e la Milano segreta dell'Ottocento, da scoprire a piedi con i visori VR di «You are Verdi». Chiudiamo con un aperitivo in centro.
+
+Quota 85 € (pranzo facoltativo 35 €). Partenza da Ghedi alle 7:30, rientro in serata.
+
+Il posto va a chi scrive per primo: WhatsApp +39 331 763 4299.
+Programma completo su nexusghedi.it (link in bio).
+
+${TAG} #Milano #DalíELaModa #PalazzoReale #YouAreVerdi`},
+ {id:'storia',canale:'storia',label:'Storia Instagram · posto liberato',inv:'Subito e la sera, se il posto è ancora libero',img:'img/storia-milano.jpg',nota:'Aggiungi l\'adesivo «Link» nella zona libera in basso, con il testo SCRIVICI. Il link è qui sotto.',t:`https://wa.me/393317634299`}]},
+
 {id:'tunisia',titolo:'Tunisia da sentire',quando:'7–12 febbraio 2027',col:'var(--viaggi)',
- img:'img/tunisia.jpg',file:'nexus-tunisia.jpg',url:SITO+'2026/11/05/tunisia-da-sentire-febbraio-2027/',
+ url:SITO+'2026/11/05/tunisia-da-sentire-febbraio-2027/',
  msgs:[
- {id:'ultimi',label:'Ultimi giorni per iscriversi',inv:'Da mandare mer 11 o gio 12 novembre',img:true,fino:'2026-11-15',t:
+ {id:'ultimi',canale:'wa',label:'Ultimi giorni per iscriversi',inv:'Mer 11 o gio 12 novembre',img:'img/tunisia.jpg',fino:'2026-11-15',t:
 `*TUNISIA · ultimi giorni per iscriversi*
 Le iscrizioni chiudono *domenica 15 novembre*, acconto 200 €.
 
 Modulo: https://forms.gle/UoJPBWJPpCfCmCk56
 Programma, quote e pagamento:
 ${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/`},
- {id:'attesa',label:'Lista d\'attesa',inv:'Dopo la chiusura delle iscrizioni',img:false,dal:'2026-11-16',t:
-`*TUNISIA DA SENTIRE* · 7–12 febbraio 2027
-Le iscrizioni sono chiuse, ma puoi metterti in *lista d'attesa*: se si libera un posto ti avvisiamo.
-Rispondi a questo messaggio.
-
-Programma completo:
-${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/`},
- {id:'annuncio',label:'Annuncio',inv:'Il primo messaggio, da rimandare se serve',img:true,fino:'2026-11-15',t:
+ {id:'annuncio',canale:'wa',label:'Annuncio',inv:'Il primo messaggio, da rimandare se serve',img:'img/tunisia.jpg',fino:'2026-11-15',t:
 `🇹🇳 *TUNISIA DA SENTIRE*
 📅 7–12 febbraio 2027 · ponte di Carnevale
 ✈️ 6 giorni, aereo e bus GT, tutto incluso
@@ -210,76 +291,142 @@ ${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/
 📝 *Iscrizioni entro il 15/11* · acconto 200 €
 https://forms.gle/UoJPBWJPpCfCmCk56
 
-Vi aspettiamo! 🧡 Nexus APS`}]},
+Vi aspettiamo! 🧡 Nexus APS`},
+ {id:'attesa',canale:'wa',label:'Lista d\'attesa',inv:'Dopo la chiusura delle iscrizioni',img:null,dal:'2026-11-16',t:
+`*TUNISIA DA SENTIRE* · 7–12 febbraio 2027
+Le iscrizioni sono chiuse, ma puoi metterti in *lista d'attesa*: se si libera un posto ti avvisiamo.
+Rispondi a questo messaggio.
+
+Programma completo:
+${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/`},
+ {id:'fb',canale:'fb',label:'Post Facebook',inv:'Fino al 15 novembre',img:'img/post-tunisia.jpg',fino:'2026-11-15',t:
+`Tunisia da sentire: dal 7 al 12 febbraio 2027, per il ponte di Carnevale.
+
+Sei giorni tra Tunisi, Sidi Bou Said, El Jem, Matmata, Tozeur, Kairouan, Cartagine e il Sahara. Il blu delle case sul mare, i mosaici del Bardo, il profumo delle spezie nei souk e una notte in tenda sotto le stelle.
+
+Aereo e bus GT, formula tutto incluso. Iscrizioni entro il 15 novembre con un acconto di 200 €.
+📝 https://forms.gle/UoJPBWJPpCfCmCk56
+👉 ${SITO}2026/11/05/tunisia-da-sentire-febbraio-2027/`},
+ {id:'ig',canale:'ig',label:'Post Instagram',inv:'Fino al 15 novembre',img:'img/post-tunisia.jpg',fino:'2026-11-15',t:
+`Tunisia da sentire: dal 7 al 12 febbraio 2027, per il ponte di Carnevale.
+
+Sei giorni tra Tunisi, Sidi Bou Said, El Jem, Matmata, Tozeur, Kairouan, Cartagine e il Sahara. Il blu delle case sul mare, i mosaici del Bardo, il profumo delle spezie nei souk e una notte in tenda sotto le stelle.
+
+Aereo e bus GT, formula tutto incluso. Iscrizioni entro il 15 novembre con un acconto di 200 €.
+
+Programma, quote e modulo: link in bio.
+
+${TAG} #Tunisia #SidiBouSaid #Sahara #ViaggiareConISensi`},
+ {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Fino al 15 novembre',img:'img/storia-tunisia.jpg',fino:'2026-11-15',nota:'Aggiungi l\'adesivo «Link» in basso con il testo ISCRIVITI, e l\'adesivo «Conto alla rovescia»: «Iscrizioni Tunisia», 15 novembre. Il link del modulo è qui sotto.',t:`https://forms.gle/UoJPBWJPpCfCmCk56`}]},
+
 {id:'attivamente',titolo:'Attiva-mente: il piacere di stare insieme',quando:'Ogni martedì',col:'var(--corsi)',
- img:'img/wa-attiva-mente.jpg',file:'nexus-attiva-mente.jpg',url:SITO+'2026/09/28/riparte-attiva-mente-ottobre-2026/',
- msgs:[{id:'settimana',label:'Promemoria del martedì',inv:'Da mandare il martedì mattina',img:true,t:
+ url:SITO+'2026/09/28/riparte-attiva-mente-ottobre-2026/',
+ msgs:[
+ {id:'wa',canale:'wa',label:'Promemoria del martedì',inv:'Il martedì mattina',img:'img/wa-attiva-mente.jpg',t:
 `*ATTIVA-MENTE* · oggi dalle 15 alle 17 in sede
-Pittura, collage, maglia, uncinetto e modellare: non serve esperienza. Gratuito per i soci.`}]}
+Pittura, collage, maglia, uncinetto e modellare: non serve esperienza. Gratuito per i soci.`},
+ {id:'fb',canale:'fb',label:'Post Facebook',inv:'Ogni tanto, per ricordarlo',img:'img/post-attiva-mente.jpg',t:
+`Attiva-mente: il piacere di stare insieme.
+
+Ogni martedì dalle 15 alle 17 nella sede Nexus di via Fabio Filzi 10 a Ghedi: pittura, collage e ritaglio, maglia e uncinetto, modellare. Non serve esperienza, si impara insieme.
+
+Le attività sono gratuite e riservate ai soci.
+👉 ${SITO}2026/09/28/riparte-attiva-mente-ottobre-2026/`},
+ {id:'ig',canale:'ig',label:'Post Instagram',inv:'Ogni tanto, per ricordarlo',img:'img/post-attiva-mente.jpg',t:
+`Attiva-mente: il piacere di stare insieme.
+
+Ogni martedì dalle 15 alle 17 nella sede Nexus a Ghedi: pittura, collage, maglia e uncinetto, modellare. Non serve esperienza, si impara insieme. Gratuito per i soci.
+
+Info: link in bio.
+
+${TAG} #AttivaMente #Laboratori #StareInsieme`},
+ {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Il martedì mattina',img:'img/storia-attiva-mente.jpg',nota:'Aggiungi l\'adesivo «Link» in basso con il testo INFO. Il link è qui sotto.',t:`${SITO}2026/09/28/riparte-attiva-mente-ottobre-2026/`}]}
 ];
 
+const CANALI={wa:'WhatsApp',fb:'Facebook',ig:'Instagram'};
 const $=(s,el=document)=>el.querySelector(s);
 const OGGI=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})();
 const attivo=m=>(!m.dal||OGGI>=m.dal)&&(!m.fino||OGGI<=m.fino);
+const scheda=m=>m.canale==='storia'?'ig':m.canale;
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const IN_CLAUDE=!!(window.claude&&window.claude.use);
 let dl=null;
 const toastEl=$('#toast');let tt;
-function toast(m){toastEl.textContent=m;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,2600)}
+function toast(m){toastEl.textContent=m;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,3200)}
 const ICO={
  img:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
  copy:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>',
+ share:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>',
  wa:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.4-.3z"/></svg>',
  giu:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'
 };
 function nQuadre(t){return (t.match(/\[[^\]]+\]/g)||[]).length}
-function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+const chiave=(e,m)=>`kit3:${e.id}:${m.id}`;
+const trova=(ev,id)=>{const e=EVENTI.find(x=>x.id===ev);return [e,e.msgs.find(m=>m.id===id)]};
 
+$('#come').innerHTML=IN_CLAUDE
+ ?`<li><b>WhatsApp:</b> salva l'immagine, manda il testo, allega la foto</li><li><b>Facebook e Instagram:</b> salva l'immagine, copia la didascalia e incollala nel post</li>`
+ :`<li><b>WhatsApp:</b> «Condividi con immagine», scegli il gruppo, invia</li><li><b>Facebook e Instagram:</b> «Copia e condividi», scegli l'app, nella didascalia tieni premuto e Incolla</li>`;
+
+function tasti(e,m,t){
+ const wa=`https://wa.me/?text=${encodeURIComponent(t)}`;
+ const salva=`<button class="btn" data-salva>${ICO.img}Salva immagine</button>`;
+ if(m.canale==='wa'){
+  if(!m.img) return `<a class="btn wa" data-wa target="_blank" rel="noopener" href="${wa}" style="grid-column:1/-1">${ICO.wa}Manda su WhatsApp</a><button class="btn" data-copia style="grid-column:1/-1">${ICO.copy}Copia testo</button>`;
+  if(IN_CLAUDE) return `${salva}<button class="btn" data-copia>${ICO.copy}Copia testo</button><a class="btn wa" data-wa target="_blank" rel="noopener" href="${wa}" style="grid-column:1/-1">${ICO.wa}Manda su WhatsApp</a>`;
+  return `<button class="btn wa" data-condividi="testo" style="grid-column:1/-1">${ICO.wa}Condividi con immagine</button><button class="btn" data-copia>${ICO.copy}Copia testo</button><a class="btn" data-wa target="_blank" rel="noopener" href="${wa}">${ICO.wa}Solo testo</a>`;
+ }
+ if(m.canale==='storia'){
+  if(IN_CLAUDE) return `${salva}<button class="btn" data-copia>${ICO.copy}Copia link</button>`;
+  return `<button class="btn wa" data-condividi="solo" style="grid-column:1/-1">${ICO.share}Condividi la storia</button><button class="btn" data-copia style="grid-column:1/-1">${ICO.copy}Copia link</button>`;
+ }
+ if(IN_CLAUDE) return `${salva}<button class="btn" data-copia>${ICO.copy}Copia didascalia</button>`;
+ return `<button class="btn wa" data-condividi="copia" style="grid-column:1/-1">${ICO.share}Copia e condividi</button><button class="btn" data-copia>${ICO.copy}Copia didascalia</button>${salva}`;
+}
+function voce(e,m,aperto){
+ const k=chiave(e,m);const t=store.get(k)??m.t;const storia=m.canale==='storia';
+ const tipo=m.img?(storia?'Storia 9:16':(m.canale==='wa'?'Con l\'immagine':'Post 4:5')):'Solo testo, senza immagine';
+ return `<details ${aperto?'open':''} data-canale="${scheda(m)}">
+  <summary><span class="tit">${esc(m.label)}<span class="quando-invio">${tipo} · ${esc(m.inv)}</span></span><span class="freccia">${ICO.giu}</span></summary>
+  <div class="corpo">
+   ${m.img?`<div class="anteprima"><img src="${m.img}" alt="Immagine: ${esc(m.label)}" data-zoom loading="lazy"><span>${storia?'Tocca per vederla intera':'Tocca per ingrandire'}</span></div>`:''}
+   ${m.nota?`<p class="nota">${esc(m.nota)}</p>`:''}
+   <label for="${e.id}-${m.id}" hidden>${esc(m.label)}</label>
+   <textarea id="${e.id}-${m.id}" data-k="${k}" data-ev="${e.id}" data-m="${m.id}" ${storia?'style="min-height:70px"':''}>${esc(t)}</textarea>
+   <div class="avviso" data-avviso hidden><span>⚠ Non ancora pronto: completa queste parti, poi potrai usarlo.</span><ul></ul></div>
+   <div class="azioni">${tasti(e,m,t)}</div>
+   <button class="ripristina" data-ripristina ${store.get(k)!==null?'':'hidden'}>Ripristina il testo originale</button>
+  </div></details>`;
+}
+let CANALE={};
+try{CANALE=JSON.parse(store.get('kit3:canali')||'{}')}catch(e){}
 function render(){
- $('#indice').innerHTML=EVENTI.map(e=>`<a href="#${e.id}">${esc(e.quando)}</a>`).join('');
- $('#eventi').innerHTML=EVENTI.map(e=>`
- <section class="evento" id="${e.id}">
+ const ev=EVENTI.map(e=>({...e,msgs:e.msgs.filter(attivo)})).filter(e=>e.msgs.length);
+ $('#indice').innerHTML=ev.map(e=>`<a href="#${e.id}">${esc(e.quando)}</a>`).join('');
+ $('#eventi').innerHTML=ev.map(e=>{
+  const c=CANALE[e.id]||'wa';const wa=e.msgs.find(m=>m.canale==='wa'&&m.img);
+  const conta=k=>e.msgs.filter(m=>scheda(m)===k).length;
+  return `<section class="evento" id="${e.id}">
   <div class="testa">
-   <img src="${e.img}" alt="Immagine: ${esc(e.titolo)}" data-zoom loading="lazy">
+   ${wa?`<img src="${wa.img}" alt="Immagine: ${esc(e.titolo)}" data-zoom loading="lazy">`:'<span></span>'}
    <div class="info">
     <span class="quando" style="background:${e.col};${e.col.includes('corsi')?'color:#fff':''}">${esc(e.quando)}</span>
     <h2>${esc(e.titolo)}</h2>
     <div class="link"><a href="${e.url}" target="_blank" rel="noopener">Articolo sul sito</a></div>
-    <div class="img-azioni"><button class="btn piccolo" data-salva="${e.id}">${ICO.img}Salva immagine</button></div>
    </div>
   </div>
+  <div class="canali" role="tablist">${Object.entries(CANALI).map(([k,n])=>`<button role="tab" aria-selected="${k===c}" data-canale-btn="${k}">${n} <span class="n">${conta(k)}</span></button>`).join('')}</div>
   <p class="ev-avviso" data-evavviso hidden></p>
-  <div class="msgs">
-   ${e.msgs.filter(attivo).map((m,i)=>{const k=`kit2:${e.id}:${m.id}`;const t=store.get(k)??m.t;const n=nQuadre(t);return `
-   <details ${i===0?'open':''}>
-    <summary><span class="tit">${esc(m.label)}<span class="quando-invio">${m.img?'Con l\'immagine':'Solo testo, senza immagine'} · ${esc(m.inv)}</span></span><span class="freccia">${ICO.giu}</span></summary>
-    <div class="corpo">
-     <label class="sr" for="${e.id}-${m.id}" hidden>${esc(m.label)}</label>
-     <textarea id="${e.id}-${m.id}" data-k="${k}" data-ev="${e.id}" data-m="${m.id}">${esc(t)}</textarea>
-     <div class="avviso" data-avviso hidden><span>⚠ Non ancora pronto: completa queste parti, poi potrai inviarlo.</span><ul></ul></div>
-     <div class="azioni">
-      ${m.img?`<button class="btn wa" data-condividi style="grid-column:1/-1">${ICO.wa}Condividi con immagine</button>
-      <button class="btn" data-copia>${ICO.copy}Copia testo</button>
-      <a class="btn" data-wa target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(t)}">${ICO.wa}Solo testo</a>`:`<a class="btn wa" data-wa target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(t)}" style="grid-column:1/-1">${ICO.wa}Manda su WhatsApp</a>
-      <button class="btn" data-copia style="grid-column:1/-1">${ICO.copy}Copia testo</button>`}
-     </div>
-     <button class="ripristina" data-ripristina ${store.get(k)!==null?'':'hidden'}>Ripristina il testo originale</button>
-    </div>
-   </details>`}).join('')}
-  </div>
- </section>`).join('');
+  <div class="msgs">${(()=>{const l=e.msgs.filter(m=>scheda(m)===c);return l.length?l.map((m,i)=>voce(e,m,i===0)).join(''):'<div class="vuoto">Niente da pubblicare qui per questo evento.</div>'})()}</div>
+ </section>`}).join('');
+ document.querySelectorAll('textarea[data-k]').forEach(aggiorna);
 }
-render();
-document.querySelectorAll('textarea[data-k]').forEach(aggiorna);
-
-document.addEventListener('input',ev=>{
- const ta=ev.target.closest('textarea[data-k]');if(!ta)return;
- store.set(ta.dataset.k,ta.value);aggiorna(ta);
-});
 function aggiorna(ta){
  const c=ta.closest('.corpo');const parti=ta.value.match(/\[[^\]]+\]/g)||[];const n=parti.length;
  const av=c.querySelector('[data-avviso]');av.hidden=!n;
  av.querySelector('ul').innerHTML=parti.map(x=>`<li>${esc(x)}</li>`).join('');
- c.querySelector('[data-wa]').href='https://wa.me/?text='+encodeURIComponent(ta.value);
+ const w=c.querySelector('[data-wa]');if(w)w.href='https://wa.me/?text='+encodeURIComponent(ta.value);
  c.querySelectorAll('.azioni .btn:not([data-salva])').forEach(bt=>{bt.classList.toggle('bloccato',!!n);bt.setAttribute('aria-disabled',n?'true':'false')});
  c.querySelector('[data-ripristina]').hidden=store.get(ta.dataset.k)===null;
  const d=ta.closest('details');d.classList.toggle('dacompletare',!!n);
@@ -290,53 +437,63 @@ function aggiorna(ta){
 }
 function riepilogo(){
  const lista=[];
- document.querySelectorAll('.evento').forEach(sec=>{
-  const tas=[...sec.querySelectorAll('textarea')].filter(t=>nQuadre(t.value));
-  const ea=sec.querySelector('[data-evavviso]');ea.hidden=!tas.length;
-  ea.textContent=tas.length?`⚠ ${tas.length===1?'1 messaggio':tas.length+' messaggi'} da completare prima dell'invio`:'';
-  tas.forEach(t=>lista.push({id:t.id,ev:sec.querySelector('h2').textContent,m:t.closest('details').querySelector('.tit').firstChild.textContent}));
+ EVENTI.forEach(e=>{
+  const sec=document.getElementById(e.id);if(!sec)return;
+  const pend=e.msgs.filter(attivo).filter(m=>nQuadre(store.get(chiave(e,m))??m.t));
+  const ea=sec.querySelector('[data-evavviso]');ea.hidden=!pend.length;
+  ea.textContent=pend.length?`⚠ ${pend.length===1?'1 messaggio':pend.length+' messaggi'} da completare prima dell'invio`:'';
+  pend.forEach(m=>lista.push({ev:e.id,m:m.id,c:scheda(m),label:m.label,tit:e.titolo}));
  });
  const el=$('#sospesi');el.hidden=!lista.length;
- el.innerHTML=lista.length?`<strong>⚠ ${lista.length===1?'C\'è un messaggio':'Ci sono '+lista.length+' messaggi'} da completare</strong>`+lista.map(x=>`<a href="#${x.id}" data-vai="${x.id}">${esc(x.m)} · ${esc(x.ev)}</a>`).join(''):'';
+ el.innerHTML=lista.length?`<strong>⚠ ${lista.length===1?'C\'è un messaggio':'Ci sono '+lista.length+' messaggi'} da completare</strong>`+lista.map(x=>`<a href="#${x.ev}" data-vai="${x.ev}|${x.m}|${x.c}">${esc(x.label)} · ${esc(x.tit)}</a>`).join(''):'';
 }
+render();
+
+document.addEventListener('input',ev=>{
+ const ta=ev.target.closest('textarea[data-k]');if(!ta)return;
+ store.set(ta.dataset.k,ta.value);aggiorna(ta);
+});
+async function copia(testo,ta){
+ try{await navigator.clipboard.writeText(testo);return true}
+ catch(e){if(ta){ta.focus();ta.select()}return false}
+}
+async function blobDi(src){const r=await fetch(src);return await r.blob()}
 document.addEventListener('click',async ev=>{
  const z=ev.target.closest('[data-zoom]');
  if(z){const zm=$('#zoom');zm.querySelector('img').src=z.src;zm.hidden=false;return}
  if(ev.target.closest('#zoom')){$('#zoom').hidden=true;return}
+ const cb=ev.target.closest('[data-canale-btn]');
+ if(cb){const sec=cb.closest('.evento');CANALE[sec.id]=cb.dataset.canaleBtn;store.set('kit3:canali',JSON.stringify(CANALE));render();document.getElementById(sec.id).scrollIntoView({block:'start'});return}
  const vai=ev.target.closest('[data-vai]');
- if(vai){ev.preventDefault();const t=document.getElementById(vai.dataset.vai);t.closest('details').open=true;t.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>t.focus({preventScroll:true}),400);return}
+ if(vai){ev.preventDefault();const [eid,mid,c]=vai.dataset.vai.split('|');CANALE[eid]=c;render();const t=document.getElementById(eid+'-'+mid);t.closest('details').open=true;t.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>t.focus({preventScroll:true}),400);return}
  const blk=ev.target.closest('.btn.bloccato');
  if(blk){ev.preventDefault();const t=blk.closest('.corpo').querySelector('textarea');toast('Prima completa le parti tra [quadre]');t.focus();return}
- const cp=ev.target.closest('[data-copia]');
- if(cp){const ta=cp.closest('.corpo').querySelector('textarea');
-  try{await navigator.clipboard.writeText(ta.value);toast('Testo copiato')}
-  catch(e){ta.focus();ta.select();toast('Testo selezionato: tieni premuto e scegli Copia')}
-  return}
- const rp=ev.target.closest('[data-ripristina]');
- if(rp){const ta=rp.closest('.corpo').querySelector('textarea');const e=EVENTI.find(x=>x.id===ta.dataset.ev);
-  store.del(ta.dataset.k);ta.value=e.msgs.find(m=>m.id===ta.dataset.m).t;aggiorna(ta);toast('Testo originale ripristinato');return}
+ const corpo=ev.target.closest('.corpo');if(!corpo)return;
+ const ta=corpo.querySelector('textarea');const [e,m]=trova(ta.dataset.ev,ta.dataset.m);
+ if(ev.target.closest('[data-copia]')){toast(await copia(ta.value,ta)?(m.canale==='storia'?'Link copiato':'Testo copiato'):'Testo selezionato: tieni premuto e scegli Copia');return}
+ if(ev.target.closest('[data-ripristina]')){store.del(ta.dataset.k);ta.value=m.t;aggiorna(ta);toast('Testo originale ripristinato');return}
  const sh=ev.target.closest('[data-condividi]');
- if(sh){const ta=sh.closest('.corpo').querySelector('textarea');const e=EVENTI.find(x=>x.id===ta.dataset.ev);
-  if(nQuadre(ta.value)){toast('Completa prima le parti tra [quadre]');ta.focus();return}
-  try{const blob=await (await fetch(e.img)).blob();const f=new File([blob],e.file,{type:'image/jpeg'});
-   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],text:ta.value});return}
-   if(navigator.share){await navigator.share({text:ta.value});return}
-   try{await navigator.clipboard.writeText(ta.value)}catch(_){}
-   toast('Questo browser non condivide immagini: testo copiato')}
+ if(sh){
+  const modo=sh.dataset.condividi;
+  if(modo==='copia'){await copia(ta.value,ta)}
+  try{const f=new File([await blobDi(m.img)],m.img.split('/').pop(),{type:'image/jpeg'});
+   const dati=modo==='testo'?{files:[f],text:ta.value}:{files:[f]};
+   if(navigator.canShare&&navigator.canShare({files:[f]})){
+    if(modo==='copia')toast('Didascalia copiata: nell\'app tieni premuto e scegli Incolla');
+    if(modo==='solo')toast('Poi aggiungi l\'adesivo link: il link è nel riquadro');
+    await navigator.share(dati);return}
+   toast('Questo browser non condivide immagini: usa «Salva immagine»')}
   catch(err){if(err&&err.name==='AbortError')return;toast('Condivisione non riuscita, riprova')}
   return}
- const sv=ev.target.closest('[data-salva]');
- if(sv){const e=EVENTI.find(x=>x.id===sv.dataset.salva);
-  if(!dl){apri(e);return}
-  try{const r=await fetch(e.img);const blob=await r.blob();await dl.save({filename:e.file,data:blob});toast('Immagine salvata nei download')}
-  catch(err){const c=err&&err.code;
-   if(c==='declined')return;
-   if(c==='rate_limited'){toast('Un attimo: c\'è già una richiesta aperta');return}
-   apri(e)}
+ if(ev.target.closest('[data-salva]')){
+  const nome='nexus-'+e.id+'-'+m.img.split('/').pop();
+  if(!dl){const zm=$('#zoom');zm.querySelector('img').src=m.img;zm.hidden=false;toast('Tieni premuto sull\'immagine per salvarla');return}
+  try{await dl.save({filename:nome,data:await blobDi(m.img)});toast('Immagine salvata nei download')}
+  catch(err){const c=err&&err.code;if(c==='declined')return;if(c==='rate_limited'){toast('Un attimo: c\'è già una richiesta aperta');return}
+   const zm=$('#zoom');zm.querySelector('img').src=m.img;zm.hidden=false;toast('Tieni premuto sull\'immagine per salvarla')}
  }
 });
-function apri(e){const zm=$('#zoom');zm.querySelector('img').src=e.img;zm.hidden=false;toast('Tieni premuto sull\'immagine per salvarla')}
-
+if(IN_CLAUDE){(async()=>{try{dl=await window.claude.use('downloads')}catch(e){dl=null}})()}
 </script>
 
 </body>
