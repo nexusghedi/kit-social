@@ -108,6 +108,7 @@ footer{color:var(--muted);font-size:.82rem}
 .oggi a{color:inherit;font-weight:800}
 .nota{margin:0;font-size:.85rem;color:var(--muted);background:var(--bg);border-radius:10px;padding:8px 12px}
 .vuoto{padding:14px 16px;color:var(--muted);font-size:.9rem}
+.evidenzia{outline:3px solid #f2a900;outline-offset:3px;border-radius:14px;transition:outline-color .6s}
 </style>
 </head>
 <body>
@@ -516,6 +517,17 @@ document.addEventListener('click',async ev=>{
    const zm=$('#zoom');zm.querySelector('img').src=m.img;zm.hidden=false;toast('Tieni premuto sull\'immagine per salvarla')}
  }
 });
+function apriHash(){
+ const h=decodeURIComponent(location.hash.slice(1));if(!h)return;
+ const e=EVENTI.find(x=>h===x.id||h.startsWith(x.id+'-'));if(!e)return;
+ const mid=h.slice(e.id.length+1);const m=mid&&e.msgs.find(x=>x.id===mid);
+ if(m){CANALE[e.id]=scheda(m)}render();
+ setTimeout(()=>{
+  if(!m){document.getElementById(e.id).scrollIntoView({block:'start'});return}
+  const t=document.getElementById(e.id+'-'+m.id);if(!t)return;const d=t.closest('details');if(d)d.open=true;
+  const box=d||t;box.scrollIntoView({behavior:'smooth',block:'start'});box.classList.add('evidenzia');setTimeout(()=>box.classList.remove('evidenzia'),2600)},60)}
+window.addEventListener('hashchange',apriHash);
+setTimeout(apriHash,0);
 if(IN_CLAUDE){(async()=>{try{dl=await window.claude.use('downloads')}catch(e){dl=null}})()}
 </script>
 
