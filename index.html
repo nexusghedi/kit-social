@@ -4,185 +4,343 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#109439">
+<meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="icona-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="icona-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Kit Nexus</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
 <style>
-/* Layout: una colonna da telefono; ogni evento ha tre schede (WhatsApp, Facebook, Instagram) con i messaggi pronti e i loro tasti */
-:root{
-  --bg:#f4f5f2; --card:#ffffff; --fg:#1d1d1b; --muted:#5d5e5a; --line:#e3e5df;
-  --wa:#109439; --wa-fg:#ffffff; --soft:#eef6f0; --warn-bg:#fff4d6; --warn-fg:#6b4a00;
-  --viaggi:#ef7d32; --conf:#f8ba32; --corsi:#0163a5; --verde:#109439;
-  --field:#fafaf8; --warn-line:#e0a800;
-  --font:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+/* Kit Nexus — stili condivisi dei mockup (stessi nomi che userebbe la pagina reale) */
+.app{
+  --bg:#f4f5f2; --card:#ffffff; --sunk:#ecede8; --ink:#1d1d1b; --muted:#575756; --line:#e3e3df; --line-strong:#cfd0cb;
+  --azione:#0e8534; --azione-press:#0b6e2b; --azione-tint:#e4f2e8; --azione-testo:#0b6e2b;
+  --arancio:#ef7d32; --blu:#0163a5; --giallo:#f8ba32; --verde:#109439; --rosso:#e74035;
+  --warn-bg:#fff3d1; --warn-line:#efd58a; --warn-ink:#6b4a00; --warn-mark:#ffe7a3;
+  --red-bg:#fde8e6; --red-ink:#a5221a; --grey-bg:#ebebe8; --grey-ink:#4a4a48;
+  --focus:#0163a5; --shadow:0 1px 2px rgba(29,29,27,.06),0 4px 14px rgba(29,29,27,.06);
+  font-family:"Nunito",system-ui,sans-serif; color:var(--ink); background:var(--bg);
+  position:relative; overflow:hidden; box-sizing:border-box; font-size:16px; line-height:1.45;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#151614; --card:#1f201d; --fg:#f1f1ec; --muted:#a9aaa3; --line:#33352f;
-  --wa:#25a84a; --wa-fg:#ffffff; --soft:#1d2a20; --warn-bg:#3a3018; --warn-fg:#f3d58a;
-  --field:#191a17; --warn-line:#a07a10; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#151614; --card:#1f201d; --fg:#f1f1ec; --muted:#a9aaa3; --line:#33352f;
-  --wa:#25a84a; --wa-fg:#ffffff; --soft:#1d2a20; --warn-bg:#3a3018; --warn-fg:#f3d58a;
-  --field:#191a17; --warn-line:#a07a10; color-scheme:dark}
-*{box-sizing:border-box}
-body{margin:0}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-img{max-width:100%}
-[hidden]{display:none!important}
-body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.5}
-.wrap{max-width:720px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
-header{display:flex;flex-direction:column;gap:6px}
-h1{margin:0;font-size:1.75rem;line-height:1.15;font-weight:900;text-wrap:balance}
-.lead{margin:0;color:var(--muted);font-size:.95rem}
-.come{display:flex;flex-wrap:wrap;gap:6px 14px;margin:4px 0 0;padding:0;list-style:none;font-size:.85rem;color:var(--muted)}
-.come b{color:var(--fg)}
-nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
-nav a{flex:none;text-decoration:none;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-weight:700;font-size:.85rem}
-.evento{background:var(--card);border-radius:18px;border:1px solid var(--line);overflow:hidden;scroll-margin-top:72px}
-details,.mat{scroll-margin-top:72px}
-.testa{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:14px;align-items:start}
-.testa img{width:96px;height:96px;object-fit:cover;border-radius:10px;display:block;background:var(--line);cursor:zoom-in}
-.testa .info{min-width:0;display:flex;flex-direction:column;gap:6px}
-.quando{align-self:flex-start;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;color:#1d1d1b}
-.evento h2{margin:0;font-size:1.15rem;line-height:1.25;font-weight:800;text-wrap:balance}
-.evento .link{font-size:.82rem;color:var(--muted);word-break:break-all}
-.evento .link a{color:inherit}
-.img-azioni{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
-.msgs{display:flex;flex-direction:column;border-top:1px solid var(--line)}
-details{border-bottom:1px solid var(--line)}
-details:last-child{border-bottom:0}
-summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 16px;font-weight:800}
-summary::-webkit-details-marker{display:none}
-summary .tit{display:flex;flex-direction:column;min-width:0}
-summary .quando-invio{font-weight:600;font-size:.8rem;color:var(--muted)}
-summary .freccia{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--wa);transition:transform .15s}
-details[open] summary .freccia{transform:rotate(180deg)}
-.badge{flex:none;font-size:.7rem;font-weight:900;letter-spacing:.06em;background:var(--warn-bg);color:var(--warn-fg);border-radius:999px;padding:2px 8px;margin-left:auto}
-.corpo{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
-textarea{width:100%;min-height:220px;resize:vertical;border:1px solid var(--line);border-radius:12px;background:var(--field);color:var(--fg);font:inherit;font-size:.92rem;line-height:1.5;padding:12px}
-textarea:focus-visible{outline:2px solid var(--wa);outline-offset:1px}
-.avviso{margin:0;background:var(--warn-bg);color:var(--warn-fg);border:2px solid var(--warn-line);border-radius:12px;padding:10px 12px;font-size:.9rem;font-weight:800;display:flex;flex-direction:column;gap:6px}
-.avviso ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
-.avviso li{background:var(--card);color:var(--fg);border:1px dashed var(--warn-line);border-radius:8px;padding:2px 8px;font-weight:700;font-size:.85rem}
-.sospesi{background:var(--warn-bg);color:var(--warn-fg);border:2px solid var(--warn-line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.92rem}
-.sospesi strong{font-weight:900;font-size:1rem}
-.sospesi a{color:inherit;font-weight:800}
-.ev-avviso{margin:0;padding:8px 16px;background:var(--warn-bg);color:var(--warn-fg);font-weight:800;font-size:.85rem;border-top:1px solid var(--line)}
-.btn.bloccato{opacity:.4;cursor:not-allowed}
-details.dacompletare>summary{background:var(--warn-bg)}
-.azioni{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.azioni .wa{grid-column:1/-1}
-.btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:12px;padding:11px 12px;font:inherit;font-weight:800;font-size:.92rem;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none;min-height:46px}
-.btn:focus-visible{outline:2px solid var(--wa);outline-offset:2px}
-.btn.wa{background:var(--wa);border-color:var(--wa);color:var(--wa-fg)}
-.btn.piccolo{min-height:36px;padding:6px 12px;font-size:.84rem;border-radius:10px}
-.btn svg{flex:none}
-.ripristina{align-self:flex-start;background:none;border:0;color:var(--muted);font:inherit;font-size:.82rem;text-decoration:underline;cursor:pointer;padding:0}
-.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font-weight:800;font-size:.9rem;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:20;max-width:calc(100% - 32px);text-align:center}
-.zoom{position:fixed;inset:0;background:rgba(10,10,9,.88);display:grid;place-items:center;z-index:30;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-.zoom img{max-width:100%;max-height:100%;border-radius:8px}
-footer{color:var(--muted);font-size:.82rem}
-@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+.app *,.app *::before,.app *::after{box-sizing:border-box}
+.app.dark{
+  --bg:#141513; --card:#1f201d; --sunk:#2a2b27; --ink:#f2f2ed; --muted:#b9b9b2; --line:#33342f; --line-strong:#4a4b45;
+  --azione:#0e8534; --azione-tint:#183823; --azione-testo:#6fd28f;
+  --warn-bg:#3a2f12; --warn-line:#5c4a1a; --warn-ink:#ffd978; --warn-mark:#5a4815;
+  --red-bg:#3d1c19; --red-ink:#ff9d94; --grey-bg:#2c2d29; --grey-ink:#cfcfc8; --focus:#6cb6ff;
+  --shadow:none;
+}
+:where(.app) :where(button,input,textarea){font-family:inherit;font-size:inherit;color:inherit}
+:where(.app) :where(a){color:var(--azione-testo)}
 
-.canali{display:flex;gap:6px;padding:0 14px 12px}
-.canali button{flex:1;appearance:none;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:10px;padding:8px 6px;font:inherit;font-weight:800;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
-.canali button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.canali button:focus-visible{outline:2px solid var(--wa);outline-offset:2px}
-.canali .n{font-size:.72rem;font-weight:900;opacity:.7}
-.anteprima{display:flex;gap:12px;align-items:center}
-.anteprima{flex-wrap:wrap}
-.anteprima img{height:84px;width:auto;max-width:120px;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;display:block}
-.anteprima span{font-size:.82rem;color:var(--muted)}
-.stato{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:800;border-radius:999px;padding:3px 10px}
-.stato::before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor}
-.stato.aperte{background:#e7f5ec;color:#0d7a2f}
-.stato.ultimi{background:#fde5e3;color:#b42b22}
-.stato.libero{background:#fff4d6;color:#7a5600}
-.stato.completo{background:#ececea;color:#3a3a38}
-.stato.info{background:var(--bg);color:var(--muted)}
-.oggi{background:#e7f5ec;color:#0d4a1f;border:2px solid #109439;border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.92rem}
-.oggi strong{font-weight:900;font-size:1rem}
-.oggi a{color:inherit;font-weight:800}
-.nota{margin:0;font-size:.85rem;color:var(--muted);background:var(--bg);border-radius:10px;padding:8px 12px}
-.vuoto{padding:14px 16px;color:var(--muted);font-size:.9rem}
-.evidenzia{outline:3px solid #f2a900;outline-offset:3px;border-radius:14px;transition:outline-color .6s}
-/* viste principali e nuove schede */
-.viste{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
-.viste button{appearance:none;border:0;background:none;color:var(--muted);font:inherit;font-weight:800;font-size:.9rem;border-radius:10px;padding:9px 4px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
-.viste button[aria-selected="true"]{background:var(--fg);color:var(--bg)}
-.viste button:focus-visible{outline:2px solid var(--wa);outline-offset:2px}
-.canali{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px!important}
-.canali button{flex-direction:column;gap:0!important;padding:7px 2px!important;font-size:.78rem!important;min-width:0;line-height:1.2}
-.canali .n{font-size:.68rem}
-.canali .n:empty{display:none}
-.pannello{border-top:1px solid var(--line);padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px}
-.mat{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:start;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
-.mat .prev{display:flex;gap:4px}
-.mat .prev{position:relative}
-.mat .prev .fr{position:absolute;left:4px;bottom:4px;font-size:.62rem;font-weight:900;background:var(--fg);color:var(--bg);border-radius:6px;padding:0 5px}
-.mat .prev img{width:84px;height:auto;max-height:110px;object-fit:contain;border:1px solid var(--line);border-radius:6px;background:#fff;display:block;cursor:zoom-in}
-.mat .dx{min-width:0;display:flex;flex-direction:column;gap:6px}
-.mat h3{margin:0;font-size:1rem;line-height:1.25;font-weight:800}
-.mat .fmt{display:flex;flex-wrap:wrap;gap:4px}
-.mat .fmt span{font-size:.72rem;font-weight:800;letter-spacing:.04em;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--muted)}
-.mat .come-st{margin:0;font-size:.85rem;color:var(--muted);line-height:1.45}
-.mat .az{display:flex;gap:8px;flex-wrap:wrap}
-.mat .az .btn{flex:1 1 92px;white-space:nowrap}
-.mat.schermo{border-style:dashed}
-.gruppo{display:flex;flex-direction:column;gap:10px}
-.gruppo>h2{margin:6px 0 0;font-size:1.05rem;font-weight:900}
-.gruppo>h2 small{font-weight:700;color:var(--muted);font-size:.8rem;margin-left:6px}
-.scheda-info{margin:0;display:grid;grid-template-columns:auto 1fr;gap:0}
-.scheda-info dt,.scheda-info dd{margin:0;padding:9px 0;border-bottom:1px solid var(--line);font-size:.92rem}
-.scheda-info dt{font-weight:800;color:var(--muted);padding-right:14px;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;padding-top:11px}
-.scheda-info dd{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
-.copiabile{display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%}
-.copiabile code{font-family:inherit;font-weight:800;background:var(--field);border:1px solid var(--line);border-radius:8px;padding:4px 8px;word-break:break-all}
-.guida{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
-.guida h2{margin:0;font-size:1.1rem;font-weight:900}
-.guida ol,.guida ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;font-size:.92rem}
-.guida p{margin:0;font-size:.92rem;color:var(--muted)}
-.loghi{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.logo{border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;background:var(--card)}
-.logo .fondo{height:86px;display:grid;place-items:center;padding:12px}
-.logo .fondo img{max-height:60px;max-width:100%}
-.logo .fondo.chiaro{background:#ffffff}.logo .fondo.scuro{background:#1d1d1b}.logo .fondo.foto{background:linear-gradient(135deg,#5a6b4a,#2c3b52)}
-.logo .lab{padding:8px 10px;font-size:.82rem;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:6px}
-.logo .lab a{font-weight:800;color:var(--wa);text-decoration:none;white-space:nowrap}
-.manca{font-size:.88rem;color:var(--muted);background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:10px 12px}
-.casi{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.caso summary{padding:11px 14px}
-.caso .scheda-info{padding:0 14px 10px}
-.caso .scheda-info dt{width:7.5em}
+/* icone (tratto, colore = currentColor) */
+.ic{display:inline-block;width:20px;height:20px;flex:none;background:currentColor;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.ic.s{width:16px;height:16px}.ic.l{width:24px;height:24px}
+.i-chat{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.9L3 20.5l1.6-4.6A8.4 8.4 0 0 1 3.5 11.5 8.5 8.5 0 0 1 12 3a8.5 8.5 0 0 1 9 8.5z'/></svg>")}
+.i-images{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='14' height='14' rx='2'/><path d='M7 21h12a2 2 0 0 0 2-2V7'/><circle cx='8.5' cy='8.5' r='1.5'/><path d='M17 13l-4-4-8 8'/></svg>")}
+.i-print{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9V2h12v7'/><path d='M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2'/><rect x='6' y='14' width='12' height='8'/></svg>")}
+.i-info{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='M12 16v-4M12 8h.01'/></svg>")}
+.i-share{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='18' cy='5' r='3'/><circle cx='6' cy='12' r='3'/><circle cx='18' cy='19' r='3'/><path d='M8.6 13.5l6.8 4M15.4 6.5l-6.8 4'/></svg>")}
+.i-copy{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='9' y='9' width='13' height='13' rx='2'/><path d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/></svg>")}
+.i-download{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3'/></svg>")}
+.i-down{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>")}
+.i-up{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M18 15l-6-6-6 6'/></svg>")}
+.i-right{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M9 6l6 6-6 6'/></svg>")}
+.i-back{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 12H5M12 19l-7-7 7-7'/></svg>")}
+.i-lock{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='11' width='18' height='11' rx='2'/><path d='M7 11V7a5 5 0 0 1 10 0v4'/></svg>")}
+.i-check{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6L9 17l-5-5'/></svg>")}
+.i-alert{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01'/></svg>")}
+.i-cal{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2'/><path d='M16 2v4M8 2v4M3 10h18'/></svg>")}
+.i-help{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01'/></svg>")}
+.i-edit{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z'/></svg>")}
+.i-undo{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 7v6h6'/><path d='M21 17a9 9 0 0 0-15-6.7L3 13'/></svg>")}
+.i-link{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7'/><path d='M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7'/></svg>")}
+.i-x{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M18 6L6 18M6 6l12 12'/></svg>")}
+.i-ext{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3'/></svg>")}
+.i-folder{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'/></svg>")}
+.i-story{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='6' y='2' width='12' height='20' rx='2.5'/><path d='M11 18h2'/></svg>")}
+.i-send{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M22 2L11 13M22 2l-7 20-4-9-9-4z'/></svg>")}
+.i-zoom{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7'/></svg>")}
+.i-text{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 7V4h16v3M9 20h6M12 4v16'/></svg>")}
+.i-more{--m:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><circle cx='5' cy='12' r='2'/><circle cx='12' cy='12' r='2'/><circle cx='19' cy='12' r='2'/></svg>")}
+
+/* struttura */
+.topbar{height:56px;padding:0 8px 0 16px;display:flex;align-items:center;gap:10px}
+.topbar .logo{width:28px;height:28px}
+.topbar h1{margin:0;font-size:19px;font-weight:800;flex:1;letter-spacing:-.01em}
+.screen{padding:0 16px 100px}
+.sec{display:flex;align-items:baseline;justify-content:space-between;margin:22px 4px 10px}
+.sec h2{margin:0;font-size:13px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.sec span{font-size:13px;font-weight:700;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.stack{display:flex;flex-direction:column;gap:10px}
+.row{display:flex;align-items:center;gap:12px}
+.muted{color:var(--muted)}
+.t-title{font-size:17px;font-weight:800;line-height:1.25;margin:0}
+.t-meta{font-size:13.5px;font-weight:600;color:var(--muted);line-height:1.3}
+.t-body{font-size:15px;line-height:1.5}
+.fold-x{position:absolute;left:0;right:0;border-top:2px dashed #c43b7d;z-index:9;pointer-events:none}
+.fold span{position:absolute;right:8px;top:-22px;background:#c43b7d;color:#fff;font:700 11px/1 "Nunito",sans-serif;padding:4px 8px;border-radius:6px}
+
+/* barra in basso */
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:72px;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:6px 8px 10px}
+.tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;color:var(--muted);font-size:12.5px;font-weight:700;position:relative}
+.tabbar a .pill{width:56px;height:30px;border-radius:999px;display:flex;align-items:center;justify-content:center}
+.tabbar a[aria-current="page"]{color:var(--ink)}
+.tabbar a[aria-current="page"] .pill{background:var(--azione-tint);color:var(--azione-testo)}
+.tabbar .badge{position:absolute;top:2px;left:calc(50% + 8px)}
+
+/* tasti */
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;border:0;cursor:pointer;text-decoration:none;border-radius:14px;font-weight:800;white-space:nowrap}
+.btn-pri,.app .btn-pri{height:54px;width:100%;background:var(--azione);color:#ffffff;font-size:17px}
+.btn-pri.press{background:var(--azione-press)}
+.btn-pri[disabled],.btn-pri.locked{background:var(--sunk);color:#5f5f5b;cursor:not-allowed}
+.dark .btn-pri[disabled],.dark .btn-pri.locked{color:#b9b9b2}
+.btn-sec{height:48px;background:var(--card);color:var(--ink);border:1.5px solid var(--line-strong);font-size:15.5px;padding:0 16px}
+.btn-sec[disabled]{color:#6b6b67;border-color:var(--line);background:var(--sunk)}
+.btn-ghost{height:44px;background:transparent;color:var(--azione-testo);font-size:15px;font-weight:800;padding:0 10px}
+.btn-ghost[disabled]{color:#77776f}
+.btn-icon{width:44px;height:44px;border-radius:12px;background:transparent;color:var(--ink);border:0;display:flex;align-items:center;justify-content:center;flex:none}
+.btn-icon.bordered{border:1.5px solid var(--line-strong);background:var(--card)}
+.focus{outline:3px solid var(--focus);outline-offset:2px}
+.actions{display:flex;flex-direction:column;gap:6px}
+.actions .alt{display:flex;justify-content:center;gap:4px;flex-wrap:wrap}
+
+/* pillole */
+.badge{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--azione);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.badge.warn{background:var(--giallo);color:#1d1d1b}
+.st{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:13px;font-weight:800;white-space:nowrap}
+.st::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.st-open{background:var(--azione-tint);color:var(--azione-testo)}
+.st-last{background:var(--red-bg);color:var(--red-ink)}
+.st-free{background:var(--warn-bg);color:var(--warn-ink)}
+.st-full{background:var(--grey-bg);color:var(--grey-ink)}
+.st-info{background:transparent;color:var(--muted);border:1.5px solid var(--line-strong)}
+.st-info::before{display:none}
+.chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12.5px;font-weight:800;white-space:nowrap}
+.chip-today{background:var(--azione);color:#fff}
+.chip-todo{background:var(--warn-bg);color:var(--warn-ink);border:1px solid var(--warn-line)}
+.chip-done{background:var(--grey-bg);color:var(--grey-ink)}
+.chip-edit{background:var(--sunk);color:var(--muted)}
+.fmt{display:inline-flex;height:24px;align-items:center;padding:0 9px;border-radius:8px;background:var(--sunk);font-size:12.5px;font-weight:800;color:var(--ink)}
+
+/* data per area */
+.date{width:54px;height:58px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;line-height:1}
+.date b{font-size:21px;font-weight:800}
+.date small{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+.a-viaggi{background:var(--arancio);color:#1d1d1b}
+.a-corsi{background:var(--blu);color:#fff}
+.a-conf{background:var(--giallo);color:#1d1d1b}
+.a-ass{background:var(--azione);color:#fff}
+.tag{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+
+/* riga evento (card chiusa) */
+.ev{display:flex;align-items:center;gap:12px;padding:10px 6px 10px 10px;text-decoration:none;color:inherit;min-height:78px}
+.ev .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.ev .ttl{font-size:16px;font-weight:800;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ev .meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ev .todo{font-size:12.5px;font-weight:800;color:var(--warn-ink);display:inline-flex;align-items:center;gap:4px}
+.ev .chev{color:var(--muted)}
+
+/* elenco "da mandare oggi" */
+.today{padding:6px}
+.today-h{display:flex;align-items:center;gap:8px;padding:8px 10px 6px}
+.today-h h2{margin:0;font-size:16px;font-weight:800;flex:1}
+.go{display:flex;align-items:center;gap:12px;padding:8px 6px 8px 10px;border-radius:12px;text-decoration:none;color:inherit;min-height:60px}
+.go + .go{border-top:1px solid var(--line)}
+.go .ico{width:40px;height:40px;border-radius:12px;background:var(--azione-tint);color:var(--azione-testo);display:flex;align-items:center;justify-content:center;flex:none}
+.go .txt{flex:1;min-width:0}
+.go b{display:block;font-size:15.5px;font-weight:800;line-height:1.25}
+.go small{display:block;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* avviso */
+.alert{display:flex;align-items:center;gap:10px;padding:12px 12px 12px 14px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;min-height:52px}
+.alert-warn{background:var(--warn-bg);color:var(--warn-ink);border:1px solid var(--warn-line)}
+.alert-info{background:var(--sunk);color:var(--ink)}
+.alert-ok{background:var(--azione-tint);color:var(--azione-testo)}
+.alert .grow{flex:1}
+
+/* scheda evento */
+.evhead{padding:4px 16px 14px;display:flex;flex-direction:column;gap:10px}
+.evhead h1{margin:0;font-size:23px;font-weight:800;line-height:1.2;letter-spacing:-.01em}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;background:var(--sunk);padding:4px;border-radius:16px;margin:0 16px}
+.tabs button{position:relative;height:58px;border:0;border-radius:12px;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:13px;font-weight:800;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.tabs .n{position:absolute;top:5px;right:8px;font-size:11px;font-weight:800;color:var(--muted)}
+.tabs .dot{position:absolute;top:7px;left:calc(50% + 9px);width:9px;height:9px;border-radius:50%;background:var(--giallo);box-shadow:0 0 0 2px var(--sunk)}
+.tabs button[aria-selected="true"] .dot{box-shadow:0 0 0 2px var(--card)}
+
+/* riga messaggio apribile */
+.msg{overflow:hidden}
+.msg-h{width:100%;display:flex;align-items:center;gap:12px;padding:12px 10px 12px 12px;background:transparent;border:0;text-align:left;cursor:pointer;min-height:68px}
+.msg-h .ico{width:40px;height:40px;border-radius:12px;background:var(--sunk);display:flex;align-items:center;justify-content:center;flex:none}
+.msg-h .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.msg-h b{font-size:16px;font-weight:800;line-height:1.25}
+.msg-h .side{display:flex;align-items:center;gap:6px}
+.msg-h .chevbox{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.msg.todo .msg-h .ico{background:var(--warn-bg);color:var(--warn-ink)}
+.msg-b{padding:0 14px 14px;display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line)}
+.msg-b > :first-child{margin-top:14px}
+
+/* anteprima immagini */
+.media{display:flex;gap:8px}
+.thumb{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--sunk);display:block;padding:0;cursor:zoom-in}
+.thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.thumb .num{position:absolute;left:6px;top:6px;width:22px;height:22px;border-radius:50%;background:rgba(29,29,27,.82);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.thumb .zoom{position:absolute;right:6px;bottom:6px;width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.92);color:#1d1d1b;display:flex;align-items:center;justify-content:center}
+
+/* testo modificabile */
+.editor-l{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.editor{border:1.5px solid var(--line-strong);border-radius:12px;background:var(--bg);padding:12px 14px;font-size:15.5px;line-height:1.5;white-space:pre-wrap;word-break:break-word;min-height:120px;position:relative}
+.editor.clip{max-height:220px;overflow:hidden}
+.editor.clip::after{content:"";position:absolute;left:0;right:0;bottom:0;height:48px;background:linear-gradient(transparent,var(--bg))}
+.editor.focused{border-color:var(--azione);box-shadow:0 0 0 3px var(--azione-tint)}
+.ph{background:var(--warn-mark);color:var(--ink);border-radius:4px;padding:0 3px;font-weight:800;border-bottom:2px dashed #b58300}
+.ph.ok{background:var(--azione-tint);border-bottom-color:var(--azione)}
+.more-text{font-size:14px;font-weight:800;color:var(--azione-testo);background:none;border:0;padding:6px 0;min-height:44px;text-align:left;cursor:pointer}
+
+/* completa le parti */
+.fill{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.fill h3{margin:0;font-size:16px;font-weight:800;color:var(--warn-ink);display:flex;align-items:center;gap:8px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:14px;font-weight:800}
+.field .inp{height:48px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--card);display:flex;align-items:center;padding:0 12px;font-size:16px;gap:8px}
+.field .inp.empty{color:#6b6b67}
+.field .inp.done{border-color:var(--azione)}
+.field .inp.active{border-color:var(--focus);box-shadow:0 0 0 3px rgba(1,99,165,.18)}
+
+/* righe etichetta/valore */
+.kv{display:flex;flex-direction:column}
+.kv-r{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);min-height:56px}
+.kv-r:last-child{border-bottom:0}
+.kv-r .k{width:96px;flex:none;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kv-r .v{flex:1;min-width:0;font-size:15.5px;line-height:1.4}
+.kv-r .v.mono{font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:.02em;word-break:break-all}
+
+/* stampa */
+.pm{display:flex;gap:14px;padding:14px}
+.pm .prev{width:92px;flex:none}
+.pm .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.pm .fmts{display:flex;gap:6px;flex-wrap:wrap}
+.pm .how{font-size:14px;line-height:1.45;color:var(--muted)}
+.pm .how b{color:var(--ink)}
+.pm .acts{display:flex;gap:8px;margin-top:2px}
+.pm .acts .btn-pri{height:48px;font-size:16px;flex:1;width:auto}
+
+/* fisarmonica */
+.acc{border-bottom:1px solid var(--line)}
+.acc:last-child{border-bottom:0}
+.acc-h{width:100%;display:flex;align-items:center;gap:12px;padding:12px 4px 12px 16px;background:transparent;border:0;text-align:left;min-height:64px;cursor:pointer}
+.acc-h .txt{flex:1}
+.acc-h b{display:block;font-size:16px;font-weight:800}
+.acc-h small{display:block;font-size:13.5px;font-weight:600;color:var(--muted)}
+
+/* toast */
+.toast{display:flex;align-items:center;gap:10px;background:#1d1d1b;color:#fff;border-radius:14px;padding:12px 8px 12px 14px;font-size:15px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.22);min-height:52px}
+.toast .ok{width:24px;height:24px;border-radius:50%;background:#4cc56f;color:#1d1d1b;display:flex;align-items:center;justify-content:center;flex:none}
+.toast .err{width:24px;height:24px;border-radius:50%;background:#ff8a80;color:#1d1d1b;display:flex;align-items:center;justify-content:center;flex:none}
+.toast .grow{flex:1}
+.toast button{background:none;border:0;color:#8fe0a8;font-weight:800;font-size:15px;height:40px;padding:0 10px;cursor:pointer}
+.app.dark .toast{background:#f2f2ed;color:#1d1d1b}
+
+/* barra azione fissa */
+.dock{position:absolute;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px 14px;display:flex;flex-direction:column;gap:4px}
+
+
+[hidden]{display:none!important}
+html,body{margin:0;background:#f4f5f2}
+@media (prefers-color-scheme: dark){html,body{background:#141513}}
+.app{max-width:560px;margin:0 auto;min-height:100vh;overflow:visible}
+.app-in{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.app-in.focusview{padding-bottom:20px}
+.topbar{position:sticky;top:0;z-index:5;background:var(--bg)}
+.topbar.evbar{padding-left:4px;gap:6px;background:var(--card);border-bottom:1px solid var(--line)}
+.evbar .tt{flex:1;min-width:0;display:flex;flex-direction:column}
+.evbar .tt b{font-size:15.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.evbar .tt .t-meta{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabbar{position:fixed;left:50%;transform:translateX(-50%);width:100%;max-width:560px;bottom:0;z-index:6;height:calc(72px + env(safe-area-inset-bottom,0px));padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+.lnk{font-size:14px;font-weight:800;display:inline-flex;align-items:center;gap:4px;min-height:44px;color:var(--azione-testo);text-decoration:none}
+.mese{font-size:13.5px;font-weight:800;color:var(--muted);margin:8px 4px 0}
+.mese:first-child{margin-top:2px}
+.date.small b{font-size:16px}
+.date.mini{width:44px;height:46px}.date.mini b{font-size:17px}.date.mini.small b{font-size:13px}.date.mini small{font-size:10px}
+.ic.muted{color:var(--muted)}.ic.verde{color:var(--azione-testo)}
+.evhead{padding:14px 16px 14px}
+.tabs{margin:0 16px}
+.tabs a{position:relative;height:58px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:13px;font-weight:800;color:var(--muted);text-decoration:none}
+.tabs a[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.tabs a[aria-selected="true"] .dot{box-shadow:0 0 0 2px var(--card)}
+.panel{padding:14px 16px 0;display:flex;flex-direction:column;gap:10px}
+.alert{border:0;width:100%;text-align:left;font-family:inherit;cursor:pointer;color:inherit}
+.alert-warn{border:1px solid var(--warn-line)}
+.alert-info{cursor:default}a.alert-info{cursor:pointer;color:var(--ink)}
+.today{padding:6px}
+.msg-b .nota{margin:0;font-size:14px;color:var(--muted);background:var(--bg);border-radius:10px;padding:8px 12px}
+textarea.editor{width:100%;display:block;resize:vertical;font:inherit;font-size:15.5px;line-height:1.5;color:var(--ink);min-height:140px}
+textarea.editor.clip{max-height:220px;height:220px;overflow:auto}
+textarea.editor:not(.clip){min-height:320px}
+textarea.editor:focus{outline:none;border-color:var(--azione);box-shadow:0 0 0 3px var(--azione-tint)}
+.editor.anteprima{min-height:0}
+.hint{margin:2px 0 0;text-align:center}
+.btn-ghost.muted{color:var(--muted);padding:0 4px}
+input.inp{width:100%;font:inherit;font-size:16px;color:var(--ink)}
+input.inp:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba(1,99,165,.18)}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;background:var(--sunk);padding:4px;border-radius:12px}
+.seg button{height:40px;border:0;border-radius:9px;background:transparent;font-weight:800;font-size:15px;color:var(--muted);cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.passi{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font-size:14.5px;line-height:1.4}
+.passi li{display:flex;gap:10px}
+.badge.nero{background:var(--ink);color:var(--card);flex:none}
+.linkbox{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line-strong);border-radius:12px;padding:4px 4px 4px 12px;background:var(--bg)}
+.linkbox input{flex:1;min-width:0;border:0;background:transparent;font-weight:700;font-size:15px;color:var(--ink)}
+.linkbox input:focus{outline:none}
+.copybox{display:flex;flex-direction:column;gap:8px}
+.copybox .cb{display:flex;gap:8px;align-items:stretch}
+.copybox .val{flex:1;background:var(--bg);border:1.5px solid var(--line-strong);border-radius:12px;padding:10px 12px;font-weight:800;font-size:16px;line-height:1.35}
+.copybox .val.mono{font-size:15px;letter-spacing:.03em;font-variant-numeric:tabular-nums}
+.btn.col{flex-direction:column;gap:2px;height:auto;padding:0 12px;font-size:13px}
+.kv-r.top{align-items:flex-start}.kv-r.top .k{padding-top:2px}
+.pm .how{margin:0}
+.pm .acts a.btn-pri,.pm .acts a.btn-sec{height:48px;font-size:16px;flex:1;width:auto}
+.pm.schermo{border-style:dashed}
+.grp{display:flex;align-items:center;gap:10px;margin:14px 4px 0}
+.matrow{display:flex;gap:12px;padding:12px;align-items:center}
+.btn.sq{width:48px;height:48px;border-radius:12px;flex:none}
+.chevbox44{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:var(--muted);flex:none}
+.acc-h{color:inherit;font-family:inherit}
+.loghi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.logo{padding:0;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.logo .fondo{height:96px;display:flex;align-items:center;justify-content:center;padding:16px;border-bottom:1px solid var(--line)}
+.logo .fondo img{max-width:100%;max-height:44px}
+.logo .lab{display:flex;align-items:center;gap:6px;padding:10px 12px;min-height:48px}
+.logo .lab .grow{flex:1;font-size:14px;font-weight:800;line-height:1.2}
+.logo .lab small{display:block;font-weight:600;color:var(--muted)}
+.guida{padding:14px 16px;display:flex;flex-direction:column;gap:12px;font-size:14.5px;line-height:1.45}
+.row.top{align-items:flex-start}.row.top .ic{margin-top:2px}
+.kicker{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:var(--azione-testo);letter-spacing:.04em}
+.h-focus{margin:0;font-size:24px;font-weight:800;line-height:1.2}
+.focusview .t-meta[href]{text-decoration:none}
+.msg.infocus .msg-b{border-top:0}
+.msg.infocus .actions{position:sticky;bottom:0;background:var(--card);margin:0 -14px -14px;padding:10px 14px 14px;border-top:1px solid var(--line);z-index:2}
+.next{display:flex;align-items:center;gap:12px;padding:12px 10px 12px 14px;text-decoration:none;color:inherit;background:var(--bg);box-shadow:none;font-size:14.5px;font-weight:700}
+.next .grow{flex:1}
+.toast-wrap{position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:528px;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:20;font-family:"Nunito",system-ui,sans-serif}
+#zoom{position:fixed;inset:0;background:rgba(10,10,9,.9);z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px));font-family:"Nunito",system-ui,sans-serif}
+#zoom img{max-width:100%;max-height:calc(100% - 80px);border-radius:8px;background:#fff}
+.zoom-az{display:flex;gap:10px;width:100%;max-width:420px}
+.zoom-az .btn{flex:1;height:50px}
+.evidenzia{outline:3px solid #f2a900;outline-offset:3px;transition:outline-color .6s}
+.app :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Kit Nexus</h1>
-    <p class="lead">Tutto quello che serve per comunicare gli eventi: messaggi per WhatsApp, Facebook e Instagram, materiali da stampare, dati utili. Puoi modificare i testi prima di usarli.</p>
-    <ul class="come" id="come"></ul>
-  </header>
-  <div class="viste" role="tablist" aria-label="Sezioni del kit">
-    <button role="tab" data-vista="eventi" aria-selected="true">Eventi</button>
-    <button role="tab" data-vista="stampa" aria-selected="false">Da stampare</button>
-    <button role="tab" data-vista="risorse" aria-selected="false">Risorse</button>
-  </div>
-  <nav id="indice" aria-label="Eventi"></nav>
-  <div class="oggi" id="oggi" hidden></div>
-  <div class="sospesi" id="sospesi" role="status" hidden></div>
-  <main id="eventi" style="display:flex;flex-direction:column;gap:22px"></main>
-  <main id="v-stampa" style="display:flex;flex-direction:column;gap:18px" hidden></main>
-  <main id="v-risorse" style="display:flex;flex-direction:column;gap:18px" hidden></main>
-  <footer>Le parti tra [quadre] vanno completate prima dell'invio. Le modifiche al testo restano su questo telefono.</footer>
-</div>
-<div class="toast" id="toast" hidden></div>
-<div class="zoom" id="zoom" hidden><img alt=""></div>
-
+<div class="app" id="app"></div>
+<div class="toast-wrap"><div class="toast" id="toast" role="status" aria-live="polite" hidden></div></div>
+<div id="zoom" hidden><img alt=""><div class="zoom-az" hidden></div></div>
 <script>
 const SITO='https://nexusghedi.it/';
 const TAG='#NexusAPS #Ghedi';
@@ -543,256 +701,354 @@ const COMUNICAZIONI=[
  ['Cambio di data o annullamento','Appena deciso',{Sito:'Scheda e testo aggiornati',WhatsApp:'Avviso solo testo agli iscritti',Stampa:'Rifare i materiali con il dato cambiato',Altro:'Calendari e attività programmate aggiornati'}],
  ['Fine evento','Il giorno dopo (automatico)',{Sito:'Automatico: «Evento concluso»',Altro:'Tolto dal kit'}]
 ];
-const CANALI={wa:'WhatsApp',fb:'Facebook',ig:'Instagram'};
-const SCHEDE={...CANALI,stampa:'Stampa',info:'Info'};
+/* ===== Kit Nexus · interfaccia (barra in basso, pagina evento, vista «Da pubblicare») ===== */
 const $=(s,el=document)=>el.querySelector(s);
+const $$=(s,el=document)=>[...el.querySelectorAll(s)];
 const OGGI=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})();
+const GIORNO=['dom','lun','mar','mer','gio','ven','sab'][new Date().getDay()];
 const attivo=m=>(!m.dal||OGGI>=m.dal)&&(!m.fino||OGGI<=m.fino);
-const scheda=m=>m.canale==='storia'?'ig':m.canale;
+const daOggi=m=>attivo(m)&&(m.invio||[]).some(d=>d===OGGI||d===GIORNO);
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
-const IN_CLAUDE=!!(window.claude&&window.claude.use);
-let dl=null;
-const toastEl=$('#toast');let tt;
-function toast(m){toastEl.textContent=m;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,3200)}
-const ICO={
- img:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
- copy:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>',
- share:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>',
- wa:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.4-.3z"/></svg>',
- giu:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'
-};
-function nQuadre(t){return (t.match(/\[[^\]]+\]/g)||[]).length}
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+const ic=(n,c='')=>`<span class="ic ${c} i-${n}" aria-hidden="true"></span>`;
 const chiave=(e,m)=>`kit3:${e.id}:${m.id}`;
-const trova=(ev,id)=>{const e=EVENTI.find(x=>x.id===ev);return [e,e.msgs.find(m=>m.id===id)]};
+const kFill=(e,m)=>`kit4:fill:${e.id}:${m.id}`;
+const MESI=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+const MESI_L=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+const GG=['dom','lun','mar','mer','gio','ven','sab'];
+const AREA=e=>e.col.includes('corsi')?'a-corsi':e.col.includes('conf')?'a-conf':e.col.includes('verde')?'a-ass':'a-viaggi';
+const breve=e=>e.titolo.replace(/^Arkè i5sensi · /,'');
+const sotto=e=>e.quando+(e.titolo.startsWith('Arkè i5sensi')?' · Arkè i5sensi':'');
+const ST_CL={aperte:'st-open',ultimi:'st-last',libero:'st-free',completo:'st-full',info:'st-info'};
+const PITTO='favicon.svg';
 
-$('#come').innerHTML=IN_CLAUDE
- ?`<li><b>WhatsApp:</b> salva l'immagine, manda il testo, allega la foto</li><li><b>Facebook e Instagram:</b> salva l'immagine, copia la didascalia e incollala nel post</li>`
- :`<li><b>WhatsApp:</b> «Condividi con immagine», scegli il gruppo, invia</li><li><b>Facebook e Instagram:</b> «Copia e condividi» manda tutte le immagini del carosello; scegli l'app, nella didascalia tieni premuto e Incolla</li>`;
+/* date dell'agenda */
+const DATE={fontanellato:['2026-11-21'],laudato:['2026-11-28'],salento:['2026-12-05','2026-12-10'],milano:['2026-12-29'],tunisia:['2027-02-07','2027-02-12'],dresda:['2027-03-29','2027-04-04'],attivamente:'ric'};
+function dataBox(e){
+ const d=DATE[e.id];
+ if(d==='ric')return {b:'MAR',s:'15–17',cl:'small'};
+ if(!d)return {b:'·',s:''};
+ const a=new Date(d[0]+'T12:00');
+ if(!d[1])return {b:String(a.getDate()),s:GG[a.getDay()]};
+ const z=new Date(d[1]+'T12:00');
+ if(a.getMonth()===z.getMonth())return {b:a.getDate()+'–'+z.getDate(),s:MESI[a.getMonth()],cl:'small'};
+ return {b:String(a.getDate()),s:MESI[a.getMonth()]};
+}
 
-function tasti(e,m,t){
- const wa=`https://wa.me/?text=${encodeURIComponent(t)}`;
- const salva=`<button class="btn" data-salva>${ICO.img}Salva immagine</button>`;
+/* parti tra [quadre] */
+const quadre=t=>[...new Set(t.match(/\[[^\]]+\]/g)||[])];
+function fills(e,m){try{return JSON.parse(store.get(kFill(e,m))||'{}')}catch(x){return {}}}
+const testoBase=(e,m)=>store.get(chiave(e,m))??m.t;
+function testoFinale(e,m){let t=testoBase(e,m);const f=fills(e,m);for(const q of quadre(t)){if(f[q]&&f[q].trim())t=t.split(q).join(f[q].trim())}return t}
+const mancanti=(e,m)=>quadre(testoFinale(e,m));
+const daCompletare=(e,m)=>mancanti(e,m).length>0;
+
+/* ---------- elementi comuni ---------- */
+function statoPill(e){const s=(e.stato||[]).filter(attivo)[0];return s?`<span class="st ${ST_CL[s.tipo]||'st-info'}">${esc(s.t)}</span>`:''}
+const tabbar=sel=>`<nav class="tabbar" aria-label="Sezioni">
+ <a href="#" ${sel==='eventi'?'aria-current="page"':''}><span class="pill">${ic('cal','l')}</span>Eventi${nOggi()?`<span class="badge">${nOggi()}</span>`:''}</a>
+ <a href="#stampa" ${sel==='stampa'?'aria-current="page"':''}><span class="pill">${ic('print','l')}</span>Da stampare</a>
+ <a href="#risorse" ${sel==='risorse'?'aria-current="page"':''}><span class="pill">${ic('folder','l')}</span>Risorse</a></nav>`;
+const topHome=t=>`<header class="topbar"><img class="logo" src="${PITTO}" alt=""><h1>${t}</h1><a class="btn-icon" href="#guida" aria-label="Come si usa il kit">${ic('help','l')}</a></header>`;
+function listaOggi(){const l=[];EVENTI.forEach(e=>e.msgs.filter(daOggi).forEach(m=>l.push([e,m])));return l}
+const nOggi=()=>listaOggi().length;
+function listaTodo(){const l=[];EVENTI.forEach(e=>e.msgs.filter(attivo).filter(m=>daCompletare(e,m)).forEach(m=>l.push([e,m])));return l}
+const canaleNome=m=>m.canale==='wa'?'WhatsApp':m.canale==='fb'?'Facebook':m.canale==='ig'?'Instagram':'Storia Instagram';
+const icoMsg=m=>m.canale==='storia'?'story':m.img?'images':'text';
+const goRow=([e,m])=>`<a class="go" href="#${e.id}-${m.id}"><span class="ico">${ic(m.canale==='wa'?'chat':icoMsg(m))}</span><span class="txt"><b>${esc(m.label)}</b><small>${canaleNome(m)} · ${esc(breve(e))}</small></span>${ic('right','muted')}</a>`;
+
+/* ---------- HOME ---------- */
+let TODO_APERTO=false;
+function viewHome(){
+ const oggi=listaOggi(),todo=listaTodo();
+ const ev=EVENTI.filter(e=>e.msgs.some(attivo)||(MAT[e.id]||[]).length);
+ let mese='',agenda='';
+ const ord=[...ev].sort((a,b)=>{const x=DATE[a.id],y=DATE[b.id];return (x==='ric'?'9':x?x[0]:'8').localeCompare(y==='ric'?'9':y?y[0]:'8')});
+ for(const e of ord){
+  const d=DATE[e.id];let m=d==='ric'?'Ogni settimana':d?(()=>{const a=new Date(d[0]+'T12:00');return MESI_L[a.getMonth()]+(a.getFullYear()!==new Date().getFullYear()?' '+a.getFullYear():'')})():'';
+  if(m!==mese){agenda+=`<div class="mese">${esc(m)}</div>`;mese=m}
+  const db=dataBox(e);const nt=e.msgs.filter(attivo).filter(x=>daCompletare(e,x)).length;
+  agenda+=`<a class="card ev" href="#${e.id}"><span class="date ${AREA(e)} ${db.cl||''}"><b>${esc(db.b)}</b><small>${esc(db.s)}</small></span><span class="txt"><span class="ttl">${esc(e.titolo)}</span><span class="meta">${statoPill(e)}${nt?`<span class="todo">${ic('alert','s')}${nt} da completare</span>`:''}</span></span>${ic('right','chev')}</a>`;
+ }
+ const oggiTxt=new Date().toLocaleDateString('it-IT',{weekday:'short',day:'numeric',month:'short'});
+ return `<div class="app-in">${topHome('Kit Nexus')}<main class="screen">
+  ${oggi.length?`<section class="card today" aria-labelledby="oggi"><div class="today-h">${ic('send','verde')}<h2 id="oggi">Da mandare oggi</h2><span class="t-meta">${esc(oggiTxt)}</span></div>${oggi.map(goRow).join('')}</section>`:''}
+  ${todo.length?`<button class="alert alert-warn" data-todo aria-expanded="${TODO_APERTO}" style="margin-top:10px">${ic('alert')}<span class="grow">${todo.length===1?'1 messaggio da completare':todo.length+' messaggi da completare'}</span>${ic(TODO_APERTO?'up':'down')}</button>
+   ${TODO_APERTO?`<div class="card today" style="margin-top:6px">${todo.map(goRow).join('')}</div>`:''}`:''}
+  <div class="sec"><h2>Eventi</h2><span>${ev.length} in programma</span></div>
+  <div class="stack">${agenda}</div>
+  <p class="t-meta" style="text-align:center;margin:22px 0 0">Gli eventi passati spariscono da soli il giorno dopo.</p>
+ </main></div>${tabbar('eventi')}`;
+}
+
+/* ---------- PAGINA EVENTO ---------- */
+const OPEN=new Set();      // messaggi aperti (ev:id)
+const SHOW_ALL=new Set();  // testi mostrati per intero
+const EDIT=new Set();      // testi con parti da completare: editor del testo aperto
+const DIDA={};             // carosello: 'ig' o 'fb' per evento
+function gruppi(e){
+ const l=e.msgs.filter(attivo);
+ const wa=l.filter(m=>m.canale==='wa');
+ const fb=l.find(m=>m.canale==='fb'),ig=l.find(m=>m.canale==='ig');
+ const soc=[];if(fb||ig)soc.push({tipo:'post',fb,ig});
+ l.filter(m=>m.canale==='fb'&&m!==fb||m.canale==='ig'&&m!==ig).forEach(m=>soc.push({tipo:'singolo',m}));
+ l.filter(m=>m.canale==='storia').forEach(m=>soc.push({tipo:'storia',m}));
+ return {wa,soc};
+}
+function testaEvento(e,dove){
+ return `<header class="topbar evbar"><a class="btn-icon" href="#" aria-label="Torna agli eventi">${ic('back')}</a>
+  <div class="tt"><b>${esc(breve(e))}</b><span class="t-meta">${esc(sotto(e))}</span></div>
+  <a class="btn-icon" href="${e.url}" target="_blank" rel="noopener" aria-label="Apri l'articolo sul sito">${ic('ext')}</a></header>`;
+}
+function viewEvento(e,tab){
+ const {wa,soc}=gruppi(e);const mats=MAT[e.id]||[];
+ const todoWa=wa.some(m=>daCompletare(e,m)),todoSoc=e.msgs.filter(attivo).filter(m=>m.canale!=='wa').some(m=>daCompletare(e,m));
+ const T=[['wa','chat','WhatsApp',wa.length,todoWa],['social','images','Social',soc.length,todoSoc],['stampa','print','Stampa',mats.filter(x=>!x.schermo).length,false],['info','info','Info','',false]];
+ const img=(wa.find(m=>m.img)||{}).img;
+ let pan='';
+ if(tab==='wa')pan=wa.length?wa.map(m=>cardMsg(e,m)).join(''):vuoto('Nessun messaggio WhatsApp per questo evento.');
+ if(tab==='social')pan=soc.length?soc.map(g=>g.tipo==='post'?cardPost(e,g):g.tipo==='storia'?cardMsg(e,g.m):cardMsg(e,g.m)).join(''):vuoto('Niente da pubblicare sui social per questo evento.');
+ if(tab==='stampa')pan=pannelloStampa(e);
+ if(tab==='info')pan=pannelloInfo(e);
+ return `<div class="app-in">${testaEvento(e)}
+ <div class="evhead"><div class="row" style="align-items:flex-start;gap:14px">
+  ${img?`<button class="thumb" style="width:84px;height:84px;flex:none" data-zoom="${img}" aria-label="Ingrandisci l'immagine dell'evento"><img src="${img}" alt=""></button>`:''}
+  <div style="display:flex;flex-direction:column;gap:8px;min-width:0"><span class="tag ${AREA(e)}" style="align-self:flex-start">${esc(e.quando)}</span><h1>${esc(e.titolo)}</h1></div></div>
+  <div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap">${statoPill(e)}<a class="lnk" href="${e.url}" target="_blank" rel="noopener">Articolo${ic('ext','s')}</a></div></div>
+ <div class="tabs" role="tablist" aria-label="Materiali dell'evento">${T.map(([k,i,n,c,d])=>`<a role="tab" href="#${e.id}${k==='wa'?'':'-'+k}" aria-selected="${k===tab}">${ic(i)}${n}${c!==''&&c?`<span class="n">${c}</span>`:''}${d?'<span class="dot" aria-label="da completare"></span>':''}</a>`).join('')}</div>
+ <div role="tabpanel" class="panel">${pan}</div></div>${tabbar('eventi')}`;
+}
+const vuoto=t=>`<div class="alert alert-info">${ic('info')}<span class="grow">${esc(t)}</span></div>`;
+
+/* riga messaggio */
+function cardMsg(e,m,focus){
+ const id=e.id+':'+m.id,aperto=focus||OPEN.has(id),todo=daCompletare(e,m),oggi=daOggi(m);
+ const tipo=m.canale==='storia'?'9:16 + adesivo link':m.img?(m.imgs?m.imgs.length+' immagini 4:5':'Con immagine'):'Solo testo';
+ const head=focus?'':`<button class="msg-h" data-apri="${id}" aria-expanded="${aperto}"><span class="ico">${ic(icoMsg(m))}</span><span class="txt"><b>${esc(m.label)}</b><span class="t-meta">${tipo} · ${esc(m.inv||'')}</span></span><span class="side">${oggi?'<span class="chip chip-today">Oggi</span>':''}${todo?'<span class="chip chip-todo">Da completare</span>':''}<span class="chevbox">${ic(aperto?'up':'down')}</span></span></button>`;
+ return `<section class="card msg ${todo?'todo':''} ${focus?'infocus':''}" id="m-${e.id}-${m.id}">${head}${aperto?`<div class="msg-b">${m.canale==='storia'?corpoStoria(e,m):corpoMsg(e,m)}</div>`:''}</section>`;
+}
+function bloccoFill(e,m){
+ const t=testoBase(e,m),q=quadre(t);if(!q.length)return '';
+ const f=fills(e,m);const n=q.filter(x=>!(f[x]&&f[x].trim())).length;
+ return `<div class="fill"><h3>${ic('alert')}${n?(n===1?'Manca ancora 1 parte':'Mancano ancora '+n+' parti'):'Tutto completato'}</h3>
+  ${q.map((x,i)=>{const v=f[x]||'';const lab=x.slice(1,-1);return `<div class="field"><label for="f-${e.id}-${m.id}-${i}">${esc(lab.charAt(0).toUpperCase()+lab.slice(1))}</label><input class="inp ${v.trim()?'done':''}" id="f-${e.id}-${m.id}-${i}" data-fill="${e.id}|${m.id}" data-q="${esc(x)}" value="${esc(v)}" placeholder="scrivi qui" autocomplete="off"></div>`}).join('')}
+  <p class="t-meta" style="margin:0;color:var(--warn-ink)">Quello che scrivi entra nel testo e resta salvato su questo telefono.</p></div>`;
+}
+function anteprimaTesto(e,m){
+ const f=fills(e,m);let h=esc(testoBase(e,m));
+ for(const q of quadre(testoBase(e,m))){const v=f[q]&&f[q].trim();h=h.split(esc(q)).join(v?`<span class="ph ok">${esc(v)}</span>`:`<span class="ph">${esc(q)}</span>`)}
+ return h;
+}
+function editor(e,m,etichetta){
+ const k=chiave(e,m),mod=store.get(k)!==null,id=e.id+':'+m.id,tutto=SHOW_ALL.has(id),q=quadre(testoBase(e,m)).length;
+ const ta=`<textarea class="editor ${tutto?'':'clip'}" data-k="${k}" data-ev="${e.id}" data-m="${m.id}" aria-label="${esc(etichetta)}" ${m.canale==='storia'?'rows="2"':''}>${esc(testoBase(e,m))}</textarea>`;
+ if(q&&!EDIT.has(id))return `<div class="editor-l"><span>${esc(etichetta)}</span><span class="t-meta">Anteprima</span></div><div class="editor anteprima">${anteprimaTesto(e,m)}</div>
+  <div class="row" style="justify-content:space-between;margin-top:-6px"><button class="more-text" data-edit="${id}">Modifica il testo</button></div>`;
+ return `<div class="editor-l"><span>${esc(etichetta)}</span>${mod?`<span class="chip chip-edit">${ic('edit','s')}Modificato</span>`:''}</div>${ta}
+  <div class="row" style="justify-content:space-between;margin-top:-6px"><button class="more-text" data-tutto="${id}">${tutto?'Riduci il testo':'Mostra tutto il testo'}</button>${mod?`<button class="btn btn-ghost muted" data-ripristina="${e.id}|${m.id}">${ic('undo','s')}Annulla modifiche</button>`:''}</div>`;
+}
+function tastoBloccato(e,m){const mm=mancanti(e,m);return `<button class="btn btn-pri locked" data-bloccato aria-disabled="true">${ic('lock')}Completa ${esc(mm.map(x=>x.slice(1,-1)).join(', '))}</button>`}
+function corpoMsg(e,m){
+ const todo=daCompletare(e,m);let media='',azioni='';
  if(m.canale==='wa'){
-  if(!m.img) return `<a class="btn wa" data-wa target="_blank" rel="noopener" href="${wa}" style="grid-column:1/-1">${ICO.wa}Manda su WhatsApp</a><button class="btn" data-copia style="grid-column:1/-1">${ICO.copy}Copia testo</button>`;
-  if(IN_CLAUDE) return `${salva}<button class="btn" data-copia>${ICO.copy}Copia testo</button><a class="btn wa" data-wa target="_blank" rel="noopener" href="${wa}" style="grid-column:1/-1">${ICO.wa}Manda su WhatsApp</a>`;
-  return `<button class="btn wa" data-condividi="testo" style="grid-column:1/-1">${ICO.wa}Condividi con immagine</button><button class="btn" data-copia>${ICO.copy}Copia testo</button><a class="btn" data-wa target="_blank" rel="noopener" href="${wa}">${ICO.wa}Solo testo</a>`;
+  if(m.img)media=`<div class="row" style="gap:14px;align-items:flex-end"><button class="thumb" style="width:132px;height:132px" data-zoom="${m.img}" aria-label="Ingrandisci l'immagine"><img src="${m.img}" alt="Immagine: ${esc(m.label)}" loading="lazy"><span class="zoom">${ic('zoom','s')}</span></button><div style="display:flex;flex-direction:column;gap:6px;padding-bottom:4px"><span class="fmt" style="align-self:flex-start">1:1</span><span class="t-meta">Parte insieme al testo</span></div></div>`;
+  azioni=todo?tastoBloccato(e,m):m.img?`<button class="btn btn-pri" data-condividi="testo" data-ev="${e.id}" data-m="${m.id}">${ic('share')}Condividi con immagine</button><p class="t-meta hint">Scegli WhatsApp, poi il gruppo o la lista broadcast.</p><div class="alt"><button class="btn btn-ghost" data-copia="${e.id}|${m.id}">${ic('copy','s')}Copia testo</button><a class="btn btn-ghost" data-wa="${e.id}|${m.id}" target="_blank" rel="noopener" href="#">${ic('text','s')}Manda solo testo</a></div>`
+   :`<a class="btn btn-pri" data-wa="${e.id}|${m.id}" target="_blank" rel="noopener" href="#">${ic('chat')}Manda su WhatsApp</a><p class="t-meta hint">Si apre WhatsApp con il testo: scegli il gruppo.</p><div class="alt"><button class="btn btn-ghost" data-copia="${e.id}|${m.id}">${ic('copy','s')}Copia testo</button></div>`;
+ } else {
+  const imgs=m.imgs||(m.img?[m.img]:[]);
+  if(imgs.length)media=`<div class="media">${imgs.map((u,i)=>`<button class="thumb" style="width:104px;height:130px" data-zoom="${u}" aria-label="Immagine ${i+1} di ${imgs.length}, ingrandisci"><img src="${u}" alt="" loading="lazy">${imgs.length>1?`<span class="num">${i+1}</span>`:''}</button>`).join('')}</div>${imgs.length>1?'<p class="t-meta" style="margin:-4px 0 0">Si pubblicano insieme, in quest\'ordine.</p>':''}`;
+  azioni=todo?tastoBloccato(e,m):`<button class="btn btn-pri" data-condividi="copia" data-ev="${e.id}" data-m="${m.id}">${ic('share')}${imgs.length>1?'Condividi le '+imgs.length+' immagini':'Condividi l\'immagine'}</button><p class="t-meta hint">La didascalia si copia da sola: nell'app tieni premuto e Incolla.</p><div class="alt"><button class="btn btn-ghost" data-copia="${e.id}|${m.id}">${ic('copy','s')}Copia solo la didascalia</button></div>`;
  }
- if(m.canale==='storia'){
-  if(IN_CLAUDE) return `${salva}<button class="btn" data-copia>${ICO.copy}Copia link</button>`;
-  return `<button class="btn wa" data-condividi="solo" style="grid-column:1/-1">${ICO.share}Condividi la storia</button><button class="btn" data-copia style="grid-column:1/-1">${ICO.copy}Copia link</button>`;
- }
- if(IN_CLAUDE) return `${salva}<button class="btn" data-copia>${ICO.copy}Copia didascalia</button>`;
- return `<button class="btn wa" data-condividi="copia" style="grid-column:1/-1">${ICO.share}Copia e condividi</button><button class="btn" data-copia ${m.imgs?'style="grid-column:1/-1"':''}>${ICO.copy}Copia didascalia</button>${m.imgs?'':salva}`;
+ return `${media}${m.nota?`<p class="nota">${esc(m.nota)}</p>`:''}${bloccoFill(e,m)}${editor(e,m,m.canale==='wa'?'Testo':'Didascalia')}<div class="actions">${azioni}</div>`;
 }
-function voce(e,m,aperto){
- const k=chiave(e,m);const t=store.get(k)??m.t;const storia=m.canale==='storia';
- const tipo=m.img?(storia?'Storia 9:16':(m.canale==='wa'?'Con l\'immagine':(m.imgs?'Carosello di '+m.imgs.length+' immagini 4:5':'Post 4:5'))):'Solo testo, senza immagine';
- return `<details ${aperto?'open':''} data-canale="${scheda(m)}">
-  <summary><span class="tit">${esc(m.label)}<span class="quando-invio">${tipo} · ${esc(m.inv)}</span></span><span class="freccia">${ICO.giu}</span></summary>
-  <div class="corpo">
-   ${m.img?`<div class="anteprima">${(m.imgs||[m.img]).map((u,i)=>`<img src="${u}" alt="Immagine ${i+1}: ${esc(m.label)}" data-zoom loading="lazy">`).join('')}<span>${m.imgs?'Tocca per ingrandire. Si pubblicano insieme, in quest\'ordine.':(storia?'Tocca per vederla intera':'Tocca per ingrandire')}</span></div>`:''}
-   ${m.nota?`<p class="nota">${esc(m.nota)}</p>`:''}
-   <label for="${e.id}-${m.id}" hidden>${esc(m.label)}</label>
-   <textarea id="${e.id}-${m.id}" data-k="${k}" data-ev="${e.id}" data-m="${m.id}" ${storia?'style="min-height:70px"':''}>${esc(t)}</textarea>
-   <div class="avviso" data-avviso hidden><span>⚠ Non ancora pronto: completa queste parti, poi potrai usarlo.</span><ul></ul></div>
-   <div class="azioni">${tasti(e,m,t)}</div>
-   <button class="ripristina" data-ripristina ${store.get(k)!==null?'':'hidden'}>Ripristina il testo originale</button>
-  </div></details>`;
+function cardPost(e,g){
+ const both=g.fb&&g.ig;if(!both)return cardMsg(e,g.fb||g.ig);
+ const id=e.id+':post',aperto=OPEN.has(id),sel=DIDA[e.id]||'ig',m=sel==='fb'?g.fb:g.ig;
+ const todo=daCompletare(e,g.fb)||daCompletare(e,g.ig),oggi=daOggi(g.fb)||daOggi(g.ig);
+ const n=(m.imgs||[m.img]).length;
+ const head=`<button class="msg-h" data-apri="${id}" aria-expanded="${aperto}"><span class="ico">${ic('images')}</span><span class="txt"><b>Post${n>1?' carosello':''}</b><span class="t-meta">Facebook e Instagram · ${n>1?n+' immagini 4:5':'immagine 4:5'}${m.inv?' · '+esc(m.inv):''}</span></span><span class="side">${oggi?'<span class="chip chip-today">Oggi</span>':''}${todo?'<span class="chip chip-todo">Da completare</span>':''}<span class="chevbox">${ic(aperto?'up':'down')}</span></span></button>`;
+ if(!aperto)return `<section class="card msg ${todo?'todo':''}" id="m-${e.id}-post">${head}</section>`;
+ const corpo=corpoMsg(e,m);const cut=corpo.indexOf('<div class="fill">')>=0?corpo.indexOf('<div class="fill">'):corpo.indexOf('<div class="editor-l">');
+ const sw=`<div style="display:flex;flex-direction:column;gap:8px"><span class="editor-l"><span>Didascalia per</span></span><div class="seg" role="tablist" aria-label="Didascalia"><button role="tab" data-dida="${e.id}|ig" aria-selected="${sel==='ig'}">Instagram</button><button role="tab" data-dida="${e.id}|fb" aria-selected="${sel==='fb'}">Facebook</button></div><span class="t-meta">Instagram: «link in bio» e hashtag. Facebook: con il link all'articolo.</span></div>`;
+ return `<section class="card msg ${todo?'todo':''}" id="m-${e.id}-post">${head}<div class="msg-b">${corpo.slice(0,cut)}${sw}${corpo.slice(cut)}</div></section>`;
+}
+function corpoStoria(e,m){
+ const todo=daCompletare(e,m);
+ return `<div class="row" style="gap:14px;align-items:flex-start"><button class="thumb" style="width:120px;height:213px;flex:none;border-radius:14px" data-zoom="${m.img}" aria-label="Ingrandisci la storia"><img src="${m.img}" alt="Immagine 9:16 della storia" loading="lazy"><span class="zoom">${ic('zoom','s')}</span></button>
+  <ol class="passi"><li><span class="badge nero">1</span><span><b>Condividi</b> e scegli Instagram › Storia.</span></li><li><span class="badge nero">2</span><span>Tocca l'icona degli <b>adesivi</b> › <b>Link</b>.</span></li><li><span class="badge nero">3</span><span>Tieni premuto e <b>Incolla</b>: il link è già copiato.</span></li></ol></div>
+  ${m.nota?`<p class="nota">${esc(m.nota)}</p>`:''}${bloccoFill(e,m)}
+  <div style="display:flex;flex-direction:column;gap:6px"><span class="editor-l"><span>Link per l'adesivo</span></span>
+  <div class="linkbox">${ic('link','s muted')}<input data-k="${chiave(e,m)}" data-ev="${e.id}" data-m="${m.id}" value="${esc(testoBase(e,m))}" aria-label="Link per l'adesivo"><button class="btn-icon" data-copia="${e.id}|${m.id}" aria-label="Copia il link">${ic('copy')}</button></div></div>
+  <div class="actions">${todo?tastoBloccato(e,m):`<button class="btn btn-pri" data-condividi="solo" data-ev="${e.id}" data-m="${m.id}">${ic('share')}Condividi la storia</button><p class="t-meta hint">Il link per l'adesivo si copia da solo.</p>`}</div>`;
 }
 
-function cardMat(e,x){
- const pdf=/\.pdf$/.test(x.file);const nome='nexus-'+x.file.split('/').pop();
- return `<div class="mat ${x.schermo?'schermo':''}" id="mat-${e.id}-${x.id}">
-  <div class="prev"><img src="${x.prev[0]}" alt="Anteprima: ${esc(x.tit)}" data-zoom loading="lazy">${x.prev.length>1?`<span class="fr">${x.come==='programma'?'+ pagine':'+ retro'}</span>`:''}</div>
-  <div class="dx"><h3>${esc(x.tit)}</h3>
-   <div class="fmt">${x.fmt.map(f=>`<span>${esc(f)}</span>`).join('')}</div>
-   <p class="come-st">${esc(COME[x.come]||'')}</p>
-   <div class="az"><a class="btn piccolo ${x.schermo?'':'wa'}" href="${x.file}" download="${nome}" ${pdf?'target="_blank" rel="noopener"':''}>${ICO.img}${pdf?'Scarica PDF':'Scarica'}</a><button class="btn piccolo" data-file="${x.file}" data-nome="${nome}">${ICO.share}Condividi</button></div>
-  </div></div>`;
-}
+/* Stampa e Info */
+const COME_B={volantini:['Fronte/retro sul lato corto.','Poi taglia lungo la linea tratteggiata.'],pieghevole:['Fronte/retro sul lato corto.','Poi piega a metà, copertina fuori.'],bacheca:['Solo fronte.','Va nella bacheca in sede.'],a3:['In sede se la stampante lo fa,','altrimenti copisteria con lo stesso PDF.'],programma:['PDF di più pagine.','Da mandare a chi chiede, o fronte/retro sul lato lungo.'],schermo:['Solo per schermo:','WhatsApp e sito, non per la stampa.']};
+const nomeFile=x=>'nexus-'+x.file.split('/').pop();
 function pannelloStampa(e){
  const l=MAT[e.id]||[];
- if(!l.length)return `<div class="manca">Per questo evento non ci sono ancora materiali da stampare. Se servono volantini A5, una locandina A4 per la bacheca o un A3, chiedili a Claude.</div>`;
- const st=l.filter(x=>!x.schermo);
- return l.map(x=>cardMat(e,x)).join('')+(st.length?'':`<div class="manca">Qui c'è solo l'immagine per schermo. Per la bacheca o i volantini va preparata la versione da stampare: chiedila a Claude.</div>`);
+ const regole=`<a class="alert alert-info" href="#stampa" style="font-size:14.5px">${ic('print')}<span class="grow">Sempre a <b>scala 100%</b>, mai «adatta alla pagina»</span><span class="lnk">Regole</span></a>`;
+ if(!l.length)return regole+vuoto('Per questo evento non ci sono ancora materiali da stampare. Se servono volantini A5, una locandina A4 per la bacheca o un A3, chiedili a Claude.');
+ return regole+l.map(x=>{const pdf=/\.pdf$/.test(x.file),c=COME_B[x.come]||['',''];const orizz=x.come==='volantini'||x.come==='pieghevole';
+  return `<article class="card pm ${x.schermo?'schermo':''}"><div class="prev"><button class="thumb" style="width:92px;height:${orizz?66:122}px" data-zoom="${x.prev[0]}" data-mat="${e.id}|${x.id}" aria-label="Ingrandisci: ${esc(x.tit)}"><img src="${x.prev[0]}" alt="" loading="lazy"></button>${x.prev.length>1?`<span class="t-meta" style="display:block;font-size:12px;margin-top:6px">${x.come==='programma'?'+ altre pagine':'+ retro'}</span>`:''}</div>
+  <div class="body"><h3 class="t-title">${esc(x.tit)}</h3><div class="fmts">${x.fmt.map(f=>`<span class="fmt">${esc(f)}</span>`).join('')}</div><p class="how"><b>${esc(c[0])}</b> ${esc(c[1])}</p>
+  <div class="acts"><a class="btn ${x.schermo?'btn-sec':'btn-pri'}" href="${x.file}" download="${nomeFile(x)}" ${pdf?'target="_blank" rel="noopener"':''}>${ic('download')}${pdf?'Scarica PDF':'Scarica'}</a><button class="btn-icon bordered" data-file="${x.file}" data-nome="${nomeFile(x)}" aria-label="Condividi: ${esc(x.tit)}">${ic('share')}</button></div></div></article>`}).join('');
 }
+const ibanSpazi=IBAN.replace(/(.{4})/g,'$1 ').trim();
 function pannelloInfo(e){
- const l=INFO[e.id]||[];
- const righe=l.map(([k,v,o])=>{o=o||{};
-  const val=o.copia?`<div class="copiabile"><code>${esc(v)}</code><button class="btn piccolo" data-copia-val="${esc(o.copia)}">${ICO.copy}Copia</button></div>`:o.link?`<a href="${o.link}" target="_blank" rel="noopener">${esc(v)}</a>`:esc(v);
-  return `<dt>${esc(k)}</dt><dd>${nQuadre(v)?`<span class="badge" style="margin:0">DA COMPLETARE</span>`:''}${val}</dd>`}).join('');
- return `${righe?`<dl class="scheda-info">${righe}</dl>`:''}
- <div class="az" style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn piccolo" href="${e.url}" target="_blank" rel="noopener" style="flex:1">Articolo sul sito</a><button class="btn piccolo" data-copia-val="${e.url}" style="flex:1">${ICO.copy}Copia link</button></div>
- <p class="nota">Pagamenti: bonifico a Nexus A.p.s., IBAN ${IBAN}, oppure Satispay (negozio Nexus A.p.s.). I dati sono anche in «Risorse».</p>`;
+ const l=INFO[e.id]||[];const caus=l.find(r=>r[0]==='Causale');
+ const righe=l.filter(r=>r[0]!=='Causale').map(([k,v,o])=>{o=o||{};const q=quadre(v).length;
+  return `<div class="kv-r"><span class="k">${esc(k)}</span><span class="v">${q?'<span class="chip chip-todo" style="margin-right:6px">Da completare</span>':''}${o.link?`<a href="${o.link}" target="_blank" rel="noopener">${esc(v)}</a>`:esc(v)}</span>${o.link?`<button class="btn-icon bordered" data-copia-val="${esc(o.link)}" aria-label="Copia il link: ${esc(k)}">${ic('copy')}</button>`:''}</div>`}).join('');
+ const art=`<div class="kv-r"><span class="k">Articolo</span><span class="v"><a href="${e.url}" target="_blank" rel="noopener">Apri sul sito</a></span><button class="btn-icon bordered" data-copia-val="${e.url}" aria-label="Copia il link dell'articolo">${ic('copy')}</button></div>`;
+ return `<p class="t-meta" style="margin:0 4px">Per rispondere a chi chiede: tocca ${ic('copy','s')} e incolla nella chat.</p>
+ <section class="card" style="padding:4px 8px 4px 16px"><div class="kv">${righe}${art}</div></section>
+ ${caus?`<div class="sec" style="margin:10px 4px 0"><h2>Pagamento</h2></div>
+ <section class="card" style="padding:14px 16px;display:flex;flex-direction:column;gap:14px">
+  <div class="copybox"><span class="editor-l"><span>Causale</span></span><div class="cb"><div class="val">${esc(caus[1])}</div><button class="btn btn-sec col" data-copia-val="${esc(caus[2].copia)}">${ic('copy')}Copia</button></div></div>
+  <div class="copybox"><span class="editor-l"><span>IBAN · bonifico a Nexus A.p.s.</span></span><div class="cb"><div class="val mono">${ibanSpazi}</div><button class="btn btn-sec col" data-copia-val="${IBAN}">${ic('copy')}Copia</button></div><span class="t-meta">Si copia senza spazi.</span></div>
+  <div class="kv-r" style="border:0;padding:0;min-height:0"><span class="k">Oppure</span><span class="v">Satispay, negozio «Nexus A.p.s.»</span></div></section>`:''}`;
 }
-function renderStampa(){
+
+/* ---------- VISTA «DA PUBBLICARE» (dai promemoria) ---------- */
+function viewFocus(e,m){
+ const altri=listaOggi().filter(([x,y])=>!(x.id===e.id&&y.id===m.id));
+ return `<div class="app-in focusview"><header class="topbar evbar"><a class="btn-icon" href="#" aria-label="Chiudi e apri tutto il kit">${ic('x')}</a>
+  <div class="tt"><b>${daOggi(m)?'Da pubblicare oggi':'Da pubblicare'}</b><span class="t-meta">${esc(breve(e))}</span></div><a class="btn btn-ghost" href="#" style="font-size:14px">Tutto il kit</a></header>
+ <main class="screen" style="padding-top:16px;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;flex-direction:column;gap:6px"><span class="kicker">${ic(m.canale==='wa'?'chat':icoMsg(m),'s')}${esc(canaleNome(m).toUpperCase())}${m.img&&m.canale==='wa'?' · CON IMMAGINE':''}</span><h1 class="h-focus">${esc(m.label)}</h1><a class="t-meta" href="#${e.id}${m.canale==='wa'?'':'-social'}" data-apri-dopo="${e.id}:${m.id}">${esc(e.titolo)} ›</a></div>
+  ${cardMsg(e,m,true)}
+  ${altri.length?`<a class="card next" href="#${altri[0][0].id}-${altri[0][1].id}">${ic('send','muted')}<span class="grow">Dopo: ${altri.length===1?'1 altro messaggio':altri.length+' altri messaggi'} per oggi</span>${ic('right','muted')}</a>`:''}
+ </main></div>`;
+}
+
+/* ---------- DA STAMPARE ---------- */
+let REGOLE_APERTE=store.get('kit4:regole')!=='chiuse';
+function viewStampa(){
  const ev=EVENTI.filter(e=>(MAT[e.id]||[]).some(x=>!x.schermo));
  const senza=EVENTI.filter(e=>e.msgs.some(attivo)&&!(MAT[e.id]||[]).some(x=>!x.schermo));
- $('#v-stampa').innerHTML=`<section class="guida"><h2>Come stampiamo in sede</h2><ol>
-  <li><b>Scala 100%</b> («dimensioni effettive»): mai «adatta alla pagina».</li>
-  <li><b>Volantini A5:</b> 2 per foglio A4, fronte/retro ribaltando sul <b>lato corto</b>, poi taglia a metà.</li>
-  <li><b>Bacheca:</b> locandina A4 solo fronte.</li>
-  <li><b>A3:</b> in sede se la stampante lo fa, altrimenti copisteria o tipografia online con lo stesso PDF.</li>
-  <li>Carta da 120–160 g per volantini e locandine; fai sempre <b>una prova</b> prima della tiratura.</li></ol></section>`
- +ev.map(e=>`<section class="gruppo"><h2>${esc(e.titolo.replace(/^Arkè i5sensi · /,''))}<small>${esc(e.quando)}</small></h2>${MAT[e.id].filter(x=>!x.schermo).map(x=>cardMat(e,x)).join('')}</section>`).join('')
- +(senza.length?`<section class="gruppo"><h2>Ancora senza materiali di stampa</h2><div class="manca">${senza.map(e=>esc(e.titolo.replace(/^Arkè i5sensi · /,''))).join(' · ')}<br>Se servono volantini o una locandina per la bacheca, chiedili a Claude.</div></section>`:'');
+ const regole=`<section class="card" id="regole"><button class="acc-h" data-regole aria-expanded="${REGOLE_APERTE}">${ic('print','l verde')}<span class="txt"><b>Come stampiamo in sede</b><small>Da leggere prima della prima stampa</small></span><span class="chevbox44">${ic(REGOLE_APERTE?'up':'down')}</span></button>
+  ${REGOLE_APERTE?`<ol class="passi" style="padding:0 16px 16px"><li><span class="badge nero">1</span><span><b>Scala 100%</b> («dimensioni effettive»), mai «adatta alla pagina».</span></li><li><span class="badge nero">2</span><span><b>Volantini A5:</b> 2 per A4, fronte/retro sul <b>lato corto</b>, poi taglia a metà.</span></li><li><span class="badge nero">3</span><span><b>Bacheca:</b> locandina A4 solo fronte.</span></li><li><span class="badge nero">4</span><span><b>A3:</b> in sede se la stampante lo fa, altrimenti copisteria con lo stesso PDF.</span></li><li><span class="badge nero">5</span><span>Carta 120–160 g. Fai sempre <b>una prova</b> prima della tiratura.</span></li></ol>`:''}</section>`;
+ const gr=ev.map(e=>{const l=MAT[e.id].filter(x=>!x.schermo),db=dataBox(e);
+  return `<div class="grp"><span class="date ${AREA(e)} mini ${db.cl||''}"><b>${esc(db.b)}</b><small>${esc(db.s)}</small></span><div style="display:flex;flex-direction:column;min-width:0"><b style="font-size:16px;font-weight:800">${esc(breve(e))}</b><span class="t-meta">${esc(e.quando)} · ${l.length===1?'1 materiale':l.length+' materiali'}</span></div></div>
+  <div class="card" style="overflow:hidden">${l.map((x,i)=>{const orizz=x.come==='volantini'||x.come==='pieghevole';return `<article class="matrow" ${i<l.length-1?'style="border-bottom:1px solid var(--line)"':''}><button class="thumb" style="width:56px;height:${orizz?40:74}px;flex:none" data-zoom="${x.prev[0]}" data-mat="${e.id}|${x.id}" aria-label="Ingrandisci: ${esc(x.tit)}"><img src="${x.prev[0]}" alt="" loading="lazy"></button>
+   <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px"><b style="font-size:15.5px;font-weight:800;line-height:1.25">${esc(x.tit)}</b><div class="fmts">${x.fmt.slice(0,2).map(f=>`<span class="fmt">${esc(f)}</span>`).join('')}</div></div>
+   <a class="btn btn-pri sq" href="${x.file}" download="${nomeFile(x)}" target="_blank" rel="noopener" aria-label="Scarica il PDF: ${esc(x.tit)}">${ic('download')}</a></article>`}).join('')}</div>`}).join('');
+ return `<div class="app-in">${topHome('Da stampare')}<main class="screen" style="display:flex;flex-direction:column;gap:10px">${regole}${gr}
+  <p class="t-meta" style="margin:4px 4px 0">Tocca la miniatura per vederla grande; da lì anche «Condividi».</p>
+  ${senza.length?`<div class="alert alert-info" style="align-items:flex-start">${ic('info')}<span class="grow" style="font-weight:600">Ancora senza materiali di stampa: ${esc(senza.map(breve).join(' · '))}. Se servono, chiedili a Claude.</span></div>`:''}
+ </main></div>${tabbar('stampa')}`;
 }
-function renderRisorse(){
- const lg=[['nexus-logo-colori.png','Nexus a colori','chiaro','su fondo bianco'],['nexus-logo-colori-su-scuro.png','Nexus a colori','scuro','su fondo scuro'],['nexus-logo-nero.png','Nexus nero','chiaro','su fondi colorati chiari'],['nexus-logo-bianco.png','Nexus bianco','foto','su foto e fondi colorati'],['arke-logo-colori.png','Arkè i5sensi','chiaro','su fondo bianco'],['arke-logo-bianco.png','Arkè i5sensi bianco','foto','su foto e fondi scuri']];
- $('#v-risorse').innerHTML=`<section class="guida"><h2>Dati dell'associazione</h2>
-  <dl class="scheda-info">
-   <dt>Nome</dt><dd>Nexus A.p.s.</dd>
-   <dt>IBAN</dt><dd><div class="copiabile"><code>${IBAN}</code><button class="btn piccolo" data-copia-val="${IBAN}">${ICO.copy}Copia</button></div></dd>
-   <dt>Satispay</dt><dd>Negozio «Nexus A.p.s.»</dd>
-   <dt>Sede</dt><dd>Via Fabio Filzi 10, Ghedi (BS)</dd>
-   <dt>WhatsApp</dt><dd><div class="copiabile"><code>331 763 4299</code><button class="btn piccolo" data-copia-val="331 763 4299">${ICO.copy}Copia</button></div></dd>
-   <dt>Email</dt><dd>nexusghedi@gmail.com</dd>
-   <dt>Sito</dt><dd><a href="${SITO}" target="_blank" rel="noopener">nexusghedi.it</a></dd>
-  </dl></section>
- <section class="guida"><h2>Loghi</h2><p>Su foto e fondi colorati usa il logo bianco (o nero sui colori chiari), così non sparisce.</p>
-  <div class="loghi">${lg.map(([f,n,b,d])=>`<div class="logo"><div class="fondo ${b}"><img src="risorse/${f}" alt="${esc(n)}" loading="lazy"></div><div class="lab"><span>${esc(n)}<br><small style="color:var(--muted);font-weight:600">${esc(d)}</small></span><a href="risorse/${f}" download="${f}">Scarica</a></div></div>`).join('')}</div></section>
- <section class="guida" id="comunicazioni"><h2>Cosa preparare per ogni comunicazione</h2><p>Tocca un caso per vedere cosa serve. Quello che non è indicato non serve.</p>
-  <div class="casi">${COMUNICAZIONI.map(([n,q,o])=>`<details class="caso"><summary><span class="tit">${esc(n)}<span class="quando-invio">${esc(q)}</span></span><span class="freccia">${ICO.giu}</span></summary><dl class="scheda-info">${Object.entries(o).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></details>`).join('')}</div></section>
- <section class="guida"><h2>Promemoria</h2><p>Ogni mattina il calendario Google «Promemoria comunicazioni» ricorda cosa mandare quel giorno, con il link diretto al messaggio in questo kit.</p></section>`;
-}
-let VISTA='eventi';
-function vista(v,scorri){
- VISTA=v;document.querySelectorAll('[data-vista]').forEach(b=>b.setAttribute('aria-selected',b.dataset.vista===v));
- $('#eventi').hidden=v!=='eventi';$('#indice').hidden=v!=='eventi';$('#oggi').hidden=v!=='eventi'||!$('#oggi').innerHTML;$('#sospesi').hidden=v!=='eventi'||!$('#sospesi').innerHTML;
- $('#v-stampa').hidden=v!=='stampa';$('#v-risorse').hidden=v!=='risorse';
- if(v==='stampa')renderStampa();if(v==='risorse')renderRisorse();
- if(scorri)window.scrollTo({top:0});
-}
-let CANALE={};
-try{CANALE=JSON.parse(store.get('kit3:canali')||'{}')}catch(e){}
-function render(){
- const ev=EVENTI.map(e=>({...e,msgs:e.msgs.filter(attivo)})).filter(e=>e.msgs.length||(MAT[e.id]||[]).length);
- $('#indice').innerHTML=ev.map(e=>`<a href="#${e.id}">${esc(e.quando)}</a>`).join('');
- $('#eventi').innerHTML=ev.map(e=>{
-  const c=CANALE[e.id]||'wa';const wa=e.msgs.find(m=>m.canale==='wa'&&m.img);
-  const conta=k=>k==='stampa'?(MAT[e.id]||[]).filter(x=>!x.schermo).length:k==='info'?'':e.msgs.filter(m=>scheda(m)===k).length;
-  return `<section class="evento" id="${e.id}">
-  <div class="testa">
-   ${wa?`<img src="${wa.img}" alt="Immagine: ${esc(e.titolo)}" data-zoom loading="lazy">`:'<span></span>'}
-   <div class="info">
-    <span class="quando" style="background:${e.col};${e.col.includes('corsi')?'color:#fff':''}">${esc(e.quando)}</span>
-    <h2>${esc(e.titolo)}</h2>
-    ${(e.stato||[]).filter(attivo).map(x=>`<span class="stato ${x.tipo}">${esc(x.t)}</span>`).join('')}
-    <div class="link"><a href="${e.url}" target="_blank" rel="noopener">Articolo sul sito</a></div>
-   </div>
-  </div>
-  <div class="canali" role="tablist">${Object.entries(SCHEDE).map(([k,n])=>`<button role="tab" aria-selected="${k===c}" data-canale-btn="${k}">${n} <span class="n">${conta(k)}</span></button>`).join('')}</div>
-  <p class="ev-avviso" data-evavviso hidden></p>
-  ${c==='stampa'?`<div class="pannello">${pannelloStampa(e)}</div>`:c==='info'?`<div class="pannello">${pannelloInfo(e)}</div>`:`<div class="msgs">${(()=>{const l=e.msgs.filter(m=>scheda(m)===c);return l.length?l.map((m,i)=>voce(e,m,i===0)).join(''):'<div class="vuoto">Niente da pubblicare qui per questo evento.</div>'})()}</div>`}
- </section>`}).join('');
- document.querySelectorAll('textarea[data-k]').forEach(aggiorna);
-}
-function aggiorna(ta){
- const c=ta.closest('.corpo');const parti=ta.value.match(/\[[^\]]+\]/g)||[];const n=parti.length;
- const av=c.querySelector('[data-avviso]');av.hidden=!n;
- av.querySelector('ul').innerHTML=parti.map(x=>`<li>${esc(x)}</li>`).join('');
- const w=c.querySelector('[data-wa]');if(w)w.href='https://wa.me/?text='+encodeURIComponent(ta.value);
- c.querySelectorAll('.azioni .btn:not([data-salva])').forEach(bt=>{bt.classList.toggle('bloccato',!!n);bt.setAttribute('aria-disabled',n?'true':'false')});
- c.querySelector('[data-ripristina]').hidden=store.get(ta.dataset.k)===null;
- const d=ta.closest('details');d.classList.toggle('dacompletare',!!n);
- const s=d.querySelector('summary');let b=s.querySelector('[data-badge]');
- if(n&&!b){b=document.createElement('span');b.className='badge';b.dataset.badge='';b.textContent='DA COMPLETARE';s.insertBefore(b,s.lastElementChild)}
- if(!n&&b)b.remove();
- riepilogo();
-}
-const GIORNO=['dom','lun','mar','mer','gio','ven','sab'][new Date().getDay()];
-const daOggi=m=>attivo(m)&&(m.invio||[]).some(d=>d===OGGI||d===GIORNO);
-function oggi(){
- const l=[];EVENTI.forEach(e=>e.msgs.filter(daOggi).forEach(m=>l.push({ev:e.id,m:m.id,c:scheda(m),label:m.label,tit:e.titolo,can:m.canale==='storia'?'Storia':CANALI[m.canale]})));
- const el=$('#oggi');el.hidden=!l.length;
- el.innerHTML=l.length?`<strong>📅 Da mandare oggi</strong>`+l.map(x=>`<a href="#${x.ev}" data-vai="${x.ev}|${x.m}|${x.c}">${esc(x.can)} · ${esc(x.label)} · ${esc(x.tit)}</a>`).join(''):'';
-}
-function riepilogo(){
- const lista=[];
- EVENTI.forEach(e=>{
-  const sec=document.getElementById(e.id);if(!sec)return;
-  const pend=e.msgs.filter(attivo).filter(m=>nQuadre(store.get(chiave(e,m))??m.t));
-  const ea=sec.querySelector('[data-evavviso]');ea.hidden=!pend.length;
-  ea.textContent=pend.length?`⚠ ${pend.length===1?'1 messaggio':pend.length+' messaggi'} da completare prima dell'invio`:'';
-  pend.forEach(m=>lista.push({ev:e.id,m:m.id,c:scheda(m),label:m.label,tit:e.titolo}));
- });
- const el=$('#sospesi');el.hidden=!lista.length;
- el.innerHTML=lista.length?`<strong>⚠ ${lista.length===1?'C\'è un messaggio':'Ci sono '+lista.length+' messaggi'} da completare</strong>`+lista.map(x=>`<a href="#${x.ev}" data-vai="${x.ev}|${x.m}|${x.c}">${esc(x.label)} · ${esc(x.tit)}</a>`).join(''):'';
-}
-render();oggi();
 
-document.addEventListener('input',ev=>{
- const ta=ev.target.closest('textarea[data-k]');if(!ta)return;
- store.set(ta.dataset.k,ta.value);aggiorna(ta);
-});
-async function copia(testo,ta){
- try{await navigator.clipboard.writeText(testo);return true}
- catch(e){if(ta){ta.focus();ta.select()}return false}
+/* ---------- RISORSE ---------- */
+let CASI_TUTTI=false;const CASO_APERTO=new Set([0]);
+function viewRisorse(){
+ const lg=[['nexus-logo-colori.png','A colori','su fondo chiaro','#ffffff'],['nexus-logo-bianco.png','Bianco','su colore o foto','#0e8534'],['nexus-logo-nero.png','Nero','su colori chiari','#f8ba32'],['nexus-logo-colori-su-scuro.png','A colori','su fondo scuro','#1d1d1b'],['arke-logo-colori.png','Arkè i5sensi','su fondo chiaro','#ffffff'],['arke-logo-bianco.png','Arkè i5sensi','su foto e fondi scuri','#2c3b52']];
+ const casi=COMUNICAZIONI.map(([n,q,o],i)=>{if(!CASI_TUTTI&&i>4)return '';const ap=CASO_APERTO.has(i);
+  return `<div class="acc"><button class="acc-h" data-caso="${i}" aria-expanded="${ap}"><span class="txt"><b>${esc(n)}</b><small>${esc(q)}</small></span><span class="chevbox44">${ic(ap?'up':'down')}</span></button>${ap?`<div class="kv" style="padding:0 16px 8px">${Object.entries(o).map(([k,v])=>`<div class="kv-r top"><span class="k">${esc(k)}</span><span class="v" style="font-size:14.5px">${esc(v)}</span></div>`).join('')}</div>`:''}</div>`}).join('');
+ return `<div class="app-in">${topHome('Risorse')}<main class="screen">
+ <div class="sec" style="margin-top:6px"><h2>Dati dell'associazione</h2></div>
+ <section class="card" style="padding:4px 8px 4px 16px"><div class="kv">
+  <div class="kv-r"><span class="k">Nome</span><span class="v">Nexus A.p.s.</span></div>
+  <div class="kv-r"><span class="k">IBAN</span><span class="v mono" style="font-size:14.5px">${ibanSpazi}</span><button class="btn-icon bordered" data-copia-val="${IBAN}" aria-label="Copia l'IBAN">${ic('copy')}</button></div>
+  <div class="kv-r"><span class="k">Satispay</span><span class="v">Negozio «Nexus A.p.s.»</span></div>
+  <div class="kv-r"><span class="k">WhatsApp</span><span class="v mono">331 763 4299</span><button class="btn-icon bordered" data-copia-val="3317634299" aria-label="Copia il numero WhatsApp">${ic('copy')}</button></div>
+  <div class="kv-r"><span class="k">Sede</span><span class="v">Via Fabio Filzi 10, Ghedi (BS)</span></div>
+  <div class="kv-r"><span class="k">Email</span><span class="v">nexusghedi@gmail.com</span><button class="btn-icon bordered" data-copia-val="nexusghedi@gmail.com" aria-label="Copia l'email">${ic('copy')}</button></div>
+  <div class="kv-r"><span class="k">Sito</span><span class="v"><a href="${SITO}" target="_blank" rel="noopener">nexusghedi.it</a></span></div></div></section>
+ <div class="sec" id="comunicazioni"><h2>Cosa preparare</h2><span>${COMUNICAZIONI.length} casi</span></div>
+ <section class="card" style="overflow:hidden">${casi}${CASI_TUTTI?'':`<div style="padding:4px 8px 8px;display:flex;justify-content:center"><button class="btn btn-ghost" data-casi>Mostra gli altri ${COMUNICAZIONI.length-5} casi${ic('down','s')}</button></div>`}</section>
+ <div class="sec"><h2>Loghi</h2><span>tocca per scaricare</span></div>
+ <div class="loghi">${lg.map(([f,n,d,bg])=>`<a class="card logo" href="risorse/${f}" download="${f}"><span class="fondo" style="background:${bg}">${'<img src="risorse/'+f+'" alt="" loading="lazy">'}</span><span class="lab"><span class="grow">${esc(n)}<small>${esc(d)}</small></span>${ic('download','verde')}</span></a>`).join('')}</div>
+ <div class="sec" id="guida"><h2>Guida rapida</h2></div>
+ <section class="card guida">
+  <div class="row top">${ic('cal','verde')}<span><b>Promemoria:</b> arrivano dal calendario Google «Promemoria comunicazioni» come «Da pubblicare: …». Il link apre il kit già sul messaggio.</span></div>
+  <div class="row top">${ic('chat','verde')}<span><b>WhatsApp:</b> tasto verde, scegli WhatsApp, poi il gruppo.</span></div>
+  <div class="row top">${ic('images','verde')}<span><b>Facebook e Instagram:</b> tasto verde, scegli l'app; nella didascalia tieni premuto e Incolla.</span></div>
+  <div class="row top">${ic('edit','verde')}<span><b>Testi:</b> puoi modificarli; le modifiche restano su questo telefono e si possono annullare.</span></div>
+  <div class="row top">${ic('alert','verde')}<span><b>Parti tra [quadre]:</b> vanno completate; finché mancano, il tasto verde resta bloccato.</span></div>
+ </section>
+ </main></div>${tabbar('risorse')}`;
 }
+
+/* ---------- ROUTER ---------- */
+let VISTA='';
+function trovaEv(h){return EVENTI.find(x=>h===x.id||h.startsWith(x.id+'-'))}
+function route(){
+ const h=decodeURIComponent(location.hash.slice(1));const app=$('#app');let html='',scroll=0,el=null;
+ if(!h){html=viewHome();VISTA='home'}
+ else if(h==='stampa'){html=viewStampa();VISTA='stampa'}
+ else if(h==='risorse'||h==='comunicazioni'||h==='guida'){html=viewRisorse();VISTA='risorse';el=h==='risorse'?null:h}
+ else{const e=trovaEv(h);
+  if(!e){html=viewHome();VISTA='home'}
+  else{const r=h.slice(e.id.length+1);
+   if(!r||r==='social'||r==='stampa'||r==='info'){html=viewEvento(e,r||'wa');VISTA='ev:'+e.id+':'+(r||'wa')}
+   else{const m=e.msgs.find(x=>x.id===r);
+    if(m){html=viewFocus(e,m);VISTA='focus'}else{html=viewEvento(e,'wa');VISTA='ev:'+e.id+':wa'}}}}
+ app.innerHTML=html;
+ if(el)setTimeout(()=>{const t=document.getElementById(el);if(t)t.scrollIntoView({block:'start'})},30);else window.scrollTo(0,scroll);
+ if(APRI_DOPO){const t=document.getElementById('m-'+APRI_DOPO.replace(':','-'));APRI_DOPO=null;if(t){t.scrollIntoView({block:'start'});t.classList.add('evidenzia');setTimeout(()=>t.classList.remove('evidenzia'),2400)}}
+}
+let APRI_DOPO=null;
+function rerender(keepScroll=true){const y=window.scrollY;route();if(keepScroll)window.scrollTo(0,y)}
+window.addEventListener('hashchange',()=>route());
+
+/* ---------- AZIONI ---------- */
+const toastEl=$('#toast');let tt;
+function toast(t,err){toastEl.innerHTML=`<span class="${err?'err':'ok'}">${ic(err?'x':'check','s')}</span><span class="grow">${esc(t)}</span>`;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,3200)}
+async function copia(t){try{await navigator.clipboard.writeText(t);return true}catch(e){return false}}
 async function blobDi(src){const r=await fetch(src);return await r.blob()}
+const trova=(ev,id)=>{const e=EVENTI.find(x=>x.id===ev);return [e,e.msgs.find(m=>m.id===id)]};
+function zoom(src,mat){const z=$('#zoom');z.querySelector('img').src=src;const a=z.querySelector('.zoom-az');
+ if(mat){const [ev,id]=mat.split('|');const x=(MAT[ev]||[]).find(y=>y.id===id);a.innerHTML=`<a class="btn btn-pri" href="${x.file}" download="${nomeFile(x)}" target="_blank" rel="noopener">${ic('download')}Scarica</a><button class="btn btn-sec" data-file="${x.file}" data-nome="${nomeFile(x)}">${ic('share')}Condividi</button>`;a.hidden=false}else{a.hidden=true}
+ z.hidden=false}
 document.addEventListener('click',async ev=>{
- const z=ev.target.closest('[data-zoom]');
- if(z){const zm=$('#zoom');zm.querySelector('img').src=z.src;zm.hidden=false;return}
- if(ev.target.closest('#zoom')){$('#zoom').hidden=true;return}
- const vb=ev.target.closest('[data-vista]');
- if(vb){vista(vb.dataset.vista,true);history.replaceState(null,'',vb.dataset.vista==='eventi'?location.pathname:'#'+vb.dataset.vista);return}
- const cv=ev.target.closest('[data-copia-val]');
- if(cv){toast(await copia(cv.dataset.copiaVal)?'Copiato':'Non riesco a copiare: tieni premuto sul testo');return}
- const fl=ev.target.closest('[data-file]');
- if(fl){try{const f=new File([await blobDi(fl.dataset.file)],fl.dataset.nome,{type:fl.dataset.file.endsWith('.pdf')?'application/pdf':'image/jpeg'});
-   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}
-   toast('Questo browser non condivide file: usa «Scarica»')}catch(err){if(err&&err.name!=='AbortError')toast('Condivisione non riuscita, riprova')}
-  return}
- const cb=ev.target.closest('[data-canale-btn]');
- if(cb){const sec=cb.closest('.evento');CANALE[sec.id]=cb.dataset.canaleBtn;store.set('kit3:canali',JSON.stringify(CANALE));render();document.getElementById(sec.id).scrollIntoView({block:'start'});return}
- const vai=ev.target.closest('[data-vai]');
- if(vai){ev.preventDefault();const [eid,mid,c]=vai.dataset.vai.split('|');CANALE[eid]=c;render();const t=document.getElementById(eid+'-'+mid);t.closest('details').open=true;t.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>t.focus({preventScroll:true}),400);return}
- const blk=ev.target.closest('.btn.bloccato');
- if(blk){ev.preventDefault();const t=blk.closest('.corpo').querySelector('textarea');toast('Prima completa le parti tra [quadre]');t.focus();return}
- const corpo=ev.target.closest('.corpo');if(!corpo)return;
- const ta=corpo.querySelector('textarea');const [e,m]=trova(ta.dataset.ev,ta.dataset.m);
- if(ev.target.closest('[data-copia]')){toast(await copia(ta.value,ta)?(m.canale==='storia'?'Link copiato':'Testo copiato'):'Testo selezionato: tieni premuto e scegli Copia');return}
- if(ev.target.closest('[data-ripristina]')){store.del(ta.dataset.k);ta.value=m.t;aggiorna(ta);toast('Testo originale ripristinato');return}
- const sh=ev.target.closest('[data-condividi]');
- if(sh){
-  const modo=sh.dataset.condividi;
-  if(modo==='copia'){await copia(ta.value,ta)}
+ const t=ev.target;
+ const z=t.closest('[data-zoom]');if(z){ev.preventDefault();zoom(z.dataset.zoom,z.dataset.mat);return}
+ if(t.closest('#zoom')&&!t.closest('.zoom-az')){$('#zoom').hidden=true;return}
+ const ap=t.closest('[data-apri]');if(ap){const k=ap.dataset.apri;OPEN.has(k)?OPEN.delete(k):OPEN.add(k);rerender();return}
+ const ad=t.closest('[data-apri-dopo]');if(ad){OPEN.add(ad.dataset.apriDopo);APRI_DOPO=ad.dataset.apriDopo;return}
+ const td=t.closest('[data-todo]');if(td){TODO_APERTO=!TODO_APERTO;rerender();return}
+ const tu=t.closest('[data-tutto]');if(tu){const k=tu.dataset.tutto;SHOW_ALL.has(k)?SHOW_ALL.delete(k):SHOW_ALL.add(k);rerender();return}
+ const ed=t.closest('[data-edit]');if(ed){EDIT.add(ed.dataset.edit);SHOW_ALL.add(ed.dataset.edit);rerender();return}
+ const di=t.closest('[data-dida]');if(di){const [e,c]=di.dataset.dida.split('|');DIDA[e]=c;rerender();return}
+ const rg=t.closest('[data-regole]');if(rg){REGOLE_APERTE=!REGOLE_APERTE;store.set('kit4:regole',REGOLE_APERTE?'aperte':'chiuse');rerender();return}
+ const cs=t.closest('[data-caso]');if(cs){const i=+cs.dataset.caso;CASO_APERTO.has(i)?CASO_APERTO.delete(i):CASO_APERTO.add(i);rerender();return}
+ if(t.closest('[data-casi]')){CASI_TUTTI=true;rerender();return}
+ if(t.closest('[data-bloccato]')){const s=t.closest('.msg-b');const f=s&&s.querySelector('.fill input:not(.done)');toast('Prima completa le parti mancanti',true);if(f)f.focus();return}
+ const rp=t.closest('[data-ripristina]');if(rp){const [e,m]=trova(...rp.dataset.ripristina.split('|'));store.del(chiave(e,m));rerender();toast('Testo originale ripristinato');return}
+ const cv=t.closest('[data-copia-val]');if(cv){toast(await copia(cv.dataset.copiaVal)?'Copiato':'Non riesco a copiare: tieni premuto sul testo',!1);return}
+ const cp=t.closest('[data-copia]');if(cp){const [e,m]=trova(...cp.dataset.copia.split('|'));toast(await copia(testoFinale(e,m))?(m.canale==='storia'?'Link copiato':'Testo copiato'):'Non riesco a copiare: tieni premuto sul testo');return}
+ const wa=t.closest('[data-wa]');if(wa){const [e,m]=trova(...wa.dataset.wa.split('|'));wa.href='https://wa.me/?text='+encodeURIComponent(testoFinale(e,m));return}
+ const fl=t.closest('[data-file]');if(fl){try{const f=new File([await blobDi(fl.dataset.file)],fl.dataset.nome,{type:fl.dataset.file.endsWith('.pdf')?'application/pdf':'image/'+(fl.dataset.file.endsWith('.png')?'png':'jpeg')});
+   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}toast('Questo browser non condivide file: usa «Scarica»',true)}catch(err){if(err&&err.name!=='AbortError')toast('Condivisione non riuscita, riprova',true)}return}
+ const sh=t.closest('[data-condividi]');
+ if(sh){const [e,m]=trova(sh.dataset.ev,sh.dataset.m);const modo=sh.dataset.condividi;const testo=testoFinale(e,m);
+  if(modo!=='testo')await copia(testo);
   try{const fs=await Promise.all((m.imgs||[m.img]).map(async(u,i)=>new File([await blobDi(u)],String(i+1).padStart(2,'0')+'-'+u.split('/').pop(),{type:'image/jpeg'})));
-   const dati=modo==='testo'?{files:fs,text:ta.value}:{files:fs};
    if(navigator.canShare&&navigator.canShare({files:fs})){
-    if(modo==='copia')toast('Didascalia copiata: nell\'app tieni premuto e scegli Incolla');
-    if(modo==='solo')toast('Poi aggiungi l\'adesivo link: il link è nel riquadro');
-    await navigator.share(dati);return}
-   toast('Questo browser non condivide immagini: usa «Salva immagine»')}
-  catch(err){if(err&&err.name==='AbortError')return;toast('Condivisione non riuscita, riprova')}
+    if(modo==='copia')toast('Didascalia copiata: nell\'app tieni premuto e Incolla');
+    if(modo==='solo')toast('Link copiato: aggiungilo con l\'adesivo Link');
+    await navigator.share(modo==='testo'?{files:fs,text:testo}:{files:fs});return}
+   toast('Questo browser non condivide immagini: tieni premuto sull\'immagine per salvarla',true)}
+  catch(err){if(err&&err.name==='AbortError')return;toast('Condivisione non riuscita, riprova',true)}
   return}
- if(ev.target.closest('[data-salva]')){
-  const nome='nexus-'+e.id+'-'+m.img.split('/').pop();
-  if(!dl){const zm=$('#zoom');zm.querySelector('img').src=m.img;zm.hidden=false;toast('Tieni premuto sull\'immagine per salvarla');return}
-  try{await dl.save({filename:nome,data:await blobDi(m.img)});toast('Immagine salvata nei download')}
-  catch(err){const c=err&&err.code;if(c==='declined')return;if(c==='rate_limited'){toast('Un attimo: c\'è già una richiesta aperta');return}
-   const zm=$('#zoom');zm.querySelector('img').src=m.img;zm.hidden=false;toast('Tieni premuto sull\'immagine per salvarla')}
- }
 });
-function apriHash(){
- const h=decodeURIComponent(location.hash.slice(1));if(!h)return;
- if(h==='stampa'||h==='risorse'){vista(h);return}
- if(h==='comunicazioni'){vista('risorse');setTimeout(()=>document.getElementById('comunicazioni').scrollIntoView({block:'start'}),60);return}
- if(VISTA!=='eventi')vista('eventi');
- const e=EVENTI.find(x=>h===x.id||h.startsWith(x.id+'-'));if(!e)return;
- const mid=h.slice(e.id.length+1);
- if(mid==='stampa'||mid==='info'){CANALE[e.id]=mid;render();setTimeout(()=>document.getElementById(e.id).scrollIntoView({block:'start'}),60);return}
- const m=mid&&e.msgs.find(x=>x.id===mid);
- if(m){CANALE[e.id]=scheda(m)}render();
- setTimeout(()=>{
-  if(!m){document.getElementById(e.id).scrollIntoView({block:'start'});return}
-  const t=document.getElementById(e.id+'-'+m.id);if(!t)return;const d=t.closest('details');if(d)d.open=true;
-  const box=d||t;box.scrollIntoView({behavior:'smooth',block:'start'});box.classList.add('evidenzia');setTimeout(()=>box.classList.remove('evidenzia'),2600)},60)}
-window.addEventListener('hashchange',apriHash);
-setTimeout(apriHash,0);
-if(IN_CLAUDE){(async()=>{try{dl=await window.claude.use('downloads')}catch(e){dl=null}})()}
+document.addEventListener('input',ev=>{
+ const t=ev.target;
+ if(t.matches('[data-k]')){store.set(t.dataset.k,t.value);const box=t.closest('.msg-b');
+  if(box){const [e,m]=trova(t.dataset.ev,t.dataset.m);const ch=box.querySelector('.editor-l');if(ch&&!ch.querySelector('.chip-edit')){ch.insertAdjacentHTML('beforeend',`<span class="chip chip-edit">${ic('edit','s')}Modificato</span>`)}
+   clearTimeout(window._ri);window._ri=setTimeout(()=>{const a=document.activeElement;const id=a&&a.id;const s=a&&a.selectionStart;if(quadre(t.value).length!==quadre(m.t).length||daCompletare(e,m)!==box.closest('.msg').classList.contains('todo')){rerender();const n=id&&document.getElementById(id);if(n){n.focus();try{n.setSelectionRange(s,s)}catch(x){}}}},600)}
+  return}
+ if(t.matches('[data-fill]')){const [ev2,id]=t.dataset.fill.split('|');const [e,m]=trova(ev2,id);const f=fills(e,m);f[t.dataset.q]=t.value;store.set(kFill(e,m),JSON.stringify(f));
+  t.classList.toggle('done',!!t.value.trim());
+  const box=t.closest('.msg-b');const pv=box&&box.querySelector('.editor.anteprima');if(pv)pv.innerHTML=anteprimaTesto(e,m);
+  clearTimeout(window._rf);window._rf=setTimeout(()=>{const cur=t.id,s=t.selectionStart;rerender();const n=document.getElementById(cur);if(n){n.focus();try{n.setSelectionRange(s,s)}catch(x){}}},700)}
+});
+/* tema scuro */
+const mq=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)');
+function tema(){$('#app').classList.toggle('dark',!!(mq&&mq.matches))}
+if(mq&&mq.addEventListener)mq.addEventListener('change',tema);
+tema();route();
 </script>
-
 </body>
 </html>
