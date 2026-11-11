@@ -9,7 +9,7 @@
 <link rel="icon" href="icona-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="icona-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Kit social Nexus</title>
+<title>Kit Nexus</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap">
 <style>
 /* Layout: una colonna da telefono; ogni evento ha tre schede (WhatsApp, Facebook, Instagram) con i messaggi pronti e i loro tasti */
@@ -42,7 +42,8 @@ h1{margin:0;font-size:1.75rem;line-height:1.15;font-weight:900;text-wrap:balance
 .come b{color:var(--fg)}
 nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 nav a{flex:none;text-decoration:none;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-weight:700;font-size:.85rem}
-.evento{background:var(--card);border-radius:18px;border:1px solid var(--line);overflow:hidden;scroll-margin-top:12px}
+.evento{background:var(--card);border-radius:18px;border:1px solid var(--line);overflow:hidden;scroll-margin-top:72px}
+details,.mat{scroll-margin-top:72px}
 .testa{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:14px;align-items:start}
 .testa img{width:96px;height:96px;object-fit:cover;border-radius:10px;display:block;background:var(--line);cursor:zoom-in}
 .testa .info{min-width:0;display:flex;flex-direction:column;gap:6px}
@@ -109,19 +110,70 @@ footer{color:var(--muted);font-size:.82rem}
 .nota{margin:0;font-size:.85rem;color:var(--muted);background:var(--bg);border-radius:10px;padding:8px 12px}
 .vuoto{padding:14px 16px;color:var(--muted);font-size:.9rem}
 .evidenzia{outline:3px solid #f2a900;outline-offset:3px;border-radius:14px;transition:outline-color .6s}
+/* viste principali e nuove schede */
+.viste{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.viste button{appearance:none;border:0;background:none;color:var(--muted);font:inherit;font-weight:800;font-size:.9rem;border-radius:10px;padding:9px 4px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.viste button[aria-selected="true"]{background:var(--fg);color:var(--bg)}
+.viste button:focus-visible{outline:2px solid var(--wa);outline-offset:2px}
+.canali{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px!important}
+.canali button{flex-direction:column;gap:0!important;padding:7px 2px!important;font-size:.78rem!important;min-width:0;line-height:1.2}
+.canali .n{font-size:.68rem}
+.canali .n:empty{display:none}
+.pannello{border-top:1px solid var(--line);padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px}
+.mat{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:start;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.mat .prev{display:flex;gap:4px}
+.mat .prev{position:relative}
+.mat .prev .fr{position:absolute;left:4px;bottom:4px;font-size:.62rem;font-weight:900;background:var(--fg);color:var(--bg);border-radius:6px;padding:0 5px}
+.mat .prev img{width:84px;height:auto;max-height:110px;object-fit:contain;border:1px solid var(--line);border-radius:6px;background:#fff;display:block;cursor:zoom-in}
+.mat .dx{min-width:0;display:flex;flex-direction:column;gap:6px}
+.mat h3{margin:0;font-size:1rem;line-height:1.25;font-weight:800}
+.mat .fmt{display:flex;flex-wrap:wrap;gap:4px}
+.mat .fmt span{font-size:.72rem;font-weight:800;letter-spacing:.04em;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--muted)}
+.mat .come-st{margin:0;font-size:.85rem;color:var(--muted);line-height:1.45}
+.mat .az{display:flex;gap:8px;flex-wrap:wrap}
+.mat .az .btn{flex:1 1 92px;white-space:nowrap}
+.mat.schermo{border-style:dashed}
+.gruppo{display:flex;flex-direction:column;gap:10px}
+.gruppo>h2{margin:6px 0 0;font-size:1.05rem;font-weight:900}
+.gruppo>h2 small{font-weight:700;color:var(--muted);font-size:.8rem;margin-left:6px}
+.scheda-info{margin:0;display:grid;grid-template-columns:auto 1fr;gap:0}
+.scheda-info dt,.scheda-info dd{margin:0;padding:9px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.scheda-info dt{font-weight:800;color:var(--muted);padding-right:14px;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;padding-top:11px}
+.scheda-info dd{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.copiabile{display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%}
+.copiabile code{font-family:inherit;font-weight:800;background:var(--field);border:1px solid var(--line);border-radius:8px;padding:4px 8px;word-break:break-all}
+.guida{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.guida h2{margin:0;font-size:1.1rem;font-weight:900}
+.guida ol,.guida ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;font-size:.92rem}
+.guida p{margin:0;font-size:.92rem;color:var(--muted)}
+.loghi{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.logo{border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;background:var(--card)}
+.logo .fondo{height:86px;display:grid;place-items:center;padding:12px}
+.logo .fondo img{max-height:60px;max-width:100%}
+.logo .fondo.chiaro{background:#ffffff}.logo .fondo.scuro{background:#1d1d1b}.logo .fondo.foto{background:linear-gradient(135deg,#5a6b4a,#2c3b52)}
+.logo .lab{padding:8px 10px;font-size:.82rem;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.logo .lab a{font-weight:800;color:var(--wa);text-decoration:none;white-space:nowrap}
+.manca{font-size:.88rem;color:var(--muted);background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:10px 12px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Kit social</h1>
-    <p class="lead">Immagini e testi pronti per WhatsApp, Facebook e Instagram, evento per evento. Puoi modificare il testo prima di usarlo.</p>
+    <h1>Kit Nexus</h1>
+    <p class="lead">Tutto quello che serve per comunicare gli eventi: messaggi per WhatsApp, Facebook e Instagram, materiali da stampare, dati utili. Puoi modificare i testi prima di usarli.</p>
     <ul class="come" id="come"></ul>
   </header>
+  <div class="viste" role="tablist" aria-label="Sezioni del kit">
+    <button role="tab" data-vista="eventi" aria-selected="true">Eventi</button>
+    <button role="tab" data-vista="stampa" aria-selected="false">Da stampare</button>
+    <button role="tab" data-vista="risorse" aria-selected="false">Risorse</button>
+  </div>
   <nav id="indice" aria-label="Eventi"></nav>
   <div class="oggi" id="oggi" hidden></div>
   <div class="sospesi" id="sospesi" role="status" hidden></div>
   <main id="eventi" style="display:flex;flex-direction:column;gap:22px"></main>
+  <main id="v-stampa" style="display:flex;flex-direction:column;gap:18px" hidden></main>
+  <main id="v-risorse" style="display:flex;flex-direction:column;gap:18px" hidden></main>
   <footer>Le parti tra [quadre] vanno completate prima dell'invio. Le modifiche al testo restano su questo telefono.</footer>
 </div>
 <div class="toast" id="toast" hidden></div>
@@ -434,8 +486,45 @@ Info: link in bio.
 ${TAG} #AttivaMente #Laboratori #StareInsieme`},
  {id:'storia',canale:'storia',label:'Storia Instagram',inv:'Ogni tanto, per farlo conoscere',img:'img/storia-attiva-mente.jpg',nota:'Aggiungi l\'adesivo «Link» in basso con il testo INFO. Il link è qui sotto.',t:`${SITO}2026/09/28/riparte-attiva-mente-ottobre-2026/`}]}
 ];
+/* MATERIALI DA STAMPARE (e da schermo). tipo: volantino | pieghevole | locandina | programma | schermo */
+const ST='stampa/',AN='stampa/anteprime/';
+const COME={
+ volantini:'Stampa fronte/retro, ribalta sul lato corto, scala 100% (mai «adatta alla pagina»). Ogni foglio A4 dà 2 volantini: taglia lungo la linea tratteggiata.',
+ pieghevole:'Stampa fronte/retro, ribalta sul lato corto, scala 100%. Poi piega a metà: la copertina va fuori.',
+ bacheca:'Stampa solo fronte su A4, scala 100%. Per la bacheca in sede.',
+ a3:'A3 solo fronte. Se la stampante della sede non fa A3, mandalo in copisteria o a una tipografia online: il file è già pronto.',
+ programma:'PDF di più pagine con il programma completo, da mandare a chi chiede dettagli o da stampare fronte/retro sul lato lungo per gli iscritti.',
+ schermo:'Immagine per schermo (WhatsApp, sito): non è pensata per la stampa.'
+};
+const MAT={
+ dresda:[
+  {id:'volantini',tit:'Volantini A5 fronte/retro',fmt:['A5','2 per foglio A4','fronte/retro'],file:ST+'dresda-volantini-A5-2perfoglio-fronte-retro.pdf',prev:[AN+'dresda-volantini-A5-2perfoglio-fronte-retro-1.jpg',AN+'dresda-volantini-A5-2perfoglio-fronte-retro-2.jpg'],come:'volantini'},
+  {id:'bacheca',tit:'Locandina A4 per la bacheca',fmt:['A4','solo fronte'],file:ST+'dresda-locandina-A4-bacheca.pdf',prev:[AN+'dresda-locandina-A4-bacheca-1.jpg'],come:'bacheca'},
+  {id:'a3',tit:'Locandina A3',fmt:['A3','solo fronte'],file:ST+'dresda-locandina-A3.pdf',prev:[AN+'dresda-locandina-A3-1.jpg'],come:'a3'},
+  {id:'programma',tit:'Programma completo',fmt:['PDF','6 pagine A4'],file:ST+'dresda-programma-completo.pdf',prev:[AN+'dresda-programma-completo-1.jpg',AN+'dresda-programma-completo-2.jpg'],come:'programma'}],
+ tunisia:[
+  {id:'pieghevole',tit:'Pieghevole 4 facciate',fmt:['A4 piegato in A5','fronte/retro'],file:ST+'tunisia-pieghevole-A4-fronte-retro.pdf',prev:[AN+'tunisia-pieghevole-A4-fronte-retro-1.jpg',AN+'tunisia-pieghevole-A4-fronte-retro-2.jpg'],come:'pieghevole'},
+  {id:'programma',tit:'Programma completo',fmt:['PDF','6 pagine A4'],file:ST+'tunisia-programma-completo.pdf',prev:[AN+'tunisia-programma-completo-1.jpg',AN+'tunisia-programma-completo-2.jpg'],come:'programma'}],
+ laudato:[
+  {id:'bacheca',tit:'Locandina A4 (della parrocchia)',fmt:['A4','solo fronte'],file:ST+'laudato-locandina-A4.pdf',prev:[AN+'laudato-locandina-A4-1.jpg'],come:'bacheca'}],
+ salento:[{id:'web',tit:'Locandina per schermo',fmt:['immagine 9:16'],file:'img/nexus-2026-12-salento.jpg',prev:['img/nexus-2026-12-salento.jpg'],come:'schermo',schermo:true}],
+ fontanellato:[{id:'web',tit:'Locandina per schermo',fmt:['immagine 9:16'],file:'img/nexus-2026-11-arke-fontanellato-locandina.jpg',prev:['img/nexus-2026-11-arke-fontanellato-locandina.jpg'],come:'schermo',schermo:true}],
+ attivamente:[{id:'web',tit:'Locandina per schermo',fmt:['immagine 1:1'],file:'img/nexus-2026-10-attiva-mente.jpg',prev:['img/nexus-2026-10-attiva-mente.jpg'],come:'schermo',schermo:true}]
+};
+/* SCHEDA INFO: [etichetta, valore, {copia:testo} | {link:url}] */
+const IBAN='IT79G0857554570000000015816';
+const INFO={
+ fontanellato:[['Data','Sabato 21 novembre 2026'],['Partenza','Ore 13:00, parcheggio di via dei Fontanili, Ghedi'],['Rientro','Partenza verso le 19:30, a Ghedi in serata'],['Quota','Compresa nel corso Arkè i5sensi per gli iscritti'],['Singola uscita','[quota da definire] per chi non è iscritto, se ci sono posti']],
+ laudato:[['Data','Sabato 28 novembre 2026, ore 20:30'],['Luogo','Teatro Il Gabbiano, Ghedi'],['Ingresso','Libero, fino a esaurimento posti'],['Con','Elisa Mastromatteo e Letizia Pari, a cura di Nexus']],
+ salento:[['Date','5–10 dicembre 2026'],['Andata','Sab 5: bus da Ghedi a Linate, volo per Bari alle 8:55'],['Rientro','Gio 10: volo Bari–Linate alle 18:30, a Ghedi in tarda serata'],['Quota','1.895 € in doppia · 2.115 € in singola (acconto 200 € già versato)'],['Saldo','Entro domenica 15 novembre'],['Causale','Viaggio in Salento – Nome e Cognome',{copia:'Viaggio in Salento – Nome e Cognome'}],['Incontro','Martedì 1 dicembre, ore 20:30, in sede']],
+ milano:[['Data','Martedì 29 dicembre 2026'],['Ritrovo','Ore 7:30, [luogo], Ghedi'],['Rientro','Partenza da Milano alle 19:30'],['Iscrizioni','Al completo · lista d\'attesa su WhatsApp']],
+ tunisia:[['Date','7–12 febbraio 2027'],['Ritrovo','Parcheggio di via dei Fontanili, Ghedi'],['Quota','1.690 € con 25 partecipanti · 1.750 € con 20 · singola +180 €'],['Documenti','Passaporto valido almeno 3 mesi dopo il rientro'],['Iscrizioni','Chiuse il 15 novembre · lista d\'attesa'],['Causale','Viaggio in Tunisia – Nome e Cognome',{copia:'Viaggio in Tunisia – Nome e Cognome'}]],
+ dresda:[['Date','29 marzo – 4 aprile 2027'],['Quota','2.495 € con 25 partecipanti · 2.395 € con 30 · singola +360 €'],['Iscrizioni','Entro il 15 novembre'],['Modulo','forms.gle/r8hEiu6XuN5mHhUL8',{link:'https://forms.gle/r8hEiu6XuN5mHhUL8'}],['Acconto','200 € entro una settimana (215 € con la tessera)'],['Causale','Viaggio a Dresda e Praga – Nome e Cognome',{copia:'Viaggio a Dresda e Praga – Nome e Cognome'}]],
+ attivamente:[['Quando','Ogni martedì, 15–17'],['Dove','Sede Nexus, via Fabio Filzi 10, Ghedi'],['Per chi','Gratuito per i soci, non serve esperienza']]
+};
 
 const CANALI={wa:'WhatsApp',fb:'Facebook',ig:'Instagram'};
+const SCHEDE={...CANALI,stampa:'Stampa',info:'Info'};
 const $=(s,el=document)=>el.querySelector(s);
 const OGGI=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})();
 const attivo=m=>(!m.dal||OGGI>=m.dal)&&(!m.fino||OGGI<=m.fino);
@@ -491,14 +580,78 @@ function voce(e,m,aperto){
    <button class="ripristina" data-ripristina ${store.get(k)!==null?'':'hidden'}>Ripristina il testo originale</button>
   </div></details>`;
 }
+
+function cardMat(e,x){
+ const pdf=/\.pdf$/.test(x.file);const nome='nexus-'+x.file.split('/').pop();
+ return `<div class="mat ${x.schermo?'schermo':''}" id="mat-${e.id}-${x.id}">
+  <div class="prev"><img src="${x.prev[0]}" alt="Anteprima: ${esc(x.tit)}" data-zoom loading="lazy">${x.prev.length>1?`<span class="fr">${x.come==='programma'?'+ pagine':'+ retro'}</span>`:''}</div>
+  <div class="dx"><h3>${esc(x.tit)}</h3>
+   <div class="fmt">${x.fmt.map(f=>`<span>${esc(f)}</span>`).join('')}</div>
+   <p class="come-st">${esc(COME[x.come]||'')}</p>
+   <div class="az"><a class="btn piccolo ${x.schermo?'':'wa'}" href="${x.file}" download="${nome}" ${pdf?'target="_blank" rel="noopener"':''}>${ICO.img}${pdf?'Scarica PDF':'Scarica'}</a><button class="btn piccolo" data-file="${x.file}" data-nome="${nome}">${ICO.share}Condividi</button></div>
+  </div></div>`;
+}
+function pannelloStampa(e){
+ const l=MAT[e.id]||[];
+ if(!l.length)return `<div class="manca">Per questo evento non ci sono ancora materiali da stampare. Se servono volantini A5, una locandina A4 per la bacheca o un A3, chiedili a Claude.</div>`;
+ const st=l.filter(x=>!x.schermo);
+ return l.map(x=>cardMat(e,x)).join('')+(st.length?'':`<div class="manca">Qui c'è solo l'immagine per schermo. Per la bacheca o i volantini va preparata la versione da stampare: chiedila a Claude.</div>`);
+}
+function pannelloInfo(e){
+ const l=INFO[e.id]||[];
+ const righe=l.map(([k,v,o])=>{o=o||{};
+  const val=o.copia?`<div class="copiabile"><code>${esc(v)}</code><button class="btn piccolo" data-copia-val="${esc(o.copia)}">${ICO.copy}Copia</button></div>`:o.link?`<a href="${o.link}" target="_blank" rel="noopener">${esc(v)}</a>`:esc(v);
+  return `<dt>${esc(k)}</dt><dd>${nQuadre(v)?`<span class="badge" style="margin:0">DA COMPLETARE</span>`:''}${val}</dd>`}).join('');
+ return `${righe?`<dl class="scheda-info">${righe}</dl>`:''}
+ <div class="az" style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn piccolo" href="${e.url}" target="_blank" rel="noopener" style="flex:1">Articolo sul sito</a><button class="btn piccolo" data-copia-val="${e.url}" style="flex:1">${ICO.copy}Copia link</button></div>
+ <p class="nota">Pagamenti: bonifico a Nexus A.p.s., IBAN ${IBAN}, oppure Satispay (negozio Nexus A.p.s.). I dati sono anche in «Risorse».</p>`;
+}
+function renderStampa(){
+ const ev=EVENTI.filter(e=>(MAT[e.id]||[]).some(x=>!x.schermo));
+ const senza=EVENTI.filter(e=>e.msgs.some(attivo)&&!(MAT[e.id]||[]).some(x=>!x.schermo));
+ $('#v-stampa').innerHTML=`<section class="guida"><h2>Come stampiamo in sede</h2><ol>
+  <li><b>Scala 100%</b> («dimensioni effettive»): mai «adatta alla pagina».</li>
+  <li><b>Volantini A5:</b> 2 per foglio A4, fronte/retro ribaltando sul <b>lato corto</b>, poi taglia a metà.</li>
+  <li><b>Bacheca:</b> locandina A4 solo fronte.</li>
+  <li><b>A3:</b> in sede se la stampante lo fa, altrimenti copisteria o tipografia online con lo stesso PDF.</li>
+  <li>Carta da 120–160 g per volantini e locandine; fai sempre <b>una prova</b> prima della tiratura.</li></ol></section>`
+ +ev.map(e=>`<section class="gruppo"><h2>${esc(e.titolo.replace(/^Arkè i5sensi · /,''))}<small>${esc(e.quando)}</small></h2>${MAT[e.id].filter(x=>!x.schermo).map(x=>cardMat(e,x)).join('')}</section>`).join('')
+ +(senza.length?`<section class="gruppo"><h2>Ancora senza materiali di stampa</h2><div class="manca">${senza.map(e=>esc(e.titolo.replace(/^Arkè i5sensi · /,''))).join(' · ')}<br>Se servono volantini o una locandina per la bacheca, chiedili a Claude.</div></section>`:'');
+}
+function renderRisorse(){
+ const lg=[['nexus-logo-colori.png','Nexus a colori','chiaro','su fondo bianco'],['nexus-logo-colori-su-scuro.png','Nexus a colori','scuro','su fondo scuro'],['nexus-logo-nero.png','Nexus nero','chiaro','su fondi colorati chiari'],['nexus-logo-bianco.png','Nexus bianco','foto','su foto e fondi colorati'],['arke-logo-colori.png','Arkè i5sensi','chiaro','su fondo bianco'],['arke-logo-bianco.png','Arkè i5sensi bianco','foto','su foto e fondi scuri']];
+ $('#v-risorse').innerHTML=`<section class="guida"><h2>Dati dell'associazione</h2>
+  <dl class="scheda-info">
+   <dt>Nome</dt><dd>Nexus A.p.s.</dd>
+   <dt>IBAN</dt><dd><div class="copiabile"><code>${IBAN}</code><button class="btn piccolo" data-copia-val="${IBAN}">${ICO.copy}Copia</button></div></dd>
+   <dt>Satispay</dt><dd>Negozio «Nexus A.p.s.»</dd>
+   <dt>Sede</dt><dd>Via Fabio Filzi 10, Ghedi (BS)</dd>
+   <dt>WhatsApp</dt><dd><div class="copiabile"><code>331 763 4299</code><button class="btn piccolo" data-copia-val="331 763 4299">${ICO.copy}Copia</button></div></dd>
+   <dt>Email</dt><dd>nexusghedi@gmail.com</dd>
+   <dt>Sito</dt><dd><a href="${SITO}" target="_blank" rel="noopener">nexusghedi.it</a></dd>
+  </dl></section>
+ <section class="guida"><h2>Loghi</h2><p>Su foto e fondi colorati usa il logo bianco (o nero sui colori chiari), così non sparisce.</p>
+  <div class="loghi">${lg.map(([f,n,b,d])=>`<div class="logo"><div class="fondo ${b}"><img src="risorse/${f}" alt="${esc(n)}" loading="lazy"></div><div class="lab"><span>${esc(n)}<br><small style="color:var(--muted);font-weight:600">${esc(d)}</small></span><a href="risorse/${f}" download="${f}">Scarica</a></div></div>`).join('')}</div></section>
+ <section class="guida"><h2>Quale comunicazione richiede cosa</h2><p>La tabella con tutti i casi (nuovo evento, ultimi posti, posto libero, saldo, partenza…) e cosa preparare per ognuno.</p>
+  <a class="btn piccolo" href="https://docs.google.com/spreadsheets/d/1mh9AHERP3e6r0XhPOZ835tnZm98-USH2Kygu1bvCa1s/edit" target="_blank" rel="noopener">Apri la tabella</a></section>
+ <section class="guida"><h2>Promemoria</h2><p>Ogni mattina il calendario Google «Promemoria comunicazioni» ricorda cosa mandare quel giorno, con il link diretto al messaggio in questo kit.</p></section>`;
+}
+let VISTA='eventi';
+function vista(v,scorri){
+ VISTA=v;document.querySelectorAll('[data-vista]').forEach(b=>b.setAttribute('aria-selected',b.dataset.vista===v));
+ $('#eventi').hidden=v!=='eventi';$('#indice').hidden=v!=='eventi';$('#oggi').hidden=v!=='eventi'||!$('#oggi').innerHTML;$('#sospesi').hidden=v!=='eventi'||!$('#sospesi').innerHTML;
+ $('#v-stampa').hidden=v!=='stampa';$('#v-risorse').hidden=v!=='risorse';
+ if(v==='stampa')renderStampa();if(v==='risorse')renderRisorse();
+ if(scorri)window.scrollTo({top:0});
+}
 let CANALE={};
 try{CANALE=JSON.parse(store.get('kit3:canali')||'{}')}catch(e){}
 function render(){
- const ev=EVENTI.map(e=>({...e,msgs:e.msgs.filter(attivo)})).filter(e=>e.msgs.length);
+ const ev=EVENTI.map(e=>({...e,msgs:e.msgs.filter(attivo)})).filter(e=>e.msgs.length||(MAT[e.id]||[]).length);
  $('#indice').innerHTML=ev.map(e=>`<a href="#${e.id}">${esc(e.quando)}</a>`).join('');
  $('#eventi').innerHTML=ev.map(e=>{
   const c=CANALE[e.id]||'wa';const wa=e.msgs.find(m=>m.canale==='wa'&&m.img);
-  const conta=k=>e.msgs.filter(m=>scheda(m)===k).length;
+  const conta=k=>k==='stampa'?(MAT[e.id]||[]).filter(x=>!x.schermo).length:k==='info'?'':e.msgs.filter(m=>scheda(m)===k).length;
   return `<section class="evento" id="${e.id}">
   <div class="testa">
    ${wa?`<img src="${wa.img}" alt="Immagine: ${esc(e.titolo)}" data-zoom loading="lazy">`:'<span></span>'}
@@ -509,9 +662,9 @@ function render(){
     <div class="link"><a href="${e.url}" target="_blank" rel="noopener">Articolo sul sito</a></div>
    </div>
   </div>
-  <div class="canali" role="tablist">${Object.entries(CANALI).map(([k,n])=>`<button role="tab" aria-selected="${k===c}" data-canale-btn="${k}">${n} <span class="n">${conta(k)}</span></button>`).join('')}</div>
+  <div class="canali" role="tablist">${Object.entries(SCHEDE).map(([k,n])=>`<button role="tab" aria-selected="${k===c}" data-canale-btn="${k}">${n} <span class="n">${conta(k)}</span></button>`).join('')}</div>
   <p class="ev-avviso" data-evavviso hidden></p>
-  <div class="msgs">${(()=>{const l=e.msgs.filter(m=>scheda(m)===c);return l.length?l.map((m,i)=>voce(e,m,i===0)).join(''):'<div class="vuoto">Niente da pubblicare qui per questo evento.</div>'})()}</div>
+  ${c==='stampa'?`<div class="pannello">${pannelloStampa(e)}</div>`:c==='info'?`<div class="pannello">${pannelloInfo(e)}</div>`:`<div class="msgs">${(()=>{const l=e.msgs.filter(m=>scheda(m)===c);return l.length?l.map((m,i)=>voce(e,m,i===0)).join(''):'<div class="vuoto">Niente da pubblicare qui per questo evento.</div>'})()}</div>`}
  </section>`}).join('');
  document.querySelectorAll('textarea[data-k]').forEach(aggiorna);
 }
@@ -562,6 +715,15 @@ document.addEventListener('click',async ev=>{
  const z=ev.target.closest('[data-zoom]');
  if(z){const zm=$('#zoom');zm.querySelector('img').src=z.src;zm.hidden=false;return}
  if(ev.target.closest('#zoom')){$('#zoom').hidden=true;return}
+ const vb=ev.target.closest('[data-vista]');
+ if(vb){vista(vb.dataset.vista,true);history.replaceState(null,'',vb.dataset.vista==='eventi'?location.pathname:'#'+vb.dataset.vista);return}
+ const cv=ev.target.closest('[data-copia-val]');
+ if(cv){toast(await copia(cv.dataset.copiaVal)?'Copiato':'Non riesco a copiare: tieni premuto sul testo');return}
+ const fl=ev.target.closest('[data-file]');
+ if(fl){try{const f=new File([await blobDi(fl.dataset.file)],fl.dataset.nome,{type:fl.dataset.file.endsWith('.pdf')?'application/pdf':'image/jpeg'});
+   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}
+   toast('Questo browser non condivide file: usa «Scarica»')}catch(err){if(err&&err.name!=='AbortError')toast('Condivisione non riuscita, riprova')}
+  return}
  const cb=ev.target.closest('[data-canale-btn]');
  if(cb){const sec=cb.closest('.evento');CANALE[sec.id]=cb.dataset.canaleBtn;store.set('kit3:canali',JSON.stringify(CANALE));render();document.getElementById(sec.id).scrollIntoView({block:'start'});return}
  const vai=ev.target.closest('[data-vai]');
@@ -595,8 +757,12 @@ document.addEventListener('click',async ev=>{
 });
 function apriHash(){
  const h=decodeURIComponent(location.hash.slice(1));if(!h)return;
+ if(h==='stampa'||h==='risorse'){vista(h);return}
+ if(VISTA!=='eventi')vista('eventi');
  const e=EVENTI.find(x=>h===x.id||h.startsWith(x.id+'-'));if(!e)return;
- const mid=h.slice(e.id.length+1);const m=mid&&e.msgs.find(x=>x.id===mid);
+ const mid=h.slice(e.id.length+1);
+ if(mid==='stampa'||mid==='info'){CANALE[e.id]=mid;render();setTimeout(()=>document.getElementById(e.id).scrollIntoView({block:'start'}),60);return}
+ const m=mid&&e.msgs.find(x=>x.id===mid);
  if(m){CANALE[e.id]=scheda(m)}render();
  setTimeout(()=>{
   if(!m){document.getElementById(e.id).scrollIntoView({block:'start'});return}
