@@ -154,6 +154,10 @@ footer{color:var(--muted);font-size:.82rem}
 .logo .lab{padding:8px 10px;font-size:.82rem;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:6px}
 .logo .lab a{font-weight:800;color:var(--wa);text-decoration:none;white-space:nowrap}
 .manca{font-size:.88rem;color:var(--muted);background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:10px 12px}
+.casi{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.caso summary{padding:11px 14px}
+.caso .scheda-info{padding:0 14px 10px}
+.caso .scheda-info dt{width:7.5em}
 </style>
 </head>
 <body>
@@ -523,6 +527,22 @@ const INFO={
  attivamente:[['Quando','Ogni martedì, 15–17'],['Dove','Sede Nexus, via Fabio Filzi 10, Ghedi'],['Per chi','Gratuito per i soci, non serve esperienza']]
 };
 
+
+const COMUNICAZIONI=[
+ ['Nuovo evento',"All'uscita dell'evento",{Sito:'Articolo + card, categorie e tag',WhatsApp:'Polaroid 1:1 + testo breve','FB / IG':'Carosello di 3 (4:5). FB con link, IG con «link in bio» e hashtag',Storia:'9:16 foto piena + adesivo link',Stampa:'Volantini A5 (2 per A4), locandina A4 per la bacheca, A3 se serve, programma',Altro:'Nexi che spunta e saluta (con prompt), modulo, evento nel calendario pubblico, attività di fine evento, kit + promemoria'}],
+ ['Ultimi giorni per iscriversi','3–4 giorni prima della scadenza',{WhatsApp:"Immagine dell'evento + testo (scadenza, acconto, modulo)",Storia:'Sì'}],
+ ['Iscrizioni chiuse','Il giorno dopo la scadenza (automatico)',{Sito:"Automatico: «Lista d'attesa»",WhatsApp:'Solo testo',Altro:'Attività programmata il giorno dopo'}],
+ ['Ultimi posti','Quando succede',{Sito:'Pillola rossa',WhatsApp:'Grafica 1:1 «Ultimi N posti»',Storia:'Sì, stesso modello',Altro:'Stato nel kit'}],
+ ['Al completo','Quando succede',{Sito:"Pillola verde + tasto lista d'attesa",WhatsApp:'Solo testo',Altro:'I messaggi di iscrizione spariscono'}],
+ ['Si è liberato un posto','Quando succede',{Sito:'Pillola gialla',WhatsApp:'Grafica 1:1 «va a chi scrive per primo»',Storia:'Sì',Altro:'Niente post Facebook/Instagram. Poi si torna ad al completo'}],
+ ['Incontro di preparazione (viaggi)','Una settimana prima + il giorno stesso',{WhatsApp:'Due messaggi solo testo','FB / IG':'Facoltativo',Storia:'Facoltativa',Altro:'Evento nel calendario pubblico'}],
+ ['Saldo (viaggi)','Prima della scadenza del saldo',{WhatsApp:'Solo testo: quota definitiva, acconto da detrarre, come pagare'}],
+ ['Partenza (viaggi, visite, uscite)','2–3 giorni prima',{WhatsApp:'Solo testo: ritrovo, documenti, 🎧 auricolari, rientro'}],
+ ['Serata o conferenza','Una settimana prima + il giorno stesso',{Sito:'Articolo',WhatsApp:'Invito con immagine','FB / IG':'Carosello',Storia:'Il giorno prima + il giorno stesso',Stampa:'Locandina A4 per la bacheca'}],
+ ['Ricorrenti (Attiva-mente)','Ogni tanto, per farle conoscere',{WhatsApp:'Messaggio con immagine','FB / IG':'Post ogni tanto',Storia:'Ogni tanto',Stampa:'Locandina A4 per la bacheca',Altro:'Niente promemoria settimanale: chi è iscritto lo sa'}],
+ ['Cambio di data o annullamento','Appena deciso',{Sito:'Scheda e testo aggiornati',WhatsApp:'Avviso solo testo agli iscritti',Stampa:'Rifare i materiali con il dato cambiato',Altro:'Calendari e attività programmate aggiornati'}],
+ ['Fine evento','Il giorno dopo (automatico)',{Sito:'Automatico: «Evento concluso»',Altro:'Tolto dal kit'}]
+];
 const CANALI={wa:'WhatsApp',fb:'Facebook',ig:'Instagram'};
 const SCHEDE={...CANALI,stampa:'Stampa',info:'Info'};
 const $=(s,el=document)=>el.querySelector(s);
@@ -632,8 +652,8 @@ function renderRisorse(){
   </dl></section>
  <section class="guida"><h2>Loghi</h2><p>Su foto e fondi colorati usa il logo bianco (o nero sui colori chiari), così non sparisce.</p>
   <div class="loghi">${lg.map(([f,n,b,d])=>`<div class="logo"><div class="fondo ${b}"><img src="risorse/${f}" alt="${esc(n)}" loading="lazy"></div><div class="lab"><span>${esc(n)}<br><small style="color:var(--muted);font-weight:600">${esc(d)}</small></span><a href="risorse/${f}" download="${f}">Scarica</a></div></div>`).join('')}</div></section>
- <section class="guida"><h2>Quale comunicazione richiede cosa</h2><p>La tabella con tutti i casi (nuovo evento, ultimi posti, posto libero, saldo, partenza…) e cosa preparare per ognuno.</p>
-  <a class="btn piccolo" href="https://docs.google.com/spreadsheets/d/1mh9AHERP3e6r0XhPOZ835tnZm98-USH2Kygu1bvCa1s/edit" target="_blank" rel="noopener">Apri la tabella</a></section>
+ <section class="guida" id="comunicazioni"><h2>Cosa preparare per ogni comunicazione</h2><p>Tocca un caso per vedere cosa serve. Quello che non è indicato non serve.</p>
+  <div class="casi">${COMUNICAZIONI.map(([n,q,o])=>`<details class="caso"><summary><span class="tit">${esc(n)}<span class="quando-invio">${esc(q)}</span></span><span class="freccia">${ICO.giu}</span></summary><dl class="scheda-info">${Object.entries(o).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></details>`).join('')}</div></section>
  <section class="guida"><h2>Promemoria</h2><p>Ogni mattina il calendario Google «Promemoria comunicazioni» ricorda cosa mandare quel giorno, con il link diretto al messaggio in questo kit.</p></section>`;
 }
 let VISTA='eventi';
@@ -758,6 +778,7 @@ document.addEventListener('click',async ev=>{
 function apriHash(){
  const h=decodeURIComponent(location.hash.slice(1));if(!h)return;
  if(h==='stampa'||h==='risorse'){vista(h);return}
+ if(h==='comunicazioni'){vista('risorse');setTimeout(()=>document.getElementById('comunicazioni').scrollIntoView({block:'start'}),60);return}
  if(VISTA!=='eventi')vista('eventi');
  const e=EVENTI.find(x=>h===x.id||h.startsWith(x.id+'-'));if(!e)return;
  const mid=h.slice(e.id.length+1);
