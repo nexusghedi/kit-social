@@ -907,8 +907,8 @@ function corpoMsg(e,m){
  const todo=daCompletare(e,m);let media='',azioni='';
  if(m.canale==='wa'){
   if(m.img)media=`<div class="row" style="gap:14px;align-items:flex-end"><button class="thumb" style="width:132px;height:132px" data-zoom="${m.img}" aria-label="Ingrandisci l'immagine"><img src="${m.img}" alt="Immagine: ${esc(m.label)}" loading="lazy"><span class="zoom">${ic('zoom','s')}</span></button><div style="display:flex;flex-direction:column;gap:6px;padding-bottom:4px"><span class="fmt" style="align-self:flex-start">1:1</span><span class="t-meta">Parte insieme al testo</span></div></div>`;
-  azioni=todo?tastoBloccato(e,m):m.img?`<button class="btn btn-pri" data-condividi="testo" data-ev="${e.id}" data-m="${m.id}">${ic('share')}Condividi con immagine</button><p class="t-meta hint">Scegli WhatsApp, poi il gruppo o la lista broadcast.</p><div class="alt"><button class="btn btn-ghost" data-copia="${e.id}|${m.id}">${ic('copy','s')}Copia testo</button><a class="btn btn-ghost" data-wa="${e.id}|${m.id}" target="_blank" rel="noopener" href="#">${ic('text','s')}Manda solo testo</a></div>`
-   :`<a class="btn btn-pri" data-wa="${e.id}|${m.id}" target="_blank" rel="noopener" href="#">${ic('chat')}Manda su WhatsApp</a><p class="t-meta hint">Si apre WhatsApp con il testo: scegli il gruppo.</p><div class="alt"><button class="btn btn-ghost" data-copia="${e.id}|${m.id}">${ic('copy','s')}Copia testo</button></div>`;
+  azioni=todo?tastoBloccato(e,m):m.img?`<button class="btn btn-pri" data-condividi="testo" data-ev="${e.id}" data-m="${m.id}">${ic('share')}Condividi con immagine</button><p class="t-meta hint">Scegli WhatsApp, poi il gruppo.</p><button class="btn btn-sec" data-broadcast="${e.id}|${m.id}">${ic('download')}Per la lista broadcast</button><div class="alt"><button class="btn btn-ghost" data-copia="${e.id}|${m.id}">${ic('copy','s')}Copia testo</button><a class="btn btn-ghost" data-wa="${e.id}|${m.id}" target="_blank" rel="noopener" href="#">${ic('text','s')}Manda solo testo</a></div>`
+   :`<a class="btn btn-pri" data-wa="${e.id}|${m.id}" target="_blank" rel="noopener" href="#">${ic('chat')}Manda su WhatsApp</a><p class="t-meta hint">Si apre WhatsApp con il testo: scegli il gruppo. Per la lista broadcast: «Copia testo», poi incollalo nella lista.</p><div class="alt"><button class="btn btn-ghost" data-copia="${e.id}|${m.id}">${ic('copy','s')}Copia testo</button></div>`;
  } else {
   const imgs=m.imgs||(m.img?[m.img]:[]);
   if(imgs.length)media=`<div class="media">${imgs.map((u,i)=>`<button class="thumb" style="width:104px;height:130px" data-zoom="${u}" aria-label="Immagine ${i+1} di ${imgs.length}, ingrandisci"><img src="${u}" alt="" loading="lazy">${imgs.length>1?`<span class="num">${i+1}</span>`:''}</button>`).join('')}</div>${imgs.length>1?'<p class="t-meta" style="margin:-4px 0 0">Si pubblicano insieme, in quest\'ordine.</p>':''}`;
@@ -1017,7 +1017,7 @@ function viewRisorse(){
  <div class="sec" id="guida"><h2>Guida rapida</h2></div>
  <section class="card guida">
   <div class="row top">${ic('cal','verde')}<span><b>Promemoria:</b> arrivano dal calendario Google «Promemoria comunicazioni» come «Da pubblicare: …». Il link apre il kit già sul messaggio.</span></div>
-  <div class="row top">${ic('chat','verde')}<span><b>WhatsApp:</b> tasto verde, scegli WhatsApp, poi il gruppo.</span></div>
+  <div class="row top">${ic('chat','verde')}<span><b>WhatsApp:</b> tasto verde, scegli WhatsApp, poi il gruppo. Le liste broadcast non compaiono tra le chat della condivisione: usa «Per la lista broadcast», che salva l'immagine e copia il testo, poi allegali dentro la lista.</span></div>
   <div class="row top">${ic('images','verde')}<span><b>Facebook e Instagram:</b> tasto verde, scegli l'app; nella didascalia tieni premuto e Incolla.</span></div>
   <div class="row top">${ic('edit','verde')}<span><b>Testi:</b> puoi modificarli; le modifiche restano su questo telefono e si possono annullare.</span></div>
   <div class="row top">${ic('alert','verde')}<span><b>Parti tra [quadre]:</b> vanno completate; finché mancano, il tasto verde resta bloccato.</span></div>
@@ -1049,7 +1049,7 @@ window.addEventListener('hashchange',()=>route());
 
 /* ---------- AZIONI ---------- */
 const toastEl=$('#toast');let tt;
-function toast(t,err){toastEl.innerHTML=`<span class="${err?'err':'ok'}">${ic(err?'x':'check','s')}</span><span class="grow">${esc(t)}</span>`;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,3200)}
+function toast(t,err,ms){toastEl.innerHTML=`<span class="${err?'err':'ok'}">${ic(err?'x':'check','s')}</span><span class="grow">${esc(t)}</span>`;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,ms||3200)}
 async function copia(t){try{await navigator.clipboard.writeText(t);return true}catch(e){return false}}
 async function blobDi(src){const r=await fetch(src);return await r.blob()}
 const trova=(ev,id)=>{const e=EVENTI.find(x=>x.id===ev);return [e,e.msgs.find(m=>m.id===id)]};
@@ -1073,6 +1073,10 @@ document.addEventListener('click',async ev=>{
  const rp=t.closest('[data-ripristina]');if(rp){const [e,m]=trova(...rp.dataset.ripristina.split('|'));store.del(chiave(e,m));rerender();toast('Testo originale ripristinato');return}
  const cv=t.closest('[data-copia-val]');if(cv){toast(await copia(cv.dataset.copiaVal)?'Copiato':'Non riesco a copiare: tieni premuto sul testo',!1);return}
  const cp=t.closest('[data-copia]');if(cp){const [e,m]=trova(...cp.dataset.copia.split('|'));toast(await copia(testoFinale(e,m))?(m.canale==='storia'?'Link copiato':'Testo copiato'):'Non riesco a copiare: tieni premuto sul testo');return}
+ const bc=t.closest('[data-broadcast]');
+ if(bc){const [e,m]=trova(...bc.dataset.broadcast.split('|'));const ok=await copia(testoFinale(e,m));
+  const a=document.createElement('a');a.href=m.img;a.download='nexus-'+e.id+'-'+m.id+'.jpg';document.body.appendChild(a);a.click();a.remove();
+  toast((ok?'Immagine salvata e testo copiato. ':'Immagine salvata. ')+'Ora apri WhatsApp › la lista broadcast › graffetta › Galleria (cartella Download), scegli la foto e nella didascalia tieni premuto › Incolla.',!1,9000);return}
  const wa=t.closest('[data-wa]');if(wa){const [e,m]=trova(...wa.dataset.wa.split('|'));wa.href='https://wa.me/?text='+encodeURIComponent(testoFinale(e,m));return}
  const fl=t.closest('[data-file]');if(fl){try{const f=new File([await blobDi(fl.dataset.file)],fl.dataset.nome,{type:fl.dataset.file.endsWith('.pdf')?'application/pdf':'image/'+(fl.dataset.file.endsWith('.png')?'png':'jpeg')});
    if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}toast('Questo browser non condivide file: usa «Scarica»',true)}catch(err){if(err&&err.name!=='AbortError')toast('Condivisione non riuscita, riprova',true)}return}
