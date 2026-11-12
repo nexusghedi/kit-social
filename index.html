@@ -335,6 +335,15 @@ input.inp:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba
 .evidenzia{outline:3px solid #f2a900;outline-offset:3px;transition:outline-color .6s}
 .app :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+/* correzioni: pillole che vanno a capo, barra con testo grande */
+.ev .meta{min-width:0}
+.ev .st,.evhead .st{white-space:normal;height:auto;min-height:26px;padding:4px 10px;line-height:1.25;max-width:100%;border-radius:14px}
+.ev .st::before,.evhead .st::before{flex:none}
+.tabbar{height:auto!important;min-height:64px;padding:6px 8px calc(8px + env(safe-area-inset-bottom,0px))!important}
+.tabbar a{padding:2px 0;line-height:1.2;text-align:center}
+.app-in{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+.go small{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 </style>
 </head>
 <body>
@@ -801,7 +810,7 @@ const nOggi=()=>listaOggi().length;
 function listaTodo(){const l=[];EVENTI.forEach(e=>e.msgs.filter(attivo).filter(m=>daCompletare(e,m)).forEach(m=>l.push([e,m])));return l}
 const canaleNome=m=>m.canale==='wa'?'WhatsApp':m.canale==='fb'?'Facebook':m.canale==='ig'?'Instagram':'Storia Instagram';
 const icoMsg=m=>m.canale==='storia'?'story':m.img?'images':'text';
-const goRow=([e,m])=>`<a class="go" href="#${e.id}-${m.id}"><span class="ico">${ic(m.canale==='wa'?'chat':icoMsg(m))}</span><span class="txt"><b>${esc(m.label)}</b><small>${canaleNome(m)} · ${esc(breve(e))}</small></span>${ic('right','muted')}</a>`;
+const goRow=([e,m])=>`<a class="go" href="#${e.id}-${m.id}"><span class="ico">${ic(m.canale==='wa'?'chat':icoMsg(m))}</span><span class="txt"><b>${esc(m.label)}</b><small>${m.label===canaleNome(m)?'':canaleNome(m)+' · '}${esc(breve(e))}</small></span>${ic('right','muted')}</a>`;
 
 /* ---------- HOME ---------- */
 let TODO_APERTO=false;
