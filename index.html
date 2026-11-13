@@ -333,6 +333,7 @@ input.inp:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba
 .zoom-az{display:flex;gap:10px;width:100%;max-width:420px}
 .zoom-az .btn{flex:1;height:50px}
 .evidenzia{outline:3px solid #f2a900;outline-offset:3px;transition:outline-color .6s}
+.msg{scroll-margin-top:84px}
 .app :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 
@@ -1055,10 +1056,14 @@ function route(){
   else{const r=h.slice(e.id.length+1);
    if(!r||r==='social'||r==='stampa'||r==='info'){html=viewEvento(e,r||'wa');VISTA='ev:'+e.id+':'+(r||'wa')}
    else{const m=e.msgs.find(x=>x.id===r);
-    if(m){html=viewFocus(e,m);VISTA='focus'}else{html=viewEvento(e,'wa');VISTA='ev:'+e.id+':wa'}}}}
+    if(m){/* apre la pagina completa dell'evento, sulla scheda giusta, con il messaggio aperto ed evidenziato */
+     const tab=m.canale==='wa'?'wa':'social';const g=gruppi(e).soc.find(x=>x.tipo==='post'&&x.fb&&x.ig&&(x.fb===m||x.ig===m));
+     const key=g?e.id+':post':e.id+':'+m.id;if(g)DIDA[e.id]=m.canale;OPEN.add(key);APRI_DOPO=key;
+     html=viewEvento(e,tab);VISTA='ev:'+e.id+':'+tab;history.replaceState(null,'','#'+e.id+(tab==='wa'?'':'-social'))}
+    else{html=viewEvento(e,'wa');VISTA='ev:'+e.id+':wa'}}}}
  app.innerHTML=html;
  if(el)setTimeout(()=>{const t=document.getElementById(el);if(t)t.scrollIntoView({block:'start'})},30);else window.scrollTo(0,scroll);
- if(APRI_DOPO){const t=document.getElementById('m-'+APRI_DOPO.replace(':','-'));APRI_DOPO=null;if(t){t.scrollIntoView({block:'start'});t.classList.add('evidenzia');setTimeout(()=>t.classList.remove('evidenzia'),2400)}}
+ if(APRI_DOPO){const t=document.getElementById('m-'+APRI_DOPO.replace(':','-'));APRI_DOPO=null;if(t){setTimeout(()=>t.scrollIntoView({block:'start',behavior:'smooth'}),60);t.classList.add('evidenzia');setTimeout(()=>t.classList.remove('evidenzia'),2400)}}
 }
 let APRI_DOPO=null;
 function rerender(keepScroll=true){const y=window.scrollY;route();if(keepScroll)window.scrollTo(0,y)}
