@@ -13,3 +13,8 @@ Pagina: https://nexusghedi.github.io/kit-social/ (non indicizzata dai motori di 
 - `strumenti/pdf.js`: rende una tavola del canvas (559×794 px = A5) in PDF vettoriale alla misura voluta (`node pdf.js tavola.html cartella_blob out.pdf larghezza_mm altezza_mm zoom`, con `F=` cartella dei font).
 - `strumenti/compose.py`: impagina 2 A5 su A4 orizzontale (con linea di taglio) e i pieghevoli 4+1 / 2+3.
 - `risorse/`: loghi Nexus e Arkè.
+
+## Versione e cache
+Ogni commit deve aggiornare la versione (meta `kit-versione` in index.html e `versione.txt`): il kit la confronta e mostra «È uscita una versione nuova». Dopo il clone installa il hook:
+
+    cp strumenti/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
