@@ -1,0 +1,7 @@
+#!/bin/sh
+# Aggiorna la versione del kit a ogni commit (meta kit-versione in index.html + versione.txt).
+# Installazione: cp strumenti/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+V=$(TZ=Europe/Rome date '+%Y-%m-%d %H:%M')
+sed -i "s#<meta name=\"kit-versione\" content=\"[^\"]*\">#<meta name=\"kit-versione\" content=\"$V\">#" index.html
+echo "$V" > versione.txt
+git add index.html versione.txt
