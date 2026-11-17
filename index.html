@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="kit-versione" content="2026-11-17 17:22">
+<meta name="kit-versione" content="2026-11-17 17:23">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -370,7 +370,10 @@ input.inp:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba
 .r-es img{max-width:100%;max-height:100%}
 .r-es.foto{background-size:cover;background-position:center;align-items:flex-end;padding:12px}.r-es.foto img{max-width:70%}
 .r-ta{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;background:var(--sunk);color:var(--ink);padding:12px 14px;font:inherit;font-size:15px;line-height:1.5;resize:vertical}
-.r-sr{overflow:hidden}
+.r-sr{padding:14px;display:flex;flex-direction:column;gap:12px}
+.r-srt{display:flex;flex-direction:column;gap:4px;line-height:1.4}.r-srt p{margin:0;font-size:14.5px}.r-srt small{font-size:12.5px;color:var(--muted);font-weight:700}
+.r-srn{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.r-srn b{font-size:17px}
+.r-pill{flex:none;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;background:var(--azione-tint);color:var(--azione-testo);white-space:nowrap}
 .r-srh{display:flex;align-items:center;gap:12px;width:100%;padding:10px;background:none;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
 .r-srh img{width:84px;height:84px;border-radius:10px;object-fit:cover;flex:none}
 .r-srh .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;line-height:1.35}.r-srh .t b{font-size:16.5px}.r-srh .t span{font-size:14px}
@@ -1163,8 +1166,8 @@ function viewTesti(sel){const k=TESTI.some(t=>t[0]===sel)?sel:TESTI[0][0];const 
   <p class="t-meta" style="margin:0">Il testo è modificabile: le modifiche restano su questo telefono.${mod?` <button class="lnk" data-testo-reset="${k}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer">Ripristina l'originale</button>`:''}</p>
  </section></main></div>${tabbar('risorse')}`}
 function viewStili(sel){return `<div class="app-in">${testaSub('Stili grafici')}<main class="screen">
- <p class="t-meta" style="margin:6px 2px 10px">Quando mandi la locandina di un evento nuovo ricevi l'anteprima nei 3 stili più adatti. Tocca uno stile per vedere post, WhatsApp e storia.</p>
- <div class="stack">${STILI.map(([k,n,d])=>{const u=ultimoUso(k),ap=STILE_APERTO===k;return `<section class="card r-sr" id="stile-${k}"><button class="r-srh" data-stile="${k}" aria-expanded="${ap}"><img src="img/stili/${k}-wa.jpg" alt=""><span class="t"><b>${esc(n)}</b><span>${esc(d)}</span>${u?`<small>Ultimo uso: ${esc(u)}</small>`:'<small class="mai">Mai usato</small>'}</span>${ic(ap?'up':'down')}</button>${ap?`<div class="stile-img" style="padding:0 12px 12px">${['post','wa','storia'].map(f=>`<button class="thumb" data-zoom="img/stili/${k}-${f}.jpg" aria-label="${esc(n)}: ${f==='wa'?'WhatsApp':f}, ingrandisci"><img src="img/stili/${k}-${f}.jpg" alt="" loading="lazy"></button>`).join('')}</div>`:''}</section>`}).join('')}</div>
+ <p class="t-meta" style="margin:6px 2px 10px">Quando mandi la locandina di un evento nuovo ricevi l'anteprima nei 3 stili più adatti. Tocca un'immagine per ingrandirla e scorrere tra post, WhatsApp e storia.</p>
+ <div class="stack">${STILI.map(([k,n,d])=>{const u=ultimoUso(k);return `<section class="card r-sr" id="stile-${k}"><div class="r-srt"><div class="r-srn"><b>${esc(n)}</b>${u?'':'<span class="r-pill">Mai usato</span>'}</div><p>${esc(d)}</p>${u?`<small>Ultimo uso: ${esc(u)}</small>`:''}</div><div class="stile-img">${['post','wa','storia'].map(f=>`<button class="thumb" data-zoom="img/stili/${k}-${f}.jpg" aria-label="${esc(n)}: ${f==='wa'?'WhatsApp':f}, ingrandisci"><img src="img/stili/${k}-${f}.jpg" alt="" loading="lazy"></button>`).join('')}</div></section>`}).join('')}</div>
  </main></div>${tabbar('risorse')}`}
 function viewQR(){return `<div class="app-in">${testaSub('QR code')}<main class="screen">
  <p class="t-meta" style="margin:6px 2px 10px">Da mettere su volantini e locandine. Scarica il PNG per Canva o l'SVG per la tipografia.</p>
