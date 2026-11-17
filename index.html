@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="kit-versione" content="2026-11-17 16:22">
+<meta name="kit-versione" content="2026-11-17 17:12">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -335,6 +335,44 @@ input.inp:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba
 .zoom-az .btn{flex:1;height:50px}
 .evidenzia{outline:3px solid #f2a900;outline-offset:3px;transition:outline-color .6s}
 .msg{scroll-margin-top:84px}
+.r-sec a{font-size:14px;font-weight:800;color:var(--azione-testo);text-decoration:none}
+.r-chips{display:flex;flex-wrap:wrap;gap:8px}
+.r-chip{display:flex;align-items:center;gap:8px;padding:10px 14px;min-height:44px;box-sizing:border-box;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:15px;font-weight:800;color:var(--ink);text-decoration:none}
+.r-chip i{font-style:normal;width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.r-chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.r-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.r-st{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink)}
+.r-st img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block}
+.r-st b{font-size:13px;line-height:1.2;font-weight:800}
+.r-lg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.r-lt{display:flex;flex-direction:column;gap:6px;background:none;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.r-lt .sw{aspect-ratio:2;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:14px 20px;box-sizing:border-box;border:1px solid var(--line)}
+.r-lt .sw img{max-width:100%;max-height:100%;display:block}
+.r-lab{font-size:13px;font-weight:700;color:var(--muted)}
+.r-pal{display:flex;gap:8px;flex-wrap:wrap}
+.r-pal button{display:flex;align-items:center;gap:6px;padding:6px 12px 6px 6px;min-height:36px;border-radius:999px;background:var(--card);border:1px solid var(--line);font:inherit;font-size:13px;font-weight:800;color:var(--ink);cursor:pointer}
+.r-pal i{width:22px;height:22px;border-radius:50%;display:block}
+.r-link{display:flex;align-items:center;gap:12px;padding:14px;min-height:64px;box-sizing:border-box;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.r-link:first-child{border-top:0}
+.r-link .ico{width:40px;height:40px;border-radius:12px;background:var(--sunk);display:flex;align-items:center;justify-content:center;flex:none}
+.r-link .t{flex:1;min-width:0}.r-link .t b{display:block;font-size:16px}.r-link .t small{font-size:13.5px;color:var(--muted);font-weight:600}
+.r-ov{position:fixed;inset:0;background:rgba(29,29,27,.45);z-index:40}
+.r-sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--card);border-radius:22px 22px 0 0;padding:10px 18px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px;max-width:560px;margin:0 auto;box-shadow:0 -8px 30px rgba(0,0,0,.2)}
+.r-grip{width:44px;height:5px;border-radius:3px;background:var(--line-strong);align-self:center}
+.r-esg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.r-es{aspect-ratio:1.3;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;border:1px solid var(--line)}
+.r-es img{max-width:100%;max-height:100%}
+.r-es.foto{background-size:cover;background-position:center;align-items:flex-end;padding:12px}.r-es.foto img{max-width:70%}
+.r-ta{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;background:var(--sunk);color:var(--ink);padding:12px 14px;font:inherit;font-size:15px;line-height:1.5;resize:vertical}
+.r-sr{overflow:hidden}
+.r-srh{display:flex;align-items:center;gap:12px;width:100%;padding:10px;background:none;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.r-srh img{width:84px;height:84px;border-radius:10px;object-fit:cover;flex:none}
+.r-srh .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;line-height:1.35}.r-srh .t b{font-size:16.5px}.r-srh .t span{font-size:14px}
+.r-srh small{font-size:12.5px;color:var(--muted);font-weight:700}.r-srh small.mai{color:var(--azione-testo);font-weight:800}
+.r-qr{display:flex;gap:14px;padding:12px;align-items:center}
+.r-qr img{width:120px;height:120px;border-radius:8px;border:1px solid var(--line);flex:none;background:#fff}
+.r-qr .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}.r-qr .t b{font-size:17px}
+.r-qr .btn{min-height:40px;height:40px}
 .stile{padding:12px;display:flex;flex-direction:column;gap:10px}
 .stile-img{display:grid;grid-template-columns:4fr 5fr 2.82fr;gap:8px;align-items:end}
 .stile-img .thumb{width:100%}.stile-img img{width:100%;height:auto;display:block}
@@ -1031,28 +1069,106 @@ const STILI=[
  ['parola','Parola grande','Mete dal nome corto e forte (Salento, Praga): il nome enorme sopra una foto ad arco.']];
 function ultimoUso(k){const l=EVENTI.filter(e=>(e.stile||'polaroid')===k);if(!l.length)return '';const d=e=>{const x=DATE[e.id];return Array.isArray(x)?x[0]:''};l.sort((a,b)=>d(b).localeCompare(d(a)));return l[0].titolo.split(' · ')[0].replace(/^Arkè i5sensi$/,l[0].titolo)}
 function schedeStili(){return STILI.map(([k,n,d])=>{const u=ultimoUso(k);return `<section class="card stile"><div class="stile-img">${['post','wa','storia'].map(f=>`<button class="thumb" data-zoom="img/stili/${k}-${f}.jpg" aria-label="${esc(n)}: ${f==='wa'?'WhatsApp':f}, ingrandisci"><img src="img/stili/${k}-${f}.jpg" alt="" loading="lazy"></button>`).join('')}</div><div class="stile-t"><b>${esc(n)}</b><span>${esc(d)}</span>${u?`<span class="t-meta">Ultimo uso: ${esc(u)}</span>`:''}</div></section>`}).join('')}
+const LOGHI=[
+ {k:'n-col',g:'Nexus APS',n:'Nexus · a colori',t:'Fondo chiaro',f:'nexus-logo-colori',svg:1,bg:'#ffffff',quando:'Sui fondi bianchi o chiari. È la versione principale.'},
+ {k:'n-scu',g:'Nexus APS',n:'Nexus · a colori su scuro',t:'Fondo scuro',f:'nexus-logo-colori-su-scuro',bg:'#1d1d1b',quando:'Sui fondi neri o molto scuri, quando si vogliono tenere i colori dei petali.'},
+ {k:'n-bia',g:'Nexus APS',n:'Nexus · bianco',t:'Foto e colore',f:'nexus-logo-bianco',svg:1,bg:'url(risorse/nexus-gradiente.jpg) center/cover',es:'#0e8534',quando:'Sopra le foto, sul gradiente Nexus e sui fondi colorati scuri (verde, blu, viola, rosso). Sull\'arancio e sul giallo usa il nero.'},
+ {k:'n-ner',g:'Nexus APS',n:'Nexus · nero',t:'Giallo, arancio',f:'nexus-logo-nero',bg:'#f8ba32',es:'#ef7d32',quando:'Sui fondi gialli e arancio, dove il logo a colori perderebbe un petalo.'},
+ {k:'a-col',g:'Arkè i5sensi',n:'Arkè i5sensi · a colori',t:'Fondo chiaro',f:'arke-logo-colori',bg:'#ffffff',quando:'Accanto al logo Nexus a colori, sui fondi chiari, per il corso e le sue uscite.'},
+ {k:'a-bia',g:'Arkè i5sensi',n:'Arkè i5sensi · bianco',t:'Foto e colore',f:'arke-logo-bianco',bg:'url(risorse/nexus-gradiente.jpg) center/cover',es:'#0e8534',quando:'Sopra le foto e sui fondi colorati, accanto al logo Nexus bianco.'}];
+const TESTI=[
+ ['pagare','Come pagare','💳','#e4f2e8',`*Come pagare* 💳
+🏢 In sede, il sabato dalle 9 alle 11 (via Fabio Filzi 10, primo piano)
+🏦 Bonifico a *Nexus A.p.s.*
+IBAN ${IBAN}
+Causale: «[nome dell'evento] – Nome e Cognome»
+📱 Satispay: negozio «Nexus A.p.s.»`],
+ ['socio','Diventare socio','🪪','#e8eefa',`*Diventare socio Nexus* 🪪
+La tessera annuale costa 15 € e serve per partecipare agli eventi a pagamento.
+✍️ Si fa online con il modulo: https://form.jotform.com/262681352191053
+🏢 Oppure in sede, il sabato dalle 9 alle 11 (via Fabio Filzi 10, Ghedi)`],
+ ['iscriversi','Come iscriversi','✍️','#fdf0dc',`*Come iscriversi a un evento* ✍️
+Trovi tutti gli eventi su ${SITO}: nell'articolo di ogni evento c'è il modulo di iscrizione.
+Per gli eventi a pagamento serve la tessera socio (15 €).
+Per qualsiasi dubbio scrivici qui su WhatsApp.`],
+ ['attesa','Lista d\'attesa','⏳','#ecede8',`Ciao! Le iscrizioni per *[nome dell'evento]* sono chiuse, ma c'è la lista d'attesa ⏳
+Se si libera un posto ti scriviamo noi. Vuoi che ti aggiungiamo? Mandaci nome, cognome e quante persone siete.`],
+ ['sede','Sede e orari','🏢','#fbe7da',`*Sede Nexus APS* 🏢
+📍 Via Fabio Filzi 10, Ghedi (di fronte alla Caritas parrocchiale, primo piano)
+🕘 Aperta il sabato dalle 9 alle 11
+📱 WhatsApp 331 763 4299 · ✉️ nexusghedi@gmail.com
+🌐 ${SITO}`]];
+const QR=[['sito','Sito','nexusghedi.it'],['whatsapp','WhatsApp','331 763 4299'],['modulo-soci','Modulo soci','iscrizione online (Jotform)']];
+const AREE=[['Viaggi','#EF7D32'],['Corsi','#0163A5'],['Libri','#F8BA32'],['Spettacoli','#922C7D'],['Mostre','#E74035'],['Vita associativa','#109439']];
+let LOGO_APERTO=null,STILE_APERTO=null;
+const testoDi=k=>{const t=TESTI.find(x=>x[0]===k);return store.get('kit4:testo:'+k)??t[4]};
+const testaSub=(t,back='#risorse')=>`<header class="topbar evbar"><a class="btn-icon" href="${back}" aria-label="Torna alle risorse">${ic('back')}</a><div class="tt"><b>${esc(t)}</b></div></header>`;
+function tessereLoghi(g){return `<div class="r-lg">${LOGHI.filter(l=>l.g===g).map(l=>`<button class="r-lt" data-logo="${l.k}" aria-label="${esc(l.n)}: apri"><span class="sw" style="background:${l.bg}"><img src="risorse/${l.f}.png" alt=""></span><span class="r-lab">${esc(l.t)}</span></button>`).join('')}</div>`}
+function foglioLogo(){const l=LOGHI.find(x=>x.k===LOGO_APERTO);if(!l)return '';
+ const esA=l.es?`<span class="r-es" style="background:${l.es}"><img src="risorse/${l.f}.png" alt=""></span><span class="r-es foto" style="background-image:url(risorse/esempio-foto.jpg)"><img src="risorse/${l.f}.png" alt=""></span>`:`<span class="r-es" style="background:${l.bg};grid-column:1/-1"><img src="risorse/${l.f}.png" alt="" style="max-width:60%"></span>`;
+ return `<div class="r-ov" data-logo-chiudi></div><section class="r-sheet" role="dialog" aria-label="${esc(l.n)}"><span class="r-grip"></span>
+ <div class="row" style="justify-content:space-between"><b style="font-size:19px">${esc(l.n)}</b><button class="btn-icon bordered" data-logo-chiudi aria-label="Chiudi">${ic('x')}</button></div>
+ <div class="r-esg">${esA}</div><p style="margin:0;font-size:15px;line-height:1.45"><b>Quando usarlo:</b> ${esc(l.quando)}</p>
+ <a class="btn btn-pri" href="risorse/${l.f}.png" download="${l.f}.png">${ic('download')}Scarica PNG (sfondo trasparente)</a>
+ ${l.svg?`<a class="btn btn-sec" href="risorse/${l.f}.svg" download="${l.f}.svg">${ic('download')}Scarica SVG (per la tipografia)</a>`:''}</section>`}
 function viewRisorse(){
- const lg=[['nexus-logo-colori.png','A colori','su fondo chiaro','#ffffff'],['nexus-logo-bianco.png','Bianco','su colore o foto','#0e8534'],['nexus-logo-nero.png','Nero','su colori chiari','#f8ba32'],['nexus-logo-colori-su-scuro.png','A colori','su fondo scuro','#1d1d1b'],['arke-logo-colori.png','Arkè i5sensi','su fondo chiaro','#ffffff'],['arke-logo-bianco.png','Arkè i5sensi','su foto e fondi scuri','#2c3b52']];
- const casi=COMUNICAZIONI.map(([n,q,o],i)=>{if(!CASI_TUTTI&&i>4)return '';const ap=CASO_APERTO.has(i);
-  return `<div class="acc"><button class="acc-h" data-caso="${i}" aria-expanded="${ap}"><span class="txt"><b>${esc(n)}</b><small>${esc(q)}</small></span><span class="chevbox44">${ic(ap?'up':'down')}</span></button>${ap?`<div class="kv" style="padding:0 16px 8px">${Object.entries(o).map(([k,v])=>`<div class="kv-r top"><span class="k">${esc(k)}</span><span class="v" style="font-size:14.5px">${esc(v)}</span></div>`).join('')}</div>`:''}</div>`}).join('');
  return `<div class="app-in">${topHome('Risorse')}<main class="screen">
- <div class="sec" style="margin-top:6px"><h2>Dati dell'associazione</h2></div>
+ <div class="sec r-sec" style="margin-top:6px"><h2>Pagare e contattarci</h2><a href="#dati">Tutti i dati</a></div>
  <section class="card" style="padding:4px 8px 4px 16px"><div class="kv">
+  <div class="kv-r"><span class="k">IBAN</span><span class="v mono" style="font-size:14.5px">${ibanSpazi}</span><button class="btn-icon bordered" data-copia-val="${IBAN}" aria-label="Copia l'IBAN">${ic('copy')}</button></div>
+  <div class="kv-r"><span class="k">WhatsApp</span><span class="v mono">331 763 4299</span><button class="btn-icon bordered" data-copia-val="3317634299" aria-label="Copia il numero WhatsApp">${ic('copy')}</button></div>
+  <div class="kv-r"><span class="k">Sede</span><span class="v">Via Fabio Filzi 10, Ghedi<small style="display:block;font-weight:600;color:var(--muted);font-size:13px">Sabato 9–11 · primo piano</small></span><button class="btn-icon bordered" data-copia-val="Via Fabio Filzi 10, Ghedi (BS)" aria-label="Copia l'indirizzo">${ic('copy')}</button></div></div></section>
+ <div class="sec r-sec"><h2>Testi pronti</h2><a href="#testi">Tutti</a></div>
+ <div class="r-chips">${TESTI.map(([k,n,e,bg])=>`<a class="r-chip" href="#testi-${k}"><i style="background:${bg}">${e}</i>${esc(n)}</a>`).join('')}</div>
+ <div class="sec r-sec"><h2>Stili grafici</h2><a href="#stili">Vedi tutti</a></div>
+ <div class="r-g3">${STILI.map(([k,n])=>`<a class="r-st" href="#stili-${k}"><img src="img/stili/${k}-wa.jpg" alt="" loading="lazy"><b>${esc(n)}</b></a>`).join('')}</div>
+ <div class="sec r-sec"><h2>Loghi</h2><span>tocca per scaricare</span></div>
+ <section class="card" style="padding:14px;display:flex;flex-direction:column;gap:12px"><b style="font-size:15px">Nexus APS</b>${tessereLoghi('Nexus APS')}<div style="height:1px;background:var(--line)"></div><b style="font-size:15px">Arkè i5sensi</b>${tessereLoghi('Arkè i5sensi')}</section>
+ <div class="sec r-sec"><h2>Colori delle aree</h2><span>tocca per copiare</span></div>
+ <div class="r-pal">${AREE.map(([n,c])=>`<button data-copia-val="${c}" aria-label="Copia il colore ${esc(n)} ${c}"><i style="background:${c}"></i>${esc(n)}</button>`).join('')}</div>
+ <div class="sec r-sec"><h2>Altro</h2></div>
+ <section class="card">
+  <a class="r-link" href="#comunicazioni"><span class="ico">${ic('check')}</span><span class="t"><b>Cosa preparare</b><small>${COMUNICAZIONI.length} casi: cosa serve per ogni comunicazione</small></span>${ic('right')}</a>
+  <a class="r-link" href="#qr"><span class="ico">${ic('link')}</span><span class="t"><b>QR code</b><small>Sito, WhatsApp, modulo soci: da mettere sui volantini</small></span>${ic('right')}</a>
+  <a class="r-link" href="#guida"><span class="ico">${ic('help')}</span><span class="t"><b>Guida rapida</b><small>Come si usa il kit</small></span>${ic('right')}</a></section>
+ </main></div>${foglioLogo()}${tabbar('risorse')}`;
+}
+function viewDati(){return `<div class="app-in">${testaSub('Dati dell\'associazione')}<main class="screen">
+ <section class="card" style="padding:4px 8px 4px 16px;margin-top:6px"><div class="kv">
   <div class="kv-r"><span class="k">Nome</span><span class="v">Nexus A.p.s.</span></div>
   <div class="kv-r"><span class="k">IBAN</span><span class="v mono" style="font-size:14.5px">${ibanSpazi}</span><button class="btn-icon bordered" data-copia-val="${IBAN}" aria-label="Copia l'IBAN">${ic('copy')}</button></div>
   <div class="kv-r"><span class="k">Satispay</span><span class="v">Negozio «Nexus A.p.s.»</span></div>
   <div class="kv-r"><span class="k">WhatsApp</span><span class="v mono">331 763 4299</span><button class="btn-icon bordered" data-copia-val="3317634299" aria-label="Copia il numero WhatsApp">${ic('copy')}</button></div>
-  <div class="kv-r"><span class="k">Sede</span><span class="v">Via Fabio Filzi 10, Ghedi (BS)</span></div>
+  <div class="kv-r"><span class="k">Sede</span><span class="v">Via Fabio Filzi 10, Ghedi (BS)<small style="display:block;font-weight:600;color:var(--muted);font-size:13px">Di fronte alla Caritas parrocchiale, primo piano · sabato 9–11</small></span><button class="btn-icon bordered" data-copia-val="Via Fabio Filzi 10, Ghedi (BS)" aria-label="Copia l'indirizzo">${ic('copy')}</button></div>
   <div class="kv-r"><span class="k">Email</span><span class="v">nexusghedi@gmail.com</span><button class="btn-icon bordered" data-copia-val="nexusghedi@gmail.com" aria-label="Copia l'email">${ic('copy')}</button></div>
-  <div class="kv-r"><span class="k">Sito</span><span class="v"><a href="${SITO}" target="_blank" rel="noopener">nexusghedi.it</a></span></div></div></section>
- <div class="sec" id="stili"><h2>Stili grafici</h2><span>${STILI.length} stili</span></div>
- <p class="t-meta" style="margin:-4px 2px 10px">Quando mandi la locandina di un evento nuovo, ti preparo un'anteprima nei 3 stili più adatti e scegli tu.</p>
- <div class="stack">${schedeStili()}</div>
- <div class="sec" id="comunicazioni"><h2>Cosa preparare</h2><span>${COMUNICAZIONI.length} casi</span></div>
- <section class="card" style="overflow:hidden">${casi}${CASI_TUTTI?'':`<div style="padding:4px 8px 8px;display:flex;justify-content:center"><button class="btn btn-ghost" data-casi>Mostra gli altri ${COMUNICAZIONI.length-5} casi${ic('down','s')}</button></div>`}</section>
- <div class="sec"><h2>Loghi</h2><span>tocca per scaricare</span></div>
- <div class="loghi">${lg.map(([f,n,d,bg])=>`<a class="card logo" href="risorse/${f}" download="${f}"><span class="fondo" style="background:${bg}">${'<img src="risorse/'+f+'" alt="" loading="lazy">'}</span><span class="lab"><span class="grow">${esc(n)}<small>${esc(d)}</small></span>${ic('download','verde')}</span></a>`).join('')}</div>
- <div class="sec" id="guida"><h2>Guida rapida</h2></div>
+  <div class="kv-r"><span class="k">Sito</span><span class="v"><a href="${SITO}" target="_blank" rel="noopener">nexusghedi.it</a></span><button class="btn-icon bordered" data-copia-val="${SITO}" aria-label="Copia l'indirizzo del sito">${ic('copy')}</button></div>
+  <div class="kv-r"><span class="k">Instagram</span><span class="v"><a href="https://www.instagram.com/aps.nexus" target="_blank" rel="noopener">@aps.nexus</a></span></div>
+  <div class="kv-r"><span class="k">Modulo soci</span><span class="v"><a href="https://form.jotform.com/262681352191053" target="_blank" rel="noopener">Tessera online (15 €)</a></span><button class="btn-icon bordered" data-copia-val="https://form.jotform.com/262681352191053" aria-label="Copia il link del modulo soci">${ic('copy')}</button></div></div></section>
+ </main></div>${tabbar('risorse')}`}
+function viewTesti(sel){const k=TESTI.some(t=>t[0]===sel)?sel:TESTI[0][0];const t=TESTI.find(x=>x[0]===k);const v=testoDi(k);const mod=v!==t[4];
+ return `<div class="app-in">${testaSub('Testi pronti')}<main class="screen">
+ <div class="r-chips" style="margin-top:6px" role="tablist">${TESTI.map(([kk,n])=>`<a class="r-chip${kk===k?' on':''}" role="tab" aria-selected="${kk===k}" href="#testi-${kk}">${esc(n)}</a>`).join('')}</div>
+ <section class="card" style="padding:14px;display:flex;flex-direction:column;gap:12px;margin-top:10px">
+  <b style="font-size:17px">${esc(t[1])}</b>
+  <textarea class="r-ta" id="testo-${k}" data-testo="${k}" rows="8" aria-label="Testo ${esc(t[1])}">${esc(v)}</textarea>
+  ${/\[[^\]]+\]/.test(v)?`<p class="t-meta" style="margin:0">Completa le parti tra [quadre] prima di mandarlo.</p>`:''}
+  <a class="btn btn-pri" data-testo-wa="${k}" href="https://wa.me/?text=${encodeURIComponent(v)}" target="_blank" rel="noopener">${ic('chat')}Manda su WhatsApp</a>
+  <button class="btn btn-sec" data-copia-val="${esc(v)}">${ic('copy')}Copia il testo</button>
+  <p class="t-meta" style="margin:0">Il testo è modificabile: le modifiche restano su questo telefono.${mod?` <button class="lnk" data-testo-reset="${k}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer">Ripristina l'originale</button>`:''}</p>
+ </section></main></div>${tabbar('risorse')}`}
+function viewStili(sel){return `<div class="app-in">${testaSub('Stili grafici')}<main class="screen">
+ <p class="t-meta" style="margin:6px 2px 10px">Quando mandi la locandina di un evento nuovo ricevi l'anteprima nei 3 stili più adatti. Tocca uno stile per vedere post, WhatsApp e storia.</p>
+ <div class="stack">${STILI.map(([k,n,d])=>{const u=ultimoUso(k),ap=(STILE_APERTO??sel)===k;return `<section class="card r-sr" id="stile-${k}"><button class="r-srh" data-stile="${k}" aria-expanded="${ap}"><img src="img/stili/${k}-wa.jpg" alt=""><span class="t"><b>${esc(n)}</b><span>${esc(d)}</span>${u?`<small>Ultimo uso: ${esc(u)}</small>`:'<small class="mai">Mai usato</small>'}</span>${ic(ap?'up':'down')}</button>${ap?`<div class="stile-img" style="padding:0 12px 12px">${['post','wa','storia'].map(f=>`<button class="thumb" data-zoom="img/stili/${k}-${f}.jpg" aria-label="${esc(n)}: ${f==='wa'?'WhatsApp':f}, ingrandisci"><img src="img/stili/${k}-${f}.jpg" alt="" loading="lazy"></button>`).join('')}</div>`:''}</section>`}).join('')}</div>
+ </main></div>${tabbar('risorse')}`}
+function viewQR(){return `<div class="app-in">${testaSub('QR code')}<main class="screen">
+ <p class="t-meta" style="margin:6px 2px 10px">Da mettere su volantini e locandine. Scarica il PNG per Canva o l'SVG per la tipografia.</p>
+ <div class="stack">${QR.map(([k,n,d])=>`<section class="card r-qr"><img src="risorse/qr-${k}.png" alt="QR code ${esc(n)}"><div class="t"><b>${esc(n)}</b><span class="t-meta">${esc(d)}</span><a class="btn btn-sec" href="risorse/qr-${k}.png" download="nexus-qr-${k}.png">${ic('download')}PNG</a><a class="btn btn-ghost" href="risorse/qr-${k}.svg" download="nexus-qr-${k}.svg">${ic('download')}SVG</a></div></section>`).join('')}</div>
+ </main></div>${tabbar('risorse')}`}
+function viewCasi(){
+ const casi=COMUNICAZIONI.map(([n,q,o],i)=>{const ap=CASO_APERTO.has(i);
+  return `<div class="acc"><button class="acc-h" data-caso="${i}" aria-expanded="${ap}"><span class="txt"><b>${esc(n)}</b><small>${esc(q)}</small></span><span class="chevbox44">${ic(ap?'up':'down')}</span></button>${ap?`<div class="kv" style="padding:0 16px 8px">${Object.entries(o).map(([k,v])=>`<div class="kv-r top"><span class="k">${esc(k)}</span><span class="v" style="font-size:14.5px">${esc(v)}</span></div>`).join('')}</div>`:''}</div>`}).join('');
+ return `<div class="app-in">${testaSub('Cosa preparare')}<main class="screen"><section class="card" style="overflow:hidden;margin-top:6px">${casi}</section></main></div>${tabbar('risorse')}`}
+function viewGuida(){return `<div class="app-in">${testaSub('Guida rapida')}<main class="screen" style="padding-top:6px">
  <section class="card guida">
   <div class="row top">${ic('cal','verde')}<span><b>Promemoria:</b> arrivano dal calendario Google «Promemoria comunicazioni» come «Da pubblicare: …». Il link apre il kit già sul messaggio.</span></div>
   <div class="row top">${ic('chat','verde')}<span><b>WhatsApp:</b> tasto verde, scegli WhatsApp, poi il gruppo. Le liste broadcast non compaiono tra le chat della condivisione: usa «Per la lista broadcast», che salva l'immagine e copia il testo, poi allegali dentro la lista.</span></div>
@@ -1060,8 +1176,7 @@ function viewRisorse(){
   <div class="row top">${ic('edit','verde')}<span><b>Testi:</b> puoi modificarli; le modifiche restano su questo telefono e si possono annullare.</span></div>
   <div class="row top">${ic('alert','verde')}<span><b>Parti tra [quadre]:</b> vanno completate; finché mancano, il tasto verde resta bloccato.</span></div>
  </section>
- </main></div>${tabbar('risorse')}`;
-}
+ </main></div>${tabbar('risorse')}`}
 
 /* ---------- ROUTER ---------- */
 let VISTA='';
@@ -1080,7 +1195,13 @@ function route(){
  const h=decodeURIComponent(location.hash.slice(1));const app=$('#app');let html='',scroll=0,el=null;
  if(!h){html=viewHome();VISTA='home'}
  else if(h==='stampa'){html=viewStampa();VISTA='stampa'}
- else if(h==='risorse'||h==='comunicazioni'||h==='guida'||h==='stili'){html=viewRisorse();VISTA='risorse';el=h==='risorse'?null:h}
+ else if(h==='risorse'){html=viewRisorse();VISTA='risorse'}
+ else if(h==='dati'){html=viewDati();VISTA='dati'}
+ else if(h==='testi'||h.startsWith('testi-')){html=viewTesti(h.slice(6));VISTA='testi'}
+ else if(h==='stili'||h.startsWith('stili-')){const k=h.slice(6);if(k)STILE_APERTO=k;html=viewStili(k);VISTA='stili';if(k)el='stile-'+k}
+ else if(h==='qr'){html=viewQR();VISTA='qr'}
+ else if(h==='comunicazioni'){html=viewCasi();VISTA='casi'}
+ else if(h==='guida'){html=viewGuida();VISTA='guida'}
  else{const e=trovaEv(h);
   if(!e){html=viewHome();VISTA='home'}
   else{const r=h.slice(e.id.length+1);
@@ -1111,6 +1232,10 @@ function zoom(src,mat){const z=$('#zoom');z.querySelector('img').src=src;const a
 document.addEventListener('click',async ev=>{
  const t=ev.target;
  if(t.closest('[data-ricarica]')){ricarica();return}
+ const lgo=t.closest('[data-logo]');if(lgo){LOGO_APERTO=lgo.dataset.logo;rerender();return}
+ if(t.closest('[data-logo-chiudi]')){LOGO_APERTO=null;rerender();return}
+ const stl=t.closest('[data-stile]');if(stl){const k=stl.dataset.stile;STILE_APERTO=STILE_APERTO===k?'':k;rerender();return}
+ const tr=t.closest('[data-testo-reset]');if(tr){store.del('kit4:testo:'+tr.dataset.testoReset);rerender();toast('Testo originale ripristinato');return}
  const z=t.closest('[data-zoom]');if(z){ev.preventDefault();zoom(z.dataset.zoom,z.dataset.mat);return}
  if(t.closest('#zoom')&&!t.closest('.zoom-az')){$('#zoom').hidden=true;return}
  const ap=t.closest('[data-apri]');if(ap){const k=ap.dataset.apri;OPEN.has(k)?OPEN.delete(k):OPEN.add(k);rerender();return}
@@ -1147,6 +1272,7 @@ document.addEventListener('click',async ev=>{
 });
 document.addEventListener('input',ev=>{
  const t=ev.target;
+ if(t.matches('[data-testo]')){const k=t.dataset.testo,orig=TESTI.find(x=>x[0]===k)[4];if(t.value===orig)store.del('kit4:testo:'+k);else store.set('kit4:testo:'+k,t.value);const c=t.closest('.card');const w=c.querySelector('[data-testo-wa]');if(w)w.href='https://wa.me/?text='+encodeURIComponent(t.value);const cp=c.querySelector('[data-copia-val]');if(cp)cp.dataset.copiaVal=t.value;return}
  if(t.matches('[data-k]')){store.set(t.dataset.k,t.value);const box=t.closest('.msg-b');
   if(box){const [e,m]=trova(t.dataset.ev,t.dataset.m);const ch=box.querySelector('.editor-l');if(ch&&!ch.querySelector('.chip-edit')){ch.insertAdjacentHTML('beforeend',`<span class="chip chip-edit">${ic('edit','s')}Modificato</span>`)}
    clearTimeout(window._ri);window._ri=setTimeout(()=>{const a=document.activeElement;const id=a&&a.id;const s=a&&a.selectionStart;if(quadre(t.value).length!==quadre(m.t).length||daCompletare(e,m)!==box.closest('.msg').classList.contains('todo')){rerender();const n=id&&document.getElementById(id);if(n){n.focus();try{n.setSelectionRange(s,s)}catch(x){}}}},600)}
