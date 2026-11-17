@@ -22,7 +22,7 @@ html,body{margin:0;background:transparent;color:var(--ink);font-family:var(--f)}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 .chip i{width:12px;height:12px;border-radius:50%;display:block}
 select.chip{appearance:none;padding-right:34px;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1b' stroke-width='2.4' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>") right 10px center/16px no-repeat}
-#mappa{height:min(70vh,620px);min-height:380px;border-radius:16px;border:1px solid var(--line);overflow:hidden;z-index:0}
+#mappa{position:relative;height:520px;border-radius:16px;border:1px solid var(--line);overflow:hidden;z-index:0}
 .legenda{display:flex;flex-wrap:wrap;gap:16px;font-size:13.5px;font-weight:700;color:var(--muted)}
 .legenda span{display:inline-flex;align-items:center;gap:6px}
 .legenda i{width:14px;height:14px;border-radius:50%;display:block}
@@ -35,6 +35,7 @@ select.chip{appearance:none;padding-right:34px;background:#fff url("data:image/s
 .pill{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.04em;padding:1px 7px;border-radius:999px;background:#fdebd9;color:#a14d10;margin-left:4px;vertical-align:1px}
 .pill.v{background:#e9e9e6;color:var(--ink)}.pill.p{background:#e4f2e8;color:var(--verde)}
 .leaflet-container{font-family:var(--f)}
+.avviso{position:absolute;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(29,29,27,.55);color:#fff;font-weight:800;font-size:17px;text-align:center;padding:20px;opacity:0;transition:opacity .25s;pointer-events:none}.avviso.on{opacity:1}
 .leaflet-popup-content{margin:12px 14px}
 h2{margin:10px 0 0;font-size:20px;font-weight:900}
 .anno{display:flex;flex-direction:column;gap:6px}
@@ -46,12 +47,11 @@ h2{margin:10px 0 0;font-size:20px;font-weight:900}
 .voce small{display:block;font-size:13px;color:var(--muted);font-weight:700;margin-top:2px}
 .elenco{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px}
 button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
-@media (max-width:640px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat b{font-size:26px}.elenco{grid-template-columns:1fr}}
+@media (max-width:640px){#mappa{height:400px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat b{font-size:26px}.elenco{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
- <div class="stats" id="stats"></div>
  <div class="filtri" role="group" aria-label="Filtra le uscite">
   <button class="chip" data-tipo="tutte" aria-pressed="true">Tutte</button>
   <button class="chip" data-tipo="g" aria-pressed="false"><i style="background:var(--arancio)"></i>In giornata</button>
@@ -60,6 +60,7 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #f2a
  </div>
  <div id="mappa" role="region" aria-label="Mappa dei luoghi visitati con Nexus"></div>
  <div class="legenda"><span><i style="background:var(--arancio)"></i>Visita in giornata</span><span><i style="background:var(--nero)"></i>Viaggio di più giorni</span><span><i style="background:#fff;border:3px solid var(--verde)"></i>In programma</span><span>Più grande = ci siamo tornati più volte</span></div>
+ <div class="stats" id="stats"></div>
  <h2>Tutte le uscite</h2>
  <div id="elenco" class="elenco"></div>
 </div>
@@ -78,9 +79,13 @@ let F={tipo:'tutte',anno:''};
  const anni=[...new Set(USCITE.map(u=>u.d.slice(0,4)))].sort();const primo=f.map(u=>u.d.slice(0,4)).sort()[0];
  document.getElementById('stats').innerHTML=[[f.length,'uscite e viaggi'],[mete.size,'luoghi visitati'],[paesi.size,'Paesi'],[(new Date().getFullYear()-primo+1),'anni in cammino (dal '+primo+')']].map(([n,t])=>`<div class="stat"><b>${n}</b><span>${t}</span></div>`).join('');
  const sel=document.getElementById('anno');anni.reverse().forEach(a=>sel.insertAdjacentHTML('beforeend',`<option value="${a}">${a}</option>`))})();
-const mappa=L.map('mappa',{scrollWheelZoom:false,worldCopyJump:true}).setView([45.5,10.2],5);
+const TOUCH=matchMedia('(pointer:coarse)').matches;
+const mappa=L.map('mappa',{scrollWheelZoom:false,worldCopyJump:true,dragging:!TOUCH,tap:false}).setView([45.5,10.2],5);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(mappa);
 mappa.on('click',()=>mappa.scrollWheelZoom.enable());
+/* su telefono un dito fa scorrere la pagina, due dita spostano e zoomano la mappa */
+if(TOUCH){const box=document.getElementById('mappa');const av=document.createElement('div');av.className='avviso';av.textContent='Usa due dita per spostare la mappa';box.appendChild(av);let t;
+ box.addEventListener('touchmove',e=>{if(e.touches.length===1){av.classList.add('on');clearTimeout(t);t=setTimeout(()=>av.classList.remove('on'),1200)}else av.classList.remove('on')},{passive:true})}
 const strato=L.layerGroup().addTo(mappa);let marker={};
 function visibili(){return USCITE.filter(u=>(F.tipo==='tutte'||u.tipo===F.tipo)&&(!F.anno||u.d.startsWith(F.anno)))}
 function disegna(){strato.clearLayers();marker={};const luoghi={};
