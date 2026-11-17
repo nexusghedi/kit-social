@@ -236,7 +236,7 @@ def stileF(e):
     o['S2']=root(1080,1920,LAV)+mesh(1080,1920,1)+tondo('3',440,300)+txt(f'giorni<br>{e["manca"]}.',112,820)+f'<div style="position: absolute; left: 140px; right: 140px; top: 1150px; text-align: center; font-size: 44px; line-height: 56px; font-weight: 600">{e["prom"]}</div>'+cap('Milano · Dalí, Verdi e un aperitivo',230)+'</div>'
     return o
 
-STILI=[('A','Etichette',FONT,stileA,'come nastri di carta: testo in strisce piene sopra la foto'),('B','Editoriale',LAUD,stileB,'serif grande, numero della data gigante, righe con icone'),('C','Quaderno',NAT,stileC,'carta a righe, foto con lo scotch, scritte a mano, evidenziatore'),('D','Sfumato',DRES,stileD,'foto sfocata e colorata, testo bianco con una parola in corsivo'),('E','Parola grande',SAL,stileE,'una parola enorme, foto in una finestra ad arco, petali')]  # F Gradiente: scartato dall'utente (12/11/2026)
+STILI=[('A','Etichette',FONT,stileA,'come nastri di carta: testo in strisce piene sopra la foto'),('B','Editoriale',LAUD,stileB,'serif grande, numero della data gigante, righe con icone'),('C','Quaderno',NAT,stileC,'carta a righe, foto con lo scotch, scritte a mano, evidenziatore'),('E','Parola grande',SAL,stileE,'una parola enorme, foto in una finestra ad arco, petali')]  # D Sfumato (17/11/2026) e F Gradiente: scartati dall'utente (12/11/2026)
 c=json.load(open(P+'canvas.json'))
 if not any(p['id']=='stili' for p in c['pages']):c['pages'].append({'id':'stili','name':'Stili nuovi · 6 stili declinati (post 3 immagini, WhatsApp e storie: notizia e promemoria)'})
 c['notes']=c.get('notes',{})

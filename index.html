@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="kit-versione" content="2026-11-17 16:14">
+<meta name="kit-versione" content="2026-11-17 16:22">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -1028,7 +1028,6 @@ const STILI=[
  ['etichette','Etichette','Gite in giornata e uscite Arkè: testo in strisce come nastro di carta sopra la foto, bollino con la data.'],
  ['editoriale','Editoriale','Conferenze, libri, serate, eventi solenni: fondo nero, data gigante, titolo in corsivo elegante.'],
  ['quaderno','Quaderno','Corsi, laboratori, vita associativa: carta a righe, foto con lo scotch, scritte a mano.'],
- ['sfumato','Sfumato','Lancio e chiusura iscrizioni dei viaggi: foto sfocata e colorata, testo bianco con una parola in corsivo.'],
  ['parola','Parola grande','Mete dal nome corto e forte (Salento, Praga): il nome enorme sopra una foto ad arco.']];
 function ultimoUso(k){const l=EVENTI.filter(e=>(e.stile||'polaroid')===k);if(!l.length)return '';const d=e=>{const x=DATE[e.id];return Array.isArray(x)?x[0]:''};l.sort((a,b)=>d(b).localeCompare(d(a)));return l[0].titolo.split(' · ')[0].replace(/^Arkè i5sensi$/,l[0].titolo)}
 function schedeStili(){return STILI.map(([k,n,d])=>{const u=ultimoUso(k);return `<section class="card stile"><div class="stile-img">${['post','wa','storia'].map(f=>`<button class="thumb" data-zoom="img/stili/${k}-${f}.jpg" aria-label="${esc(n)}: ${f==='wa'?'WhatsApp':f}, ingrandisci"><img src="img/stili/${k}-${f}.jpg" alt="" loading="lazy"></button>`).join('')}</div><div class="stile-t"><b>${esc(n)}</b><span>${esc(d)}</span>${u?`<span class="t-meta">Ultimo uso: ${esc(u)}</span>`:''}</div></section>`}).join('')}
