@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="kit-versione" content="2026-11-17 17:12">
+<meta name="kit-versione" content="2026-11-17 17:18">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -329,9 +329,15 @@ input.inp:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba
 .next{display:flex;align-items:center;gap:12px;padding:12px 10px 12px 14px;text-decoration:none;color:inherit;background:var(--bg);box-shadow:none;font-size:14.5px;font-weight:700}
 .next .grow{flex:1}
 .toast-wrap{position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:528px;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:20;font-family:"Nunito",system-ui,sans-serif}
-#zoom{position:fixed;inset:0;background:rgba(10,10,9,.9);z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px));font-family:"Nunito",system-ui,sans-serif}
-#zoom img{max-width:100%;max-height:calc(100% - 80px);border-radius:8px;background:#fff}
+#zoom{position:fixed;inset:0;background:rgba(10,10,9,.96);z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px));font-family:"Nunito",system-ui,sans-serif}
+#zoom img{max-width:100%;max-height:calc(100% - 120px);border-radius:8px;background:#fff}
 .zoom-az{display:flex;gap:10px;width:100%;max-width:420px}
+.zoom-x{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.18) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round'><path d='M18 6L6 18M6 6l12 12'/></svg>") center/24px no-repeat;cursor:pointer;z-index:2}
+.zoom-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.7);background:rgba(0,0,0,.55) center/26px no-repeat;cursor:pointer;z-index:2}
+.zoom-nav.prev{left:calc(8px + env(safe-area-inset-left,0px));background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M15 6l-6 6 6 6'/></svg>")}.zoom-nav.next{right:calc(8px + env(safe-area-inset-right,0px));background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M9 6l6 6-6 6'/></svg>")}
+.zoom-nav:disabled{opacity:.25;cursor:default}.zoom-nav[hidden]{display:none}
+.zoom-n{color:#fff;font-weight:800;font-size:14px;min-height:18px}
+#zoom{position:fixed}
 .zoom-az .btn{flex:1;height:50px}
 .evidenzia{outline:3px solid #f2a900;outline-offset:3px;transition:outline-color .6s}
 .msg{scroll-margin-top:84px}
@@ -395,7 +401,7 @@ input.inp:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba
 <body>
 <div class="app" id="app"></div>
 <div class="toast-wrap"><div class="toast" id="toast" role="status" aria-live="polite" hidden></div></div>
-<div id="zoom" hidden><img alt=""><div class="zoom-az" hidden></div></div>
+<div id="zoom" hidden role="dialog" aria-label="Anteprima"><button class="zoom-x" data-zoom-chiudi aria-label="Chiudi l'anteprima"></button><button class="zoom-nav prev" data-zoom-vai="-1" aria-label="Immagine precedente"></button><img alt=""><button class="zoom-nav next" data-zoom-vai="1" aria-label="Immagine successiva"></button><div class="zoom-n" aria-live="polite"></div><div class="zoom-az" hidden></div></div>
 <script>
 const SITO='https://nexusghedi.it/';
 const TAG='#NexusAPS #Ghedi';
@@ -1073,7 +1079,7 @@ const LOGHI=[
  {k:'n-col',g:'Nexus APS',n:'Nexus · a colori',t:'Fondo chiaro',f:'nexus-logo-colori',svg:1,bg:'#ffffff',quando:'Sui fondi bianchi o chiari. È la versione principale.'},
  {k:'n-scu',g:'Nexus APS',n:'Nexus · a colori su scuro',t:'Fondo scuro',f:'nexus-logo-colori-su-scuro',bg:'#1d1d1b',quando:'Sui fondi neri o molto scuri, quando si vogliono tenere i colori dei petali.'},
  {k:'n-bia',g:'Nexus APS',n:'Nexus · bianco',t:'Foto e colore',f:'nexus-logo-bianco',svg:1,bg:'url(risorse/nexus-gradiente.jpg) center/cover',es:'#0e8534',quando:'Sopra le foto, sul gradiente Nexus e sui fondi colorati scuri (verde, blu, viola, rosso). Sull\'arancio e sul giallo usa il nero.'},
- {k:'n-ner',g:'Nexus APS',n:'Nexus · nero',t:'Giallo, arancio',f:'nexus-logo-nero',bg:'#f8ba32',es:'#ef7d32',quando:'Sui fondi gialli e arancio, dove il logo a colori perderebbe un petalo.'},
+ {k:'n-ner',g:'Nexus APS',n:'Nexus · nero',t:'Giallo, arancio',f:'nexus-logo-nero',bg:'#f8ba32',es:'#ef7d32',foto:'esempio-foto-chiara.jpg',quando:'Sui fondi gialli e arancio, dove il logo a colori perderebbe un petalo, e sulle foto molto chiare.'},
  {k:'a-col',g:'Arkè i5sensi',n:'Arkè i5sensi · a colori',t:'Fondo chiaro',f:'arke-logo-colori',bg:'#ffffff',quando:'Accanto al logo Nexus a colori, sui fondi chiari, per il corso e le sue uscite.'},
  {k:'a-bia',g:'Arkè i5sensi',n:'Arkè i5sensi · bianco',t:'Foto e colore',f:'arke-logo-bianco',bg:'url(risorse/nexus-gradiente.jpg) center/cover',es:'#0e8534',quando:'Sopra le foto e sui fondi colorati, accanto al logo Nexus bianco.'}];
 const TESTI=[
@@ -1105,7 +1111,7 @@ const testoDi=k=>{const t=TESTI.find(x=>x[0]===k);return store.get('kit4:testo:'
 const testaSub=(t,back='#risorse')=>`<header class="topbar evbar"><a class="btn-icon" href="${back}" aria-label="Torna alle risorse">${ic('back')}</a><div class="tt"><b>${esc(t)}</b></div></header>`;
 function tessereLoghi(g){return `<div class="r-lg">${LOGHI.filter(l=>l.g===g).map(l=>`<button class="r-lt" data-logo="${l.k}" aria-label="${esc(l.n)}: apri"><span class="sw" style="background:${l.bg}"><img src="risorse/${l.f}.png" alt=""></span><span class="r-lab">${esc(l.t)}</span></button>`).join('')}</div>`}
 function foglioLogo(){const l=LOGHI.find(x=>x.k===LOGO_APERTO);if(!l)return '';
- const esA=l.es?`<span class="r-es" style="background:${l.es}"><img src="risorse/${l.f}.png" alt=""></span><span class="r-es foto" style="background-image:url(risorse/esempio-foto.jpg)"><img src="risorse/${l.f}.png" alt=""></span>`:`<span class="r-es" style="background:${l.bg};grid-column:1/-1"><img src="risorse/${l.f}.png" alt="" style="max-width:60%"></span>`;
+ const esA=l.es?`<span class="r-es" style="background:${l.es}"><img src="risorse/${l.f}.png" alt=""></span><span class="r-es foto" style="background-image:url(risorse/${l.foto||'esempio-foto.jpg'})"><img src="risorse/${l.f}.png" alt=""></span>`:`<span class="r-es" style="background:${l.bg};grid-column:1/-1"><img src="risorse/${l.f}.png" alt="" style="max-width:60%"></span>`;
  return `<div class="r-ov" data-logo-chiudi></div><section class="r-sheet" role="dialog" aria-label="${esc(l.n)}"><span class="r-grip"></span>
  <div class="row" style="justify-content:space-between"><b style="font-size:19px">${esc(l.n)}</b><button class="btn-icon bordered" data-logo-chiudi aria-label="Chiudi">${ic('x')}</button></div>
  <div class="r-esg">${esA}</div><p style="margin:0;font-size:15px;line-height:1.45"><b>Quando usarlo:</b> ${esc(l.quando)}</p>
@@ -1226,18 +1232,34 @@ function toast(t,err,ms){toastEl.innerHTML=`<span class="${err?'err':'ok'}">${ic
 async function copia(t){try{await navigator.clipboard.writeText(t);return true}catch(e){return false}}
 async function blobDi(src){const r=await fetch(vSrc(src));return await r.blob()}
 const trova=(ev,id)=>{const e=EVENTI.find(x=>x.id===ev);return [e,e.msgs.find(m=>m.id===id)]};
-function zoom(src,mat){const z=$('#zoom');z.querySelector('img').src=src;const a=z.querySelector('.zoom-az');
+let ZL=[],ZI=0;
+function zoomMostra(){const z=$('#zoom');const [src,mat]=ZL[ZI];z.querySelector('img').src=src;const n=ZL.length>1;
+ z.querySelectorAll('.zoom-nav').forEach(b=>b.hidden=!n);z.querySelector('.prev').disabled=ZI===0;z.querySelector('.next').disabled=ZI===ZL.length-1;
+ z.querySelector('.zoom-n').textContent=n?(ZI+1)+' di '+ZL.length:'';const a=z.querySelector('.zoom-az');
  if(mat){const [ev,id]=mat.split('|');const x=(MAT[ev]||[]).find(y=>y.id===id);a.innerHTML=`<a class="btn btn-pri" href="${x.file}" download="${nomeFile(x)}" target="_blank" rel="noopener">${ic('download')}Scarica</a><button class="btn btn-sec" data-file="${x.file}" data-nome="${nomeFile(x)}">${ic('share')}Condividi</button>`;a.hidden=false}else{a.hidden=true}
- z.hidden=false}
+}
+function zoom(src,mat,el){const g=el&&el.closest('.media,.stile-img,.r-esg');const l=g?[...g.querySelectorAll('[data-zoom]')]:[];
+ ZL=l.length>1?l.map(x=>[x.dataset.zoom,x.dataset.mat]):[[src,mat]];ZI=Math.max(0,ZL.findIndex(x=>x[0]===src));zoomMostra();
+ const z=$('#zoom');if(z.hidden){z.hidden=false;apriLivello()}}
+function zoomVai(d){const i=ZI+d;if(i<0||i>=ZL.length)return;ZI=i;zoomMostra()}
+/* livelli (anteprima, scheda logo): il tasto Indietro di Android li chiude invece di cambiare pagina */
+function apriLivello(){try{history.pushState({livello:1},'')}catch(e){}}
+function chiudiLivelli(daIndietro){let c=false;const z=$('#zoom');if(!z.hidden){z.hidden=true;c=true}else if(LOGO_APERTO){LOGO_APERTO=null;rerender();c=true}
+ if(c&&!daIndietro&&history.state&&history.state.livello){try{history.back()}catch(e){}}return c}
+window.addEventListener('popstate',()=>{chiudiLivelli(true)});
+{let x0=null;const z=$('#zoom');z.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});z.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>50)zoomVai(dx<0?1:-1)})}
+document.addEventListener('keydown',e=>{if($('#zoom').hidden)return;if(e.key==='ArrowRight')zoomVai(1);if(e.key==='ArrowLeft')zoomVai(-1);if(e.key==='Escape')chiudiLivelli()});
 document.addEventListener('click',async ev=>{
  const t=ev.target;
  if(t.closest('[data-ricarica]')){ricarica();return}
- const lgo=t.closest('[data-logo]');if(lgo){LOGO_APERTO=lgo.dataset.logo;rerender();return}
- if(t.closest('[data-logo-chiudi]')){LOGO_APERTO=null;rerender();return}
+ const lgo=t.closest('[data-logo]');if(lgo){const prima=LOGO_APERTO;LOGO_APERTO=lgo.dataset.logo;rerender();if(!prima)apriLivello();return}
+ if(t.closest('[data-logo-chiudi]')){chiudiLivelli();return}
  const stl=t.closest('[data-stile]');if(stl){const k=stl.dataset.stile;STILE_APERTO=STILE_APERTO===k?'':k;rerender();return}
  const tr=t.closest('[data-testo-reset]');if(tr){store.del('kit4:testo:'+tr.dataset.testoReset);rerender();toast('Testo originale ripristinato');return}
- const z=t.closest('[data-zoom]');if(z){ev.preventDefault();zoom(z.dataset.zoom,z.dataset.mat);return}
- if(t.closest('#zoom')&&!t.closest('.zoom-az')){$('#zoom').hidden=true;return}
+ const zv=t.closest('[data-zoom-vai]');if(zv){zoomVai(+zv.dataset.zoomVai);return}
+ if(t.closest('[data-zoom-chiudi]')){chiudiLivelli();return}
+ const z=t.closest('[data-zoom]');if(z){ev.preventDefault();zoom(z.dataset.zoom,z.dataset.mat,z);return}
+ if(t.closest('#zoom')&&!t.closest('.zoom-az')&&!t.closest('img')){chiudiLivelli();return}
  const ap=t.closest('[data-apri]');if(ap){const k=ap.dataset.apri;OPEN.has(k)?OPEN.delete(k):OPEN.add(k);rerender();return}
  const ad=t.closest('[data-apri-dopo]');if(ad){OPEN.add(ad.dataset.apriDopo);APRI_DOPO=ad.dataset.apriDopo;return}
  const td=t.closest('[data-todo]');if(td){TODO_APERTO=!TODO_APERTO;rerender();return}
