@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Dove siamo stati · Nexus APS</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+:root{--bg:#ffffff;--ink:#1d1d1b;--muted:#5d5d5b;--line:#e3e3df;--sunk:#f4f5f2;--verde:#0e8534;--arancio:#ef7d32;--nero:#1d1d1b;--f:'Nunito',system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f)}
+.wrap{max-width:1100px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-left,0px)) 32px max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{background:var(--sunk);border-radius:14px;padding:12px 14px}
+.stat b{display:block;font-size:30px;line-height:1;font-weight:900;color:var(--verde);font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;font-weight:700;color:var(--muted)}
+.filtri{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:14.5px;font-weight:800;color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip i{width:12px;height:12px;border-radius:50%;display:block}
+select.chip{appearance:none;padding-right:34px;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1b' stroke-width='2.4' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>") right 10px center/16px no-repeat}
+#mappa{height:min(62vh,560px);min-height:360px;border-radius:16px;border:1px solid var(--line);overflow:hidden;z-index:0}
+.legenda{display:flex;flex-wrap:wrap;gap:16px;font-size:13.5px;font-weight:700;color:var(--muted)}
+.legenda span{display:inline-flex;align-items:center;gap:6px}
+.legenda i{width:14px;height:14px;border-radius:50%;display:block}
+.pop{font-family:var(--f);min-width:200px;max-width:260px}
+.pop h3{margin:0 0 6px;font-size:16px;font-weight:900}
+.pop ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.pop li{font-size:13.5px;line-height:1.35}
+.pop li small{display:block;color:var(--muted);font-weight:700}
+.pop a{color:var(--verde);font-weight:800}
+.pill{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.04em;padding:1px 7px;border-radius:999px;background:#fdebd9;color:#a14d10;margin-left:4px;vertical-align:1px}
+.pill.v{background:#e9e9e6;color:var(--ink)}.pill.p{background:#e4f2e8;color:var(--verde)}
+.leaflet-container{font-family:var(--f)}
+.leaflet-popup-content{margin:12px 14px}
+h2{margin:10px 0 0;font-size:20px;font-weight:900}
+.anno{display:flex;flex-direction:column;gap:6px}
+.anno h3{margin:8px 0 2px;font-size:15px;font-weight:900;color:var(--verde)}
+.voce{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--sunk);border:0;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+.voce:hover{background:#ecede8}
+.voce i{width:12px;height:12px;border-radius:50%;flex:none;margin-top:5px}
+.voce b{font-size:15px;line-height:1.3}
+.voce small{display:block;font-size:13px;color:var(--muted);font-weight:700;margin-top:2px}
+.elenco{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px}
+button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat b{font-size:26px}.elenco{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="stats" id="stats"></div>
+ <div class="filtri" role="group" aria-label="Filtra le uscite">
+  <button class="chip" data-tipo="tutte" aria-pressed="true">Tutte</button>
+  <button class="chip" data-tipo="g" aria-pressed="false"><i style="background:var(--arancio)"></i>In giornata</button>
+  <button class="chip" data-tipo="v" aria-pressed="false"><i style="background:var(--nero)"></i>Più giorni</button>
+  <select class="chip" id="anno" aria-label="Anno"><option value="">Tutti gli anni</option></select>
+ </div>
+ <div id="mappa" role="region" aria-label="Mappa dei luoghi visitati con Nexus"></div>
+ <div class="legenda"><span><i style="background:var(--arancio)"></i>Visita in giornata</span><span><i style="background:var(--nero)"></i>Viaggio di più giorni</span><span><i style="background:#fff;border:3px solid var(--verde)"></i>In programma</span><span>Più grande = ci siamo tornati più volte</span></div>
+ <h2>Tutte le uscite</h2>
+ <div id="elenco" class="elenco"></div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="dati.js"></script>
+<script>
+const MESI=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+const dataTxt=d=>{const [a,m]=d.split('-');return MESI[+m-1]+' '+a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const oggi=new Date().toISOString().slice(0,10);
+USCITE.forEach(u=>{if(u.stato==='p'&&u.d<oggi)u.stato='f'});
+USCITE.sort((a,b)=>b.d.localeCompare(a.d));
+let F={tipo:'tutte',anno:''};
+// statistiche (solo uscite fatte)
+(function(){const f=USCITE.filter(u=>u.stato==='f');const mete=new Set(),paesi=new Set();f.forEach(u=>u.l.forEach(l=>{mete.add(l[0]);paesi.add(l[3])}));
+ const anni=[...new Set(USCITE.map(u=>u.d.slice(0,4)))].sort();const primo=f.map(u=>u.d.slice(0,4)).sort()[0];
+ document.getElementById('stats').innerHTML=[[f.length,'uscite e viaggi'],[mete.size,'luoghi visitati'],[paesi.size,'Paesi'],[(new Date().getFullYear()-primo+1),'anni in cammino (dal '+primo+')']].map(([n,t])=>`<div class="stat"><b>${n}</b><span>${t}</span></div>`).join('');
+ const sel=document.getElementById('anno');anni.reverse().forEach(a=>sel.insertAdjacentHTML('beforeend',`<option value="${a}">${a}</option>`))})();
+const mappa=L.map('mappa',{scrollWheelZoom:false,worldCopyJump:true}).setView([45.5,10.2],5);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:18,subdomains:'abcd',attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(mappa);
+mappa.on('click',()=>mappa.scrollWheelZoom.enable());
+const strato=L.layerGroup().addTo(mappa);let marker={};
+function visibili(){return USCITE.filter(u=>(F.tipo==='tutte'||u.tipo===F.tipo)&&(!F.anno||u.d.startsWith(F.anno)))}
+function disegna(){strato.clearLayers();marker={};const luoghi={};
+ visibili().forEach(u=>u.l.forEach(([n,la,lo,pa])=>{const k=la.toFixed(3)+','+lo.toFixed(3);(luoghi[k]=luoghi[k]||{n,la,lo,pa,u:[]}).u.push(u)}));
+ const pts=[];
+ Object.entries(luoghi).forEach(([k,p])=>{const fatte=p.u.filter(u=>u.stato==='f');const tutte=p.u;const ult=tutte[0];
+  const soloProg=!fatte.length;const col=(fatte[0]||ult).tipo==='v'?'#1d1d1b':'#ef7d32';const r=Math.min(6+Math.sqrt(Math.max(1,fatte.length))*3,16);
+  const m=L.circleMarker([p.la,p.lo],{radius:r,color:soloProg?'#0e8534':'#ffffff',weight:soloProg?3:2,fillColor:soloProg?'#ffffff':col,fillOpacity:1});
+  m.bindPopup(`<div class="pop"><h3>${esc(p.n)}</h3><ul>${tutte.map(u=>`<li><b>${esc(u.t)}</b>${u.stato==='p'?'<span class="pill p">IN PROGRAMMA</span>':u.tipo==='v'?'<span class="pill v">PIÙ GIORNI</span>':'<span class="pill">GIORNATA</span>'}<small>${dataTxt(u.d)} · ${esc(p.pa)}</small><a href="${u.u}" target="_blank" rel="noopener">Leggi l'articolo</a></li>`).join('')}</ul></div>`,{maxWidth:280});
+  m.addTo(strato);marker[k]=m;pts.push([p.la,p.lo])});
+ if(pts.length&&(F.anno||F.tipo!=='tutte'))mappa.fitBounds(pts,{padding:[30,30],maxZoom:9});
+ const el=document.getElementById('elenco');const per={};visibili().forEach(u=>(per[u.d.slice(0,4)]=per[u.d.slice(0,4)]||[]).push(u));
+ el.innerHTML=Object.keys(per).sort().reverse().map(a=>`<div class="anno"><h3>${a}</h3>${per[a].map(u=>`<button class="voce" data-k="${u.l[0][1].toFixed(3)+','+u.l[0][2].toFixed(3)}"><i style="${u.stato==='p'?'background:#fff;border:3px solid #0e8534':'background:'+(u.tipo==='v'?'#1d1d1b':'#ef7d32')}"></i><span><b>${esc(u.t)}</b><small>${dataTxt(u.d)} · ${esc([...new Set(u.l.map(l=>l[0]))].join(', '))}</small></span></button>`).join('')}</div>`).join('')}
+document.addEventListener('click',e=>{const c=e.target.closest('[data-tipo]');if(c){F.tipo=c.dataset.tipo;document.querySelectorAll('[data-tipo]').forEach(b=>b.setAttribute('aria-pressed',b===c));if(F.tipo==='tutte'&&!F.anno)mappa.setView([45.5,10.2],5);disegna();return}
+ const v=e.target.closest('.voce');if(v){const m=marker[v.dataset.k];if(m){mappa.flyTo(m.getLatLng(),9,{duration:.8});setTimeout(()=>m.openPopup(),850);document.getElementById('mappa').scrollIntoView({behavior:'smooth',block:'center'})}}});
+document.getElementById('anno').addEventListener('change',e=>{F.anno=e.target.value;if(!F.anno&&F.tipo==='tutte')mappa.setView([45.5,10.2],5);disegna()});
+disegna();
+</script>
+</body>
+</html>
