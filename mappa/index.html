@@ -98,6 +98,9 @@ document.addEventListener('click',e=>{const c=e.target.closest('[data-tipo]');if
  const v=e.target.closest('.voce');if(v){const m=marker[v.dataset.k];if(m){mappa.flyTo(m.getLatLng(),9,{duration:.8});setTimeout(()=>m.openPopup(),850);document.getElementById('mappa').scrollIntoView({behavior:'smooth',block:'center'})}}});
 document.getElementById('anno').addEventListener('change',e=>{F.anno=e.target.value;if(!F.anno&&F.tipo==='tutte')mappa.setView([45.5,10.2],5);disegna()});
 disegna();
+/* nel sito la pagina sta in un iframe: comunica l'altezza per evitare la doppia barra di scorrimento */
+function altezza(){try{parent.postMessage({nexusMappaH:document.documentElement.scrollHeight},'*')}catch(e){}}
+new ResizeObserver(altezza).observe(document.body);window.addEventListener('load',altezza);
 </script>
 </body>
 </html>
