@@ -31,7 +31,10 @@ select.chip{appearance:none;padding-right:34px;background:#fff url("data:image/s
 .pop ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
 .pop li{font-size:13.5px;line-height:1.35}
 .pop li small{display:block;color:var(--muted);font-weight:700}
-.pop a{color:var(--verde);font-weight:800}
+.pop a{color:var(--ink);font-weight:800;text-decoration:underline;text-decoration-color:var(--verde);text-decoration-thickness:2px;text-underline-offset:3px}
+.pop h3 .n{font-size:12px;font-weight:800;color:var(--muted);white-space:nowrap}
+.leaflet-popup-scrolled{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;border:0!important;padding-right:6px}
+.pop li{border-top:1px solid var(--line);padding-top:8px}.pop li:first-child{border-top:0;padding-top:0}
 .pill{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.04em;padding:1px 7px;border-radius:999px;background:#fdebd9;color:#a14d10;margin-left:4px;vertical-align:1px}
 .pill.v{background:#e9e9e6;color:var(--ink)}.pill.p{background:#e4f2e8;color:var(--verde)}
 .leaflet-container{font-family:var(--f)}
@@ -94,7 +97,7 @@ function disegna(){strato.clearLayers();marker={};const luoghi={};
  Object.entries(luoghi).forEach(([k,p])=>{const fatte=p.u.filter(u=>u.stato==='f');const tutte=p.u;const ult=tutte[0];
   const soloProg=!fatte.length;const col=(fatte[0]||ult).tipo==='v'?'#1d1d1b':'#ef7d32';const r=Math.min(6+Math.sqrt(Math.max(1,fatte.length))*3,16);
   const m=L.circleMarker([p.la,p.lo],{radius:r,color:soloProg?'#0e8534':'#ffffff',weight:soloProg?3:2,fillColor:soloProg?'#ffffff':col,fillOpacity:1});
-  m.bindPopup(`<div class="pop"><h3>${esc(p.n)}</h3><ul>${tutte.map(u=>`<li><b>${esc(u.t)}</b>${u.stato==='p'?'<span class="pill p">IN PROGRAMMA</span>':u.tipo==='v'?'<span class="pill v">PIÙ GIORNI</span>':'<span class="pill">GIORNATA</span>'}<small>${dataTxt(u.d)} · ${esc(p.pa)}</small><a href="${u.u}" target="_blank" rel="noopener">Leggi l'articolo</a></li>`).join('')}</ul></div>`,{maxWidth:280});
+  m.bindPopup(`<div class="pop"><h3>${esc(p.n)}${tutte.length>1?` <span class="n">${tutte.length} uscite</span>`:''}</h3><ul>${tutte.map(u=>`<li><a href="${u.u}" target="_blank" rel="noopener">${esc(u.t)}</a>${u.stato==='p'?'<span class="pill p">IN PROGRAMMA</span>':u.tipo==='v'?'<span class="pill v">PIÙ GIORNI</span>':'<span class="pill">GIORNATA</span>'}<small>${dataTxt(u.d)} · ${esc(p.pa)}</small></li>`).join('')}</ul></div>`,{maxWidth:280,maxHeight:Math.max(180,document.getElementById('mappa').clientHeight-110),autoPanPadding:[12,12]});
   m.addTo(strato);marker[k]=m;pts.push([p.la,p.lo])});
  if(pts.length&&(F.anno||F.tipo!=='tutte'))mappa.fitBounds(pts,{padding:[30,30],maxZoom:9});
  const el=document.getElementById('elenco');const per={};visibili().forEach(u=>(per[u.d.slice(0,4)]=per[u.d.slice(0,4)]||[]).push(u));
