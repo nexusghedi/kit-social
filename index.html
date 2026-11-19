@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="kit-versione" content="2026-11-19 12:37">
+<meta name="kit-versione" content="2026-11-19 12:56">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -816,25 +816,27 @@ const INFO={
 
 
 const COMUNICAZIONI=[
- ['Nuovo evento',"All'uscita dell'evento",{Sito:'Articolo + card, categorie e tag',WhatsApp:'Polaroid 1:1 + testo breve, alla lista broadcast','NEXUS APS / IG':'Carosello di 3 (4:5). FB con link, IG con «link in bio» e hashtag','Nexus Experience':'Viaggi, gite, uscite ed esperienze: condividi il post di NEXUS APS (tasto Condividi › pagina Nexus Experience)',Storia:'9:16 foto piena + adesivo link',Stampa:'Volantini A5 (2 per A4), locandina A4 per la bacheca, A3 se serve, programma',Altro:'Nexi che spunta e saluta (con prompt), modulo, evento nel calendario pubblico, attività di fine evento, kit + promemoria'}],
- ['Ultimi giorni per iscriversi','3–4 giorni prima della scadenza',{WhatsApp:"Immagine dell'evento + testo (scadenza, acconto, modulo)",Storia:'Sì'}],
- ['Iscrizioni chiuse','Il giorno dopo la scadenza (automatico)',{Sito:"Automatico: «Lista d'attesa»",WhatsApp:'Solo testo',Altro:'Attività programmata il giorno dopo'}],
- ['Ultimi posti','Quando succede',{Sito:'Pillola rossa',WhatsApp:'Grafica 1:1 «Ultimi N posti»',Storia:'Sì, stesso modello',Altro:'Stato nel kit'}],
- ['Al completo','Quando succede',{Sito:"Pillola verde + tasto lista d'attesa",WhatsApp:'Solo testo',Altro:'I messaggi di iscrizione spariscono'}],
- ['Si è liberato un posto','Quando succede',{Sito:'Pillola gialla',WhatsApp:'Grafica 1:1 «va a chi scrive per primo»',Storia:'Sì',Altro:'Niente post sulle pagine né su Instagram. Poi si torna ad al completo'}],
- ['Incontro di preparazione (viaggi)','Una settimana prima + il giorno stesso',{WhatsApp:'Due messaggi solo testo',Storia:'Facoltativa',Altro:'Evento nel calendario pubblico'}],
- ['Saldo (viaggi)','Prima della scadenza del saldo',{WhatsApp:'Solo testo: quota definitiva, acconto da detrarre, come pagare'}],
- ['Partenza (viaggi, visite, uscite)','2–3 giorni prima',{WhatsApp:'Solo testo: ritrovo, documenti, 🎧 auricolari, rientro'}],
- ['Serata o conferenza','Una settimana prima + il giorno stesso',{Sito:'Articolo',WhatsApp:'Invito con immagine','NEXUS APS / IG':'Carosello',Storia:'Il giorno prima + il giorno stesso',Stampa:'Locandina A4 per la bacheca'}],
- ['Ricorrenti (Attiva-mente)','Ogni tanto, per farle conoscere',{WhatsApp:'Messaggio con immagine','NEXUS APS / IG':'Post ogni tanto',Storia:'Ogni tanto',Stampa:'Locandina A4 per la bacheca',Altro:'Niente promemoria settimanale: chi è iscritto lo sa'}],
- ['Cambio di data o annullamento','Appena deciso',{Sito:'Scheda e testo aggiornati',WhatsApp:'Avviso solo testo agli iscritti','NEXUS APS':'Solo se l\'evento era pubblico (e su Nexus Experience se era stato condiviso lì)',Stampa:'Rifare i materiali con il dato cambiato',Altro:'Calendari e attività programmate aggiornati'}],
+ ['Nuovo evento',"All'uscita dell'evento",{Sito:'Articolo + card, categorie e tag','WhatsApp · tutti':'Polaroid 1:1 + testo breve','NEXUS APS / IG':'Carosello di 3 (4:5). FB con link, IG con «link in bio» e hashtag','Nexus Experience':'Viaggi, gite, uscite ed esperienze: condividi il post di NEXUS APS (Condividi › pagina Nexus Experience)','Storia IG + stato WA':'9:16 foto piena: su Instagram con adesivo link, nello stato WhatsApp con il link in didascalia',Stampa:'Volantini A5 (2 per A4), locandina A4 per la bacheca, A3 se serve, programma',Altro:'Nexi che spunta e saluta (con prompt), modulo, evento nel calendario pubblico, attività di fine evento, kit + promemoria'}],
+ ['Ultimi giorni per iscriversi','3–4 giorni prima della scadenza',{'WhatsApp · tutti':"Immagine dell'evento + testo (scadenza, acconto, modulo)",'Storia IG + stato WA':'Sì'}],
+ ['Iscrizioni chiuse','Il giorno dopo la scadenza (automatico)',{Sito:"Automatico: «Lista d'attesa»",'WhatsApp · tutti':'Solo testo',Altro:'Attività programmata il giorno dopo'}],
+ ['Lista d\'attesa','Quando qualcuno chiede dopo la chiusura',{'WhatsApp · iscritti':'Risposta singola (testo pronto in Risorse › Testi pronti)'}],
+ ['Ultimi posti','Quando succede',{Sito:'Pillola rossa','WhatsApp · tutti':'Grafica 1:1 «Ultimi N posti»','Storia IG + stato WA':'Sì, stesso modello',Altro:'Stato nel kit'}],
+ ['Al completo','Quando succede',{Sito:"Pillola verde + tasto lista d'attesa",'WhatsApp · tutti':'Solo testo',Altro:'I messaggi di iscrizione spariscono'}],
+ ['Si è liberato un posto','Quando succede',{Sito:'Pillola gialla','WhatsApp · tutti':'Grafica 1:1 «va a chi scrive per primo»','Storia IG + stato WA':'Sì',Altro:'Niente post sulle pagine né su Instagram. Poi si torna ad al completo'}],
+ ['Incontro di preparazione (viaggi)','Una settimana prima + il giorno stesso',{'WhatsApp · iscritti':'Due messaggi solo testo','Storia IG + stato WA':'Facoltativa',Altro:'Evento nel calendario pubblico'}],
+ ['Saldo (viaggi)','Prima della scadenza del saldo',{'WhatsApp · iscritti':'Solo testo: quota definitiva, acconto da detrarre, come pagare'}],
+ ['Partenza (viaggi, visite, uscite)','2–3 giorni prima',{'WhatsApp · iscritti':'Solo testo: ritrovo, documenti, 🎧 auricolari, rientro'}],
+ ['Serata o conferenza','Una settimana prima + il giorno stesso',{Sito:'Articolo','WhatsApp · tutti':'Invito con immagine + promemoria il giorno stesso','NEXUS APS / IG':'Carosello','Storia IG + stato WA':'Il giorno prima + il giorno stesso',Stampa:'Locandina A4 per la bacheca'}],
+ ['Ricorrenti (Attiva-mente)','Ogni tanto, per farle conoscere',{'WhatsApp · tutti':'Messaggio con immagine','NEXUS APS / IG':'Post ogni tanto','Storia IG + stato WA':'Ogni tanto',Stampa:'Locandina A4 per la bacheca',Altro:'Niente promemoria settimanale: chi è iscritto lo sa'}],
+ ['Cambio di data o annullamento','Appena deciso',{Sito:'Scheda e testo aggiornati','WhatsApp · iscritti':'Avviso solo testo','WhatsApp · tutti':'Solo se l\'evento era stato annunciato a tutti','NEXUS APS':'Solo se l\'evento era pubblico (e su Nexus Experience se era stato condiviso lì)',Stampa:'Rifare i materiali con il dato cambiato',Altro:'Calendari e attività programmate aggiornati'}],
  ['Fine evento','Il giorno dopo (automatico)',{Sito:'Automatico: «Evento concluso»',Altro:'Tolto dal kit dopo «Com\'è andata»; promemoria in calendario per mandare le foto'}],
- ['Com\'è andata','Entro 2–3 giorni dalla fine',{'Da mandare a Claude':'Le foto migliori (meglio di gruppo o di spalle, niente primi piani senza consenso, attenzione ai minori) e due righe su com\'è andata',Sito:'Paragrafo «Com\'è andata» con galleria, aggiunto all\'articolo dell\'evento',WhatsApp:'Collage di 3–4 foto + testo breve con link all\'articolo. Chi ha altre foto le manda rispondendo al messaggio','Nexus Experience':'Viaggi, gite, uscite ed esperienze: carosello fino a 10 foto (4:5), prima immagine con titolo e logo, racconto e link. È la pagina dei racconti','NEXUS APS / IG':'Serate, corsi e vita associativa: stesso carosello su NEXUS APS. Instagram sempre, con «link in bio»',Storia:'Una foto + adesivo link',Altro:'Kit + promemoria nel calendario'}],
- ['Rinnovo della tessera','Inizio gennaio',{Sito:'Notizia con il link al modulo Jotform',WhatsApp:'Immagine 1:1 + testo (15 €, online o in sede il sabato 9–11)','NEXUS APS / IG':'Post singolo «Diventa socio»',Storia:'Sì, con adesivo link al modulo',Stampa:'Locandina A4 per la bacheca'}],
- ['Assemblea dei soci','Convocazione nei tempi dello statuto + promemoria il giorno prima',{Sito:'Notizia con data, ora, luogo e ordine del giorno',WhatsApp:'Convocazione solo testo + promemoria (non sulle pagine)',Stampa:'Avviso A4 per la bacheca'}],
- ['Sede chiusa','Una settimana prima',{Sito:'Notizia breve',WhatsApp:'Solo testo con date di chiusura e riapertura','NEXUS APS / IG':'Post o storia breve',Stampa:'Avviso A4 sulla porta'}],
- ['Auguri (Natale, Pasqua)','Qualche giorno prima della festa',{WhatsApp:'Immagine 1:1 con Nexi a tema',Storia:'Sì','NEXUS APS / IG':'Post singolo','Nexus Experience':'Condividi il post di NEXUS APS'}],
- ['5×1000 (se Nexus è iscritta)','Maggio–giugno (dichiarazione dei redditi)',{Sito:'Notizia con il codice fiscale da copiare',WhatsApp:'Immagine 1:1 + testo','NEXUS APS / IG':'Post singolo',Stampa:'Locandina A4 per la bacheca'}]
+ ['Com\'è andata','Entro 2–3 giorni dalla fine',{'Da mandare a Claude':'Le foto migliori (meglio di gruppo o di spalle, niente primi piani senza consenso, attenzione ai minori) e due righe su com\'è andata',Sito:'Paragrafo «Com\'è andata» con galleria, aggiunto all\'articolo dell\'evento','WhatsApp · tutti':'Collage di 3–4 foto + testo breve con link all\'articolo. Chi ha altre foto le manda rispondendo al messaggio','Nexus Experience':'Viaggi, gite, uscite ed esperienze: carosello fino a 10 foto (4:5), prima immagine con titolo e logo, racconto e link. È la pagina dei racconti','NEXUS APS / IG':'Serate, corsi e vita associativa: stesso carosello su NEXUS APS. Instagram sempre, anche per i viaggi, con «link in bio»','Storia IG + stato WA':'Una foto + link',Altro:'Kit + promemoria nel calendario'}],
+ ['Rinnovo della tessera','Inizio gennaio',{Sito:'Notizia con il link al modulo Jotform','WhatsApp · tutti':'Immagine 1:1 + testo (15 €, online o in sede il sabato 9–11)','NEXUS APS / IG':'Post singolo «Diventa socio»','Storia IG + stato WA':'Sì, con il link al modulo',Stampa:'Locandina A4 per la bacheca'}],
+ ['Assemblea dei soci','Convocazione nei tempi dello statuto + promemoria il giorno prima',{Sito:'Notizia con data, ora, luogo e ordine del giorno','WhatsApp · tutti':'Convocazione solo testo + promemoria (non sulle pagine)',Stampa:'Avviso A4 per la bacheca'}],
+ ['Sede chiusa','Una settimana prima',{Sito:'Notizia breve','WhatsApp · tutti':'Solo testo con date di chiusura e riapertura','NEXUS APS / IG':'Post o storia breve',Stampa:'Avviso A4 sulla porta',Altro:'Orari della pagina Facebook e della scheda Google aggiornati'}],
+ ['Auguri (Natale, Pasqua)','Qualche giorno prima della festa',{'WhatsApp · tutti':'Immagine 1:1 con Nexi a tema','Storia IG + stato WA':'Sì','NEXUS APS / IG':'Post singolo','Nexus Experience':'Condividi il post di NEXUS APS'}],
+ ['5×1000 (se Nexus è iscritta)','Maggio–giugno (dichiarazione dei redditi)',{Sito:'Notizia con il codice fiscale da copiare','WhatsApp · tutti':'Immagine 1:1 + testo','NEXUS APS / IG':'Post singolo',Stampa:'Locandina A4 per la bacheca'}],
+ ['Messaggi in arrivo','Con regolarità, anche nei giorni senza eventi',{'Dove':'Business Suite › Posta in arrivo: Messenger e direct di Instagram insieme. WhatsApp sul telefono dell\'associazione',Altro:'Per le domande frequenti ci sono i Testi pronti (come pagare, socio, iscriversi, lista d\'attesa, sede)'}]
 ];
 /* ===== Kit Nexus · interfaccia (barra in basso, pagina evento, vista «Da pubblicare») ===== */
 const $=(s,el=document)=>el.querySelector(s);
@@ -1023,7 +1025,7 @@ function corpoStoria(e,m){
   ${m.nota?`<p class="nota">${esc(m.nota)}</p>`:''}${bloccoFill(e,m)}
   <div style="display:flex;flex-direction:column;gap:6px"><span class="editor-l"><span>Link per l'adesivo</span></span>
   <div class="linkbox">${ic('link','s muted')}<input data-k="${chiave(e,m)}" data-ev="${e.id}" data-m="${m.id}" value="${esc(testoBase(e,m))}" aria-label="Link per l'adesivo"><button class="btn-icon" data-copia="${e.id}|${m.id}" aria-label="Copia il link">${ic('copy')}</button></div></div>
-  <div class="actions">${todo?tastoBloccato(e,m):`<button class="btn btn-pri" data-condividi="solo" data-ev="${e.id}" data-m="${m.id}">${ic('share')}Condividi la storia</button><p class="t-meta hint">Il link per l'adesivo si copia da solo.</p>`}</div>`;
+  <div class="actions">${todo?tastoBloccato(e,m):`<button class="btn btn-pri" data-condividi="solo" data-ev="${e.id}" data-m="${m.id}">${ic('share')}Condividi la storia</button><p class="t-meta hint">Il link per l'adesivo si copia da solo.</p><div class="gruppo-box"><p class="t-meta">${ic('chat','s')}<b>Anche nello stato di WhatsApp:</b> la vedono i soci che hanno salvato il numero di Nexus.</p><button class="btn btn-sec" data-condividi="testo" data-ev="${e.id}" data-m="${m.id}">${ic('share','s')}Condividi nello stato WhatsApp</button><p class="t-meta hint">Scegli WhatsApp › Il mio stato. Il link entra come didascalia.</p></div>`}</div>`;
 }
 
 /* Stampa e Info */
@@ -1197,6 +1199,7 @@ function viewGuida(){return `<div class="app-in">${testaSub('Guida rapida')}<mai
  <section class="card guida">
   <div class="row top">${ic('cal','verde')}<span><b>Promemoria:</b> arrivano dal calendario Google «Promemoria comunicazioni» come «Da pubblicare: …». Il link apre il kit già sul messaggio.</span></div>
   <div class="row top">${ic('chat','verde')}<span><b>WhatsApp:</b> i messaggi ai soci vanno nella lista broadcast. Tasto verde «Per la lista broadcast»: salva l'immagine e copia il testo, poi nella lista allega l'immagine e incolla. Chi ha domande risponde al messaggio. «Manda a una persona» serve per mandarlo a qualcuno in particolare.</span></div>
+  <div class="row top">${ic('story','verde')}<span><b>Storie e stato WhatsApp:</b> ogni storia di Instagram va anche nello stato di WhatsApp, con il tasto «Condividi nello stato WhatsApp» sotto la storia.</span></div>
   <div class="row top">${ic('images','verde')}<span><b>NEXUS APS e Instagram:</b> la vetrina, dove escono tutti gli annunci con il link al sito. Tasto verde, scegli l'app; nella didascalia tieni premuto e Incolla.</span></div>
   <div class="row top">${ic('share','verde')}<span><b>Nexus Experience:</b> la pagina dei racconti. Ci vanno i «Com'è andata» con le foto di viaggi, gite ed esperienze; gli annunci di viaggi e uscite si condividono qui dal post di NEXUS APS.</span></div>
   <div class="row top">${ic('edit','verde')}<span><b>Testi:</b> puoi modificarli; le modifiche restano su questo telefono e si possono annullare.</span></div>
