@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="kit-versione" content="2026-11-19 12:56">
+<meta name="kit-versione" content="2026-11-19 16:08">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -125,6 +125,8 @@
 .st-info::before{display:none}
 .chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12.5px;font-weight:800;white-space:nowrap}
 .chip-today{background:var(--azione);color:#fff}
+.dest{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border-radius:12px;font-size:14.5px;line-height:1.35;font-weight:600;background:#e7f4eb;color:#0d5a25;margin-bottom:12px}.dest .ic{flex:none;margin-top:2px}.dest b{font-weight:800}.dest.iscr{background:#fff0e3;color:#8f420a}.dest.soc{background:#eef1f8;color:#283b6b}
+.dmini{display:inline-block;align-self:flex-start;width:fit-content;margin:3px 0 2px;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:800;background:#e7f4eb;color:#0d5a25}.dmini.iscr{background:#fff0e3;color:#8f420a}.dmini.soc{background:#eef1f8;color:#283b6b}
 .chip-todo{background:var(--warn-bg);color:var(--warn-ink);border:1px solid var(--warn-line)}
 .chip-done{background:var(--grey-bg);color:var(--grey-ink)}
 .chip-edit{background:var(--sunk);color:var(--muted)}
@@ -962,11 +964,23 @@ function viewEvento(e,tab){
 const vuoto=t=>`<div class="alert alert-info">${ic('info')}<span class="grow">${esc(t)}</span></div>`;
 
 /* riga messaggio */
+const ISCRITTI=new Set(['incontro','incontro-oggi','saldo','partenza','domani']);
+function dest(e,m){
+ const viaggi=AREA(e)==='a-viaggi';
+ if(m.canale==='wa'){const isc=m.a?m.a==='iscritti':(ISCRITTI.has(m.id)||/iscritt/i.test(m.label||''));
+  return isc?{c:'iscr',ico:'users',mini:'Solo agli iscritti',txt:`<b>A chi:</b> solo agli iscritti a «${esc(e.titolo)}», non a tutta la lista`}
+            :{c:'',ico:'chat',mini:'A tutti · broadcast',txt:'<b>A chi:</b> tutti i soci, nella lista broadcast generale'}}
+ if(m.canale==='fb')return {c:'soc',ico:'images',mini:'Pagina NEXUS APS',txt:`<b>Dove:</b> pagina Facebook NEXUS APS${viaggi?'. Poi condividilo su Nexus Experience':''}`};
+ if(m.canale==='ig')return {c:'soc',ico:'images',mini:'Instagram',txt:'<b>Dove:</b> Instagram @aps.nexus'};
+ if(m.canale==='storia')return {c:'soc',ico:'story',mini:'Storia IG + stato WA',txt:'<b>Dove:</b> storia Instagram @aps.nexus e stato di WhatsApp'};
+ return null}
+const destBox=d=>d?`<div class="dest ${d.c}">${ic(d.ico,'s')}<span>${d.txt}</span></div>`:'';
+const destMini=d=>d?`<span class="dmini ${d.c}">${esc(d.mini)}</span>`:'';
 function cardMsg(e,m,focus){
  const id=e.id+':'+m.id,aperto=focus||OPEN.has(id),todo=daCompletare(e,m),oggi=daOggi(m);
  const tipo=m.canale==='storia'?'9:16 + adesivo link':m.img?(m.imgs?m.imgs.length+' immagini 4:5':'Con immagine'):'Solo testo';
- const head=focus?'':`<button class="msg-h" data-apri="${id}" aria-expanded="${aperto}"><span class="ico">${ic(icoMsg(m))}</span><span class="txt"><b>${esc(m.label)}</b><span class="t-meta">${tipo} · ${esc(m.inv||'')}</span></span><span class="side">${oggi?'<span class="chip chip-today">Oggi</span>':''}${todo?'<span class="chip chip-todo">Da completare</span>':''}<span class="chevbox">${ic(aperto?'up':'down')}</span></span></button>`;
- return `<section class="card msg ${todo?'todo':''} ${focus?'infocus':''}" id="m-${e.id}-${m.id}">${head}${aperto?`<div class="msg-b">${m.canale==='storia'?corpoStoria(e,m):corpoMsg(e,m)}</div>`:''}</section>`;
+ const head=focus?'':`<button class="msg-h" data-apri="${id}" aria-expanded="${aperto}"><span class="ico">${ic(icoMsg(m))}</span><span class="txt"><b>${esc(m.label)}</b>${destMini(dest(e,m))}<span class="t-meta">${tipo} · ${esc(m.inv||'')}</span></span><span class="side">${oggi?'<span class="chip chip-today">Oggi</span>':''}${todo?'<span class="chip chip-todo">Da completare</span>':''}<span class="chevbox">${ic(aperto?'up':'down')}</span></span></button>`;
+ return `<section class="card msg ${todo?'todo':''} ${focus?'infocus':''}" id="m-${e.id}-${m.id}">${head}${aperto?`<div class="msg-b">${destBox(dest(e,m))}${m.canale==='storia'?corpoStoria(e,m):corpoMsg(e,m)}</div>`:''}</section>`;
 }
 function bloccoFill(e,m){
  const t=testoBase(e,m),q=quadre(t);if(!q.length)return '';
@@ -1012,11 +1026,12 @@ function cardPost(e,g){
  const id=e.id+':post',aperto=OPEN.has(id),sel=DIDA[e.id]||'ig',m=sel==='fb'?g.fb:g.ig;
  const todo=daCompletare(e,g.fb)||daCompletare(e,g.ig),oggi=daOggi(g.fb)||daOggi(g.ig);
  const n=(m.imgs||[m.img]).length;
- const head=`<button class="msg-h" data-apri="${id}" aria-expanded="${aperto}"><span class="ico">${ic('images')}</span><span class="txt"><b>Post${n>1?' carosello':''}</b><span class="t-meta">NEXUS APS e Instagram · ${n>1?n+' immagini 4:5':'immagine 4:5'}${m.inv?' · '+esc(m.inv):''}</span></span><span class="side">${oggi?'<span class="chip chip-today">Oggi</span>':''}${todo?'<span class="chip chip-todo">Da completare</span>':''}<span class="chevbox">${ic(aperto?'up':'down')}</span></span></button>`;
+ const head=`<button class="msg-h" data-apri="${id}" aria-expanded="${aperto}"><span class="ico">${ic('images')}</span><span class="txt"><b>Post${n>1?' carosello':''}</b><span class="dmini soc">NEXUS APS + Instagram</span><span class="t-meta">${n>1?n+' immagini 4:5':'immagine 4:5'}${m.inv?' · '+esc(m.inv):''}</span></span><span class="side">${oggi?'<span class="chip chip-today">Oggi</span>':''}${todo?'<span class="chip chip-todo">Da completare</span>':''}<span class="chevbox">${ic(aperto?'up':'down')}</span></span></button>`;
  if(!aperto)return `<section class="card msg ${todo?'todo':''}" id="m-${e.id}-post">${head}</section>`;
  const corpo=corpoMsg(e,m);const cut=corpo.indexOf('<div class="fill">')>=0?corpo.indexOf('<div class="fill">'):corpo.indexOf('<div class="editor-l">');
  const sw=`<div style="display:flex;flex-direction:column;gap:8px"><span class="editor-l"><span>Didascalia per</span></span><div class="seg" role="tablist" aria-label="Didascalia"><button role="tab" data-dida="${e.id}|ig" aria-selected="${sel==='ig'}">Instagram</button><button role="tab" data-dida="${e.id}|fb" aria-selected="${sel==='fb'}">Facebook</button></div><span class="t-meta">Instagram: «link in bio» e hashtag. Facebook: sulla pagina NEXUS APS, con il link all'articolo.</span></div>`;
- return `<section class="card msg ${todo?'todo':''}" id="m-${e.id}-post">${head}<div class="msg-b">${corpo.slice(0,cut)}${sw}${corpo.slice(cut)}</div></section>`;
+ const dp=`<div class="dest soc">${ic('images','s')}<span><b>Dove:</b> pagina Facebook NEXUS APS e Instagram @aps.nexus${AREA(e)==='a-viaggi'?'. Poi condividi il post Facebook su Nexus Experience':''}</span></div>`;
+ return `<section class="card msg ${todo?'todo':''}" id="m-${e.id}-post">${head}<div class="msg-b">${dp}${corpo.slice(0,cut)}${sw}${corpo.slice(cut)}</div></section>`;
 }
 function corpoStoria(e,m){
  const todo=daCompletare(e,m);
