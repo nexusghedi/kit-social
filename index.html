@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="kit-versione" content="2026-11-18 10:46">
+<meta name="kit-versione" content="2026-11-19 11:45">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -754,6 +754,28 @@ Quattro pomeriggi per creare con le tue mani le decorazioni di Natale, con Sonia
 ${TAG} #Natale #LaboratorioCreativo #DecorazioniNatalizie #FaiDaTe`},
  {id:'storia',invio:['2026-11-13','2026-11-16'],canale:'storia',label:'Storia Instagram',inv:'All\'uscita e il giorno prima del primo incontro',img:'img/storia-natale.jpg',fino:'2026-12-14',nota:'Aggiungi l\'adesivo «Link» accanto al tasto rosso «Scrivici su WhatsApp». Il link è qui sotto.',t:`${SITO}2026/11/12/laboratorio-natale-2026/`}]},
 
+{id:'trasloco',titolo:'Il gruppo Facebook chiude',quando:'Comunicazione · gruppo Facebook',col:'var(--verde)',stato:[{t:'Fissa il post in alto · archivia il gruppo dopo 3–4 settimane',tipo:'info'}],
+ url:'https://www.facebook.com/groups/nexusghedi/',urlLab:'Gruppo',
+ msgs:[
+ {id:'saluto',invio:['2026-11-19'],canale:'gruppo',label:'Post di saluto nel gruppo',inv:'Da pubblicare nel gruppo e fissare in alto',img:'img/gruppo-chiuso.jpg',nota:'Pubblica direttamente nel gruppo, come Nexus APS. Poi dal post: «…» › Fissa in alto.',t:
+`📦 Chiuso per trasloco!
+
+Cari amici di Nexus, grazie per essere stati con noi in questo gruppo! 💚
+Per tenervi aggiornati in modo più semplice, abbiamo deciso di riunire tutto sulle nostre pagine e su WhatsApp. Tra qualche settimana questo gruppo verrà archiviato: i post resteranno visibili, ma non pubblicheremo più qui.
+
+Da oggi ci trovate così:
+🌱 NEXUS APS – eventi, corsi e notizie: facebook.com/nexusghedi
+✈️ Nexus Experience – gite, viaggi ed esperienze: facebook.com/viagginexus
+📸 Instagram: @aps.nexus
+🌐 Sito, con programma e iscrizioni: nexusghedi.it
+
+💬 Volete ricevere le novità direttamente su WhatsApp?
+1. Salvate in rubrica il numero +39 331 763 4299 con il nome "Nexus"
+2. Mandateci un messaggio con scritto "Nexus"
+E vi aggiungiamo noi!
+
+Ci vediamo di là! 🐙`}]},
+
 {id:'attivamente',titolo:'Attiva-mente: il piacere di stare insieme',quando:'Ogni martedì',col:'var(--corsi)',stato:[{t:'Gratuito per i soci, ogni martedì 15–17',tipo:'info'}],
  url:SITO+'2026/09/28/riparte-attiva-mente-ottobre-2026/',
  msgs:[
@@ -866,7 +888,7 @@ const ST_CL={aperte:'st-open',ultimi:'st-last',libero:'st-free',completo:'st-ful
 const PITTO='favicon.svg';
 
 /* date dell'agenda */
-const DATE={fontanellato:['2026-11-21'],laudato:['2026-11-28'],salento:['2026-12-05','2026-12-10'],milano:['2026-12-29'],tunisia:['2027-02-07','2027-02-12'],natale:['2026-11-17','2026-12-15'],dresda:['2027-03-29','2027-04-04'],attivamente:'ric'};
+const DATE={fontanellato:['2026-11-21'],laudato:['2026-11-28'],salento:['2026-12-05','2026-12-10'],milano:['2026-12-29'],tunisia:['2027-02-07','2027-02-12'],natale:['2026-11-17','2026-12-15'],dresda:['2027-03-29','2027-04-04'],trasloco:['2026-11-19'],attivamente:'ric'};
 function dataBox(e){
  const d=DATE[e.id];
  if(d==='ric')return {b:'MAR',s:'15–17',cl:'small'};
@@ -948,7 +970,7 @@ function gruppi(e){
 function testaEvento(e,dove){
  return `<header class="topbar evbar"><a class="btn-icon" href="#" aria-label="Torna agli eventi">${ic('back')}</a>
   <div class="tt"><b>${esc(breve(e))}</b><span class="t-meta">${esc(sotto(e))}</span></div>
-  <a class="btn-icon" href="${e.url}" target="_blank" rel="noopener" aria-label="Apri l'articolo sul sito">${ic('ext')}</a></header>`;
+  <a class="btn-icon" href="${e.url}" target="_blank" rel="noopener" aria-label="${e.urlLab?'Apri: '+esc(e.urlLab):'Apri l\'articolo sul sito'}">${ic('ext')}</a></header>`;
 }
 function viewEvento(e,tab){
  const {wa,soc}=gruppi(e);const mats=MAT[e.id]||[];
@@ -964,7 +986,7 @@ function viewEvento(e,tab){
  <div class="evhead"><div class="row" style="align-items:flex-start;gap:14px">
   ${img?`<button class="thumb" style="width:84px;height:84px;flex:none" data-zoom="${img}" aria-label="Ingrandisci l'immagine dell'evento"><img src="${img}" alt=""></button>`:''}
   <div style="display:flex;flex-direction:column;gap:8px;min-width:0"><span class="tag ${AREA(e)}" style="align-self:flex-start">${esc(e.quando)}</span><h1>${esc(e.titolo)}</h1></div></div>
-  <div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap">${statoPill(e)}<a class="lnk" href="${e.url}" target="_blank" rel="noopener">Articolo${ic('ext','s')}</a></div></div>
+  <div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap">${statoPill(e)}<a class="lnk" href="${e.url}" target="_blank" rel="noopener">${esc(e.urlLab||'Articolo')}${ic('ext','s')}</a></div></div>
  <div class="tabs" role="tablist" aria-label="Materiali dell'evento">${T.map(([k,i,n,c,d])=>`<a role="tab" href="#${e.id}${k==='wa'?'':'-'+k}" aria-selected="${k===tab}">${ic(i)}${n}${c!==''&&c?`<span class="n">${c}</span>`:''}${d?'<span class="dot" aria-label="da completare"></span>':''}</a>`).join('')}</div>
  <div role="tabpanel" class="panel">${pan}</div></div>${tabbar('eventi')}`;
 }
@@ -1005,7 +1027,7 @@ function corpoMsg(e,m){
   azioni=todo?tastoBloccato(e,m):m.img?`<button class="btn btn-pri" data-condividi="testo" data-ev="${e.id}" data-m="${m.id}">${ic('share')}Condividi con immagine</button><p class="t-meta hint">Scegli WhatsApp, poi il gruppo.</p><button class="btn btn-sec" data-broadcast="${e.id}|${m.id}">${ic('download')}Per la lista broadcast</button><div class="alt"><button class="btn btn-ghost" data-copia="${e.id}|${m.id}">${ic('copy','s')}Copia testo</button><a class="btn btn-ghost" data-wa="${e.id}|${m.id}" target="_blank" rel="noopener" href="#">${ic('text','s')}Manda solo testo</a></div>`
    :`<a class="btn btn-pri" data-wa="${e.id}|${m.id}" target="_blank" rel="noopener" href="#">${ic('chat')}Manda su WhatsApp</a><p class="t-meta hint">Si apre WhatsApp con il testo: scegli il gruppo. Per la lista broadcast: «Copia testo», poi incollalo nella lista.</p><div class="alt"><button class="btn btn-ghost" data-copia="${e.id}|${m.id}">${ic('copy','s')}Copia testo</button></div>`;
   if(!todo&&ANCHE_GRUPPO.has(m.id))azioni+=`<div class="gruppo-box"><p class="t-meta">${ic('users','s')}<b>Anche nel gruppo Facebook</b>, scrivendo come Nexus. Il testo si copia senza asterischi.</p><button class="btn btn-sec" data-copia-gruppo="${e.id}|${m.id}">${ic('copy','s')}Copia per il gruppo</button></div>`;
- } else if(m.canale==='gruppo'){
+ } else if(m.canale==='gruppo'&&!m.img){
   azioni=todo?tastoBloccato(e,m):`<button class="btn btn-pri" data-copia="${e.id}|${m.id}">${ic('copy')}Copia le righe</button>
   <ol class="passi" style="margin-top:6px"><li><span class="badge nero">1</span><span>Sulla pagina Nexus apri il post appena pubblicato.</span></li><li><span class="badge nero">2</span><span><b>Condividi</b> › <b>Condividi in un gruppo</b> › scegli il gruppo.</span></li><li><span class="badge nero">3</span><span>Sopra il post tieni premuto, <b>Incolla</b> e Pubblica.</span></li></ol>`;
  } else {
@@ -1053,7 +1075,7 @@ function pannelloInfo(e){
  const l=INFO[e.id]||[];const caus=l.find(r=>r[0]==='Causale');
  const righe=l.filter(r=>r[0]!=='Causale').map(([k,v,o])=>{o=o||{};const q=quadre(v).length;
   return `<div class="kv-r"><span class="k">${esc(k)}</span><span class="v">${q?'<span class="chip chip-todo" style="margin-right:6px">Da completare</span>':''}${o.link?`<a href="${o.link}" target="_blank" rel="noopener">${esc(v)}</a>`:esc(v)}</span>${o.link?`<button class="btn-icon bordered" data-copia-val="${esc(o.link)}" aria-label="Copia il link: ${esc(k)}">${ic('copy')}</button>`:''}</div>`}).join('');
- const art=`<div class="kv-r"><span class="k">Articolo</span><span class="v"><a href="${e.url}" target="_blank" rel="noopener">Apri sul sito</a></span><button class="btn-icon bordered" data-copia-val="${e.url}" aria-label="Copia il link dell'articolo">${ic('copy')}</button></div>`;
+ const art=`<div class="kv-r"><span class="k">${esc(e.urlLab||'Articolo')}</span><span class="v"><a href="${e.url}" target="_blank" rel="noopener">${e.urlLab?'Apri':'Apri sul sito'}</a></span><button class="btn-icon bordered" data-copia-val="${e.url}" aria-label="Copia il link dell'articolo">${ic('copy')}</button></div>`;
  return `<p class="t-meta" style="margin:0 4px">Per rispondere a chi chiede: tocca ${ic('copy','s')} e incolla nella chat.</p>
  <section class="card" style="padding:4px 8px 4px 16px"><div class="kv">${righe}${art}</div></section>
  ${caus?`<div class="sec" style="margin:10px 4px 0"><h2>Pagamento</h2></div>
@@ -1241,7 +1263,7 @@ function route(){
  else{const e=trovaEv(h);
   if(!e){html=viewHome();VISTA='home'}
   else{const r=h.slice(e.id.length+1);
-   if(!r||r==='social'||r==='stampa'||r==='info'){html=viewEvento(e,r||'wa');VISTA='ev:'+e.id+':'+(r||'wa')}
+   if(!r||r==='social'||r==='stampa'||r==='info'){const t0=r||(gruppi(e).wa.length?'wa':'social');html=viewEvento(e,t0);VISTA='ev:'+e.id+':'+t0}
    else{const m=e.msgs.find(x=>x.id===r);
     if(m){/* apre la pagina completa dell'evento, sulla scheda giusta, con il messaggio aperto ed evidenziato */
      const tab=m.canale==='wa'?'wa':'social';const g=gruppi(e).soc.find(x=>x.tipo==='post'&&x.fb&&x.ig&&(x.fb===m||x.ig===m));
