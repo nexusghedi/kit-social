@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="kit-versione" content="2026-11-22 13:49">
+<meta name="kit-versione" content="2026-11-22 14:05">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -245,6 +245,10 @@
 
 /* toast */
 .toast{display:flex;align-items:center;gap:10px;background:#1d1d1b;color:#fff;border-radius:14px;padding:12px 8px 12px 14px;font-size:15px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.22);min-height:52px}
+.togli{display:flex;flex-direction:column;gap:6px;margin-top:10px;padding-top:12px;border-top:1px dashed var(--line,#ddd)}.togli p{margin:0}.togli .btn{align-self:flex-start}
+.tolti{margin-top:14px;background:var(--card,#fff);border-radius:16px;padding:4px 14px}.tolti summary{cursor:pointer;font-weight:800;font-size:15px;color:var(--muted);padding:12px 0;list-style:none;display:flex;gap:8px;align-items:center}.tolti summary::-webkit-details-marker{display:none}
+.tolto-r{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line,#eee);font-size:15px}
+.toast-az{background:none;border:0;color:#7fd99b;font:inherit;font-weight:900;padding:8px 10px;cursor:pointer}
 .toast .ok{width:24px;height:24px;border-radius:50%;background:#4cc56f;color:#1d1d1b;display:flex;align-items:center;justify-content:center;flex:none}
 .toast .err{width:24px;height:24px;border-radius:50%;background:#ff8a80;color:#1d1d1b;display:flex;align-items:center;justify-content:center;flex:none}
 .toast .grow{flex:1}
@@ -876,7 +880,10 @@ const $=(s,el=document)=>el.querySelector(s);
 const $$=(s,el=document)=>[...el.querySelectorAll(s)];
 const OGGI=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})();
 const GIORNO=['dom','lun','mar','mer','gio','ven','sab'][new Date().getDay()];
-const attivo=m=>(!m.dal||OGGI>=m.dal)&&(!m.fino||OGGI<=m.fino);
+EVENTI.forEach(e=>e.msgs.forEach(m=>m._ev=e.id));
+const kTolto=(ev,id)=>`kit5:tolto:${ev}:${id}`;
+const tolto=m=>!!m._ev&&localStorage.getItem(kTolto(m._ev,m.id))==='1';
+const attivo=m=>!tolto(m)&&(!m.dal||OGGI>=m.dal)&&(!m.fino||OGGI<=m.fino);
 const daOggi=m=>attivo(m)&&(m.invio||[]).some(d=>d===OGGI||d===GIORNO);
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
@@ -980,8 +987,8 @@ function viewEvento(e,tab){
  const T=[['wa','chat','WhatsApp',wa.length,todoWa],['social','images','Social',soc.length,todoSoc],['stampa','print','Stampa',mats.filter(x=>!x.schermo).length,false],['info','info','Info','',false]];
  const img=(wa.find(m=>m.img)||{}).img;
  let pan='';
- if(tab==='wa')pan=wa.length?wa.map(m=>cardMsg(e,m)).join(''):vuoto('Nessun messaggio WhatsApp per questo evento.');
- if(tab==='social')pan=soc.length?soc.map(g=>g.tipo==='post'?cardPost(e,g):g.tipo==='storia'?cardMsg(e,g.m):cardMsg(e,g.m)).join(''):vuoto('Niente da pubblicare sui social per questo evento.');
+ if(tab==='wa')pan=(wa.length?wa.map(m=>cardMsg(e,m)).join(''):vuoto(e.msgs.some(m=>m.canale==='wa'&&tolto(m))?'Tutto fatto: nessun messaggio WhatsApp da mandare.':'Nessun messaggio WhatsApp per questo evento.'))+sezTolti(e,'wa');
+ if(tab==='social')pan=(soc.length?soc.map(g=>g.tipo==='post'?cardPost(e,g):g.tipo==='storia'?cardMsg(e,g.m):cardMsg(e,g.m)).join(''):vuoto(e.msgs.some(m=>m.canale!=='wa'&&tolto(m))?'Tutto fatto: niente da pubblicare sui social.':'Niente da pubblicare sui social per questo evento.'))+sezTolti(e,'social');
  if(tab==='stampa')pan=pannelloStampa(e);
  if(tab==='info')pan=pannelloInfo(e);
  return `<div class="app-in">${testaEvento(e)}
@@ -1008,11 +1015,21 @@ function dest(e,m){
  return null}
 const destBox=d=>d?`<div class="dest ${d.c}">${ic(d.ico,'s')}<span>${d.txt}</span></div>`:'';
 const destMini=d=>d?`<span class="dmini ${d.c}">${esc(d.mini)}</span>`:'';
+function tastoTogli(e,ms){
+ const nome=m=>m.canale==='wa'?'mandato':m.canale==='storia'?'pubblicata':'pubblicato';
+ if(ms.length===1)return `<div class="togli"><button class="btn btn-sec" data-togli="${e.id}|${ms[0].id}">${ic('check','s')}Già ${nome(ms[0])}: togli dal kit</button><p class="t-meta">Sparisce da «Da mandare oggi» e da questa pagina. Si può rimettere.</p></div>`;
+ return `<div class="togli"><span class="t-meta">Già pubblicato? Toglilo dal kit:</span><div class="row" style="gap:8px;flex-wrap:wrap">${ms.map(m=>`<button class="btn btn-sec" data-togli="${e.id}|${m.id}">${ic('check','s')}${m.canale==='fb'?'Facebook':'Instagram'}</button>`).join('')}</div></div>`;
+}
+const etTolto=m=>m.canale==='wa'?'WhatsApp · '+m.label:m.canale==='fb'?'Facebook · '+m.label.replace(/^Post Facebook · /,''):m.canale==='ig'?'Instagram':m.canale==='storia'?'Storia':m.label;
+function sezTolti(e,tab){
+ const l=e.msgs.filter(m=>tolto(m)&&(tab==='wa'?m.canale==='wa':m.canale!=='wa'));if(!l.length)return '';
+ return `<details class="tolti"><summary>${ic('check','s')}Già fatti, tolti dal kit (${l.length})</summary>${l.map(m=>`<div class="tolto-r"><span class="grow">${esc(etTolto(m))}</span><button class="btn btn-ghost" data-rimetti="${e.id}|${m.id}">${ic('undo','s')}Rimetti</button></div>`).join('')}</details>`;
+}
 function cardMsg(e,m,focus){
  const id=e.id+':'+m.id,aperto=focus||OPEN.has(id),todo=daCompletare(e,m),oggi=daOggi(m);
  const tipo=m.canale==='storia'?'9:16 + adesivo link':m.img?(m.imgs?m.imgs.length+' immagini 4:5':'Con immagine'):'Solo testo';
  const head=focus?'':`<button class="msg-h" data-apri="${id}" aria-expanded="${aperto}"><span class="ico">${ic(icoMsg(m))}</span><span class="txt"><b>${esc(m.label)}</b>${destMini(dest(e,m))}<span class="t-meta">${tipo} · ${esc(m.inv||'')}</span></span><span class="side">${oggi?'<span class="chip chip-today">Oggi</span>':''}${todo?'<span class="chip chip-todo">Da completare</span>':''}<span class="chevbox">${ic(aperto?'up':'down')}</span></span></button>`;
- return `<section class="card msg ${todo?'todo':''} ${focus?'infocus':''}" id="m-${e.id}-${m.id}">${head}${aperto?`<div class="msg-b">${destBox(dest(e,m))}${m.canale==='storia'?corpoStoria(e,m):corpoMsg(e,m)}</div>`:''}</section>`;
+ return `<section class="card msg ${todo?'todo':''} ${focus?'infocus':''}" id="m-${e.id}-${m.id}">${head}${aperto?`<div class="msg-b">${destBox(dest(e,m))}${m.canale==='storia'?corpoStoria(e,m):corpoMsg(e,m)}${tastoTogli(e,[m])}</div>`:''}</section>`;
 }
 function bloccoFill(e,m){
  const t=testoBase(e,m),q=quadre(t);if(!q.length)return '';
@@ -1058,12 +1075,12 @@ function cardPost(e,g){
  const id=e.id+':post',aperto=OPEN.has(id),sel=DIDA[e.id]||'ig',m=sel==='fb'?g.fb:g.ig;
  const todo=daCompletare(e,g.fb)||daCompletare(e,g.ig),oggi=daOggi(g.fb)||daOggi(g.ig);
  const n=(m.imgs||[m.img]).length;
- const head=`<button class="msg-h" data-apri="${id}" aria-expanded="${aperto}"><span class="ico">${ic('images')}</span><span class="txt"><b>Post${n>1?' carosello':''}</b><span class="dmini soc">NEXUS APS + Instagram</span><span class="t-meta">${n>1?n+' immagini 4:5':'immagine 4:5'}${m.inv?' · '+esc(m.inv):''}</span></span><span class="side">${oggi?'<span class="chip chip-today">Oggi</span>':''}${todo?'<span class="chip chip-todo">Da completare</span>':''}<span class="chevbox">${ic(aperto?'up':'down')}</span></span></button>`;
+ const head=`<button class="msg-h" data-apri="${id}" aria-expanded="${aperto}"><span class="ico">${ic('images')}</span><span class="txt"><b>Post${n>1?' carosello':''}</b><span class="dmini soc">${g.fb.exp?'Nexus Experience':'NEXUS APS'} + Instagram</span><span class="t-meta">${n>1?n+' immagini 4:5':'immagine 4:5'}${m.inv?' · '+esc(m.inv):''}</span></span><span class="side">${oggi?'<span class="chip chip-today">Oggi</span>':''}${todo?'<span class="chip chip-todo">Da completare</span>':''}<span class="chevbox">${ic(aperto?'up':'down')}</span></span></button>`;
  if(!aperto)return `<section class="card msg ${todo?'todo':''}" id="m-${e.id}-post">${head}</section>`;
  const corpo=corpoMsg(e,m);const cut=corpo.indexOf('<div class="fill">')>=0?corpo.indexOf('<div class="fill">'):corpo.indexOf('<div class="editor-l">');
- const sw=`<div style="display:flex;flex-direction:column;gap:8px"><span class="editor-l"><span>Didascalia per</span></span><div class="seg" role="tablist" aria-label="Didascalia"><button role="tab" data-dida="${e.id}|ig" aria-selected="${sel==='ig'}">Instagram</button><button role="tab" data-dida="${e.id}|fb" aria-selected="${sel==='fb'}">Facebook</button></div><span class="t-meta">Instagram: «link in bio» e hashtag. Facebook: sulla pagina NEXUS APS, con il link all'articolo.</span></div>`;
- const dp=`<div class="dest soc">${ic('images','s')}<span><b>Dove:</b> pagina Facebook NEXUS APS e Instagram @aps.nexus${AREA(e)==='a-viaggi'?'. Poi condividi il post Facebook su Nexus Experience':''}</span></div>`;
- return `<section class="card msg ${todo?'todo':''}" id="m-${e.id}-post">${head}<div class="msg-b">${dp}${corpo.slice(0,cut)}${sw}${corpo.slice(cut)}</div></section>`;
+ const sw=`<div style="display:flex;flex-direction:column;gap:8px"><span class="editor-l"><span>Didascalia per</span></span><div class="seg" role="tablist" aria-label="Didascalia"><button role="tab" data-dida="${e.id}|ig" aria-selected="${sel==='ig'}">Instagram</button><button role="tab" data-dida="${e.id}|fb" aria-selected="${sel==='fb'}">Facebook</button></div><span class="t-meta">Instagram: «link in bio» e hashtag. Facebook: sulla pagina ${g.fb.exp?'Nexus Experience':'NEXUS APS'}, con il link all'articolo.</span></div>`;
+ const dp=g.fb.exp?`<div class="dest soc">${ic('images','s')}<span><b>Dove:</b> pagina Facebook Nexus Experience (la pagina dei racconti) e Instagram @aps.nexus</span></div>`:`<div class="dest soc">${ic('images','s')}<span><b>Dove:</b> pagina Facebook NEXUS APS e Instagram @aps.nexus${AREA(e)==='a-viaggi'?'. Poi condividi il post Facebook su Nexus Experience':''}</span></div>`;
+ return `<section class="card msg ${todo?'todo':''}" id="m-${e.id}-post">${head}<div class="msg-b">${dp}${corpo.slice(0,cut)}${sw}${corpo.slice(cut)}${tastoTogli(e,[g.fb,g.ig])}</div></section>`;
 }
 function corpoStoria(e,m){
  const todo=daCompletare(e,m);
@@ -1299,6 +1316,7 @@ window.addEventListener('hashchange',()=>route());
 /* ---------- AZIONI ---------- */
 const toastEl=$('#toast');let tt;
 function toast(t,err,ms){toastEl.innerHTML=`<span class="${err?'err':'ok'}">${ic(err?'x':'check','s')}</span><span class="grow">${esc(t)}</span>`;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,ms||3200)}
+function toastAzione(t,lab,k){toastEl.innerHTML=`<span class="ok">${ic('check','s')}</span><span class="grow">${esc(t)}</span><button class="toast-az" data-rimetti="${k}">${esc(lab)}</button>`;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,6000)}
 async function copia(t){try{await navigator.clipboard.writeText(t);return true}catch(e){return false}}
 async function blobDi(src){const r=await fetch(vSrc(src));return await r.blob()}
 const trova=(ev,id)=>{const e=EVENTI.find(x=>x.id===ev);return [e,e.msgs.find(m=>m.id===id)]};
@@ -1330,6 +1348,8 @@ document.addEventListener('click',async ev=>{
  if(t.closest('[data-zoom-chiudi]')){chiudiLivelli();return}
  const z=t.closest('[data-zoom]');if(z){ev.preventDefault();zoom(z.dataset.zoom,z.dataset.mat,z);return}
  if(t.closest('#zoom')&&!t.closest('.zoom-az')&&!t.closest('img')){chiudiLivelli();return}
+ const tg=t.closest('[data-togli]');if(tg){const [ev_,id]=tg.dataset.togli.split('|');try{localStorage.setItem(kTolto(ev_,id),'1')}catch(x){}rerender();toastAzione('Tolto dal kit','Annulla',`${ev_}|${id}`);return}
+ const rm=t.closest('[data-rimetti]');if(rm){const [ev_,id]=rm.dataset.rimetti.split('|');try{localStorage.removeItem(kTolto(ev_,id))}catch(x){}rerender();toast('Rimesso nel kit');return}
  const ap=t.closest('[data-apri]');if(ap){const k=ap.dataset.apri;OPEN.has(k)?OPEN.delete(k):OPEN.add(k);rerender();return}
  const ad=t.closest('[data-apri-dopo]');if(ad){OPEN.add(ad.dataset.apriDopo);APRI_DOPO=ad.dataset.apriDopo;return}
  const td=t.closest('[data-todo]');if(td){TODO_APERTO=!TODO_APERTO;rerender();return}
