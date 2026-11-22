@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="kit-versione" content="2026-11-22 14:40">
+<meta name="kit-versione" content="2026-11-22 15:03">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -848,7 +848,7 @@ const COMUNICAZIONI=[
  ['Ultimi posti','Quando succede',{Sito:'Pillola rossa','WhatsApp · tutti':'Grafica 1:1 «Ultimi N posti»','Storia IG + stato WA':'Sì, stesso modello',Altro:'Stato nel kit'}],
  ['Al completo','Quando succede',{Sito:"Pillola verde + tasto lista d'attesa",'WhatsApp · tutti':'Solo testo',Altro:'I messaggi di iscrizione spariscono'}],
  ['Si è liberato un posto','Quando succede',{Sito:'Pillola gialla','WhatsApp · tutti':'Grafica 1:1 «va a chi scrive per primo»','Storia IG + stato WA':'Sì',Altro:'Niente post sulle pagine né su Instagram. Poi si torna ad al completo'}],
- ['Incontro di preparazione (viaggi)','Una settimana prima + il giorno stesso',{'WhatsApp · iscritti':'Due messaggi solo testo','Storia IG + stato WA':'Facoltativa',Altro:'Evento nel calendario pubblico'}],
+ ['Incontro di preparazione (viaggi e uscite)','Una settimana prima + il giorno stesso',{'WhatsApp · tutti':'Due messaggi solo testo, a tutta la lista broadcast: l\'incontro è aperto a tutti','Storia IG + stato WA':'Facoltativa',Altro:'Evento nel calendario pubblico'}],
  ['Saldo (viaggi)','Prima della scadenza del saldo',{'WhatsApp · iscritti':'Solo testo: quota definitiva, acconto da detrarre, come pagare'}],
  ['Partenza (viaggi, visite, uscite)','2–3 giorni prima',{'WhatsApp · iscritti':'Solo testo: ritrovo, documenti, 🎧 auricolari, rientro'}],
  ['Serata o conferenza','Una settimana prima + il giorno stesso',{Sito:'Articolo','WhatsApp · tutti':'Invito con immagine + promemoria il giorno stesso','NEXUS APS / IG':'Carosello','Storia IG + stato WA':'Il giorno prima + il giorno stesso',Stampa:'Locandina A4 per la bacheca'}],
@@ -990,7 +990,7 @@ function viewEvento(e,tab){
 const vuoto=t=>`<div class="alert alert-info">${ic('info')}<span class="grow">${esc(t)}</span></div>`;
 
 /* riga messaggio */
-const ISCRITTI=new Set(['incontro','incontro-oggi','saldo','partenza','domani']);
+const ISCRITTI=new Set(['saldo','partenza','domani']);
 function dest(e,m){
  const viaggi=AREA(e)==='a-viaggi';
  if(m.canale==='wa'){const isc=m.a?m.a==='iscritti':(ISCRITTI.has(m.id)||/iscritt/i.test(m.label||''));
